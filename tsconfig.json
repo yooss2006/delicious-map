@@ -21,11 +21,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noUncheckedIndexedAccess": true,
-    "incremental": true
+    "incremental": true,
   },
   "include": ["src"],
-  "exclude": [
-    "node_modules"
-  ],
-  "extends": "./tsconfig.paths.json"
+  "exclude": ["node_modules"],
+  "extends": "./tsconfig.paths.json",
 }
