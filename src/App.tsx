@@ -1,5 +1,5 @@
 function App() {
-  return <div>하이</div>;
+  return <div>시작2</div>;
 }
 
 export default App;
