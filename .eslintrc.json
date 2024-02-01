@@ -13,8 +13,7 @@
       "jsx": true
     },
     "warnOnUnsupportedTypeScriptVersion": true,
-    "ecmaVersion": 11,
-    "project": "./tsconfig.json"
+    "ecmaVersion": 11
   },
   "settings": {
     "react": {
