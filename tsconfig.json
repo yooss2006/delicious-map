@@ -2,9 +2,13 @@
   "compilerOptions": {
     "target": "ES6",
     "useDefineForClassFields": true,
-    "lib": ["dom", "dom.iterable", "es6", "scripthost"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "es6",
+      "scripthost"
+    ],
     "module": "ESNext",
-
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -23,7 +27,11 @@
     "noUncheckedIndexedAccess": true,
     "incremental": true,
   },
-  "include": ["src"],
-  "exclude": ["node_modules"],
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
   "extends": "./tsconfig.paths.json",
 }

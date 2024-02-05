@@ -1,5 +1,12 @@
+import AppProvider from '@/providers/app';
+import AppRouter from '@/routes';
+
 function App() {
-  return <div>시작2</div>;
+  return (
+    <AppProvider>
+      <AppRouter />
+    </AppProvider>
+  );
 }
 
 export default App;
