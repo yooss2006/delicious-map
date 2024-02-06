@@ -1,3 +1,4 @@
+import { Wrapper } from '@googlemaps/react-wrapper';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import React from 'react';
@@ -21,7 +22,9 @@ export default function AppProvider({ children }: Props) {
         <HelmetProvider>
           <QueryClientProvider client={queryClient}>
             <ReactQueryDevtools initialIsOpen={false} />
-            <Router>{children}</Router>
+            <Wrapper apiKey={import.meta.env.VITE_GOOGLE_APT_KEY} libraries={['places']}>
+              <Router>{children}</Router>
+            </Wrapper>
           </QueryClientProvider>
         </HelmetProvider>
       </ErrorBoundary>

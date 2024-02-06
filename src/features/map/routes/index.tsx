@@ -1,10 +1,10 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import GoogleMap from '@/features/map/components/GoogleMap';
 
-export function MapRoutes() {
+export function MapPage() {
   return (
-    <Routes>
-      <Route path="/" element={<div>지도</div>} />
-      <Route path="*" element={<Navigate to="." />} />
-    </Routes>
+    <div>
+      <h1>지도</h1>
+      <GoogleMap style={{ width: '100%', height: '400px' }} />
+    </div>
   );
 }
