@@ -4,11 +4,7 @@ import { lazyImport } from '@/utils/lazyImport';
 const { MapPage } = lazyImport(() => import('@/features/map'), 'MapPage');
 
 const App = () => {
-  return (
-    <div>
-      <Outlet />
-    </div>
-  );
+  return <Outlet />;
 };
 
 export const protectedRoutes = [

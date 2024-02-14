@@ -11,13 +11,13 @@ type Props = {
 
 const config: ThemeConfig = {
   initialColorMode: 'dark',
-  useSystemColorMode: false,
 };
 
-const { Button } = chakraTheme.components;
+const { Input, Button } = chakraTheme.components;
 
 export const theme = extendBaseTheme({
   components: {
+    Input,
     Button,
   },
   config,

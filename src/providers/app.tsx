@@ -1,4 +1,3 @@
-import { Wrapper } from '@googlemaps/react-wrapper';
 import React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { HelmetProvider } from 'react-helmet-async';
@@ -22,9 +21,7 @@ export default function AppProvider({ children }: Props) {
         <HelmetProvider>
           <ReactQueryProvider>
             <ChakraProvider>
-              <Wrapper apiKey={import.meta.env.VITE_GOOGLE_APT_KEY} libraries={['places']}>
-                <Router>{children}</Router>
-              </Wrapper>
+              <Router>{children}</Router>
             </ChakraProvider>
           </ReactQueryProvider>
         </HelmetProvider>
