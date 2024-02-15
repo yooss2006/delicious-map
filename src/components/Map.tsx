@@ -1,6 +1,6 @@
 import { useKakaoMap } from '@/lib/kakao-map';
 
-export default function KakaoMap() {
+export default function Map() {
   const { MapComponent } = useKakaoMap();
 
   return <>{MapComponent}</>;

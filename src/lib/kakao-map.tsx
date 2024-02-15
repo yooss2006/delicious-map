@@ -36,6 +36,7 @@ const KakaoMapContext = React.createContext<MapContext>(null);
 
 export function KakaoMapProvider({ children }: Props) {
   const [map, setMap] = React.useState<any>(null);
+  const curentMarker = React.useRef<any>(null);
   const mapRef = React.useRef(null);
 
   const move = React.useCallback(
@@ -46,7 +47,16 @@ export function KakaoMapProvider({ children }: Props) {
         if (curLevel !== level) {
           map.setLevel(level);
         }
-        map.setCenter(moveLatLng);
+        if (curentMarker.current) {
+          curentMarker.current.setMap(null);
+        }
+
+        const marker = new window.kakao.maps.Marker({
+          position: moveLatLng,
+        });
+        curentMarker.current = marker;
+        map.panTo(moveLatLng);
+        marker.setMap(map);
       }
     },
     [map]
@@ -69,7 +79,7 @@ export function KakaoMapProvider({ children }: Props) {
     return <Box style={{ width: '100%', height: '100%' }} ref={mapRef}></Box>;
   }, [mapRef]);
 
-  const value = React.useMemo(() => ({ MapComponent, move }), [map, MapComponent, move]);
+  const value = React.useMemo(() => ({ MapComponent, move }), [MapComponent, move]);
 
   return <KakaoMapContext.Provider value={value}>{children}</KakaoMapContext.Provider>;
 }

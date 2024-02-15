@@ -19,7 +19,7 @@ export default function SearchForm({
 
   const handleFormFinish = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!searchText) return;
+    if (!searchText.replace(/^\s+|\s+$/g, '')) return;
     onSearch(searchText);
   };
 
