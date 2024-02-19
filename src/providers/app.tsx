@@ -5,6 +5,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import ChakraProvider from '@/lib/chakra';
 import { ReactQueryProvider } from '@/lib/react-query';
+import { ModalProvider } from '@/providers/useModal';
 
 type Props = {
   children: React.ReactNode;
@@ -21,7 +22,9 @@ export default function AppProvider({ children }: Props) {
         <HelmetProvider>
           <ReactQueryProvider>
             <ChakraProvider>
-              <Router>{children}</Router>
+              <ModalProvider>
+                <Router>{children}</Router>
+              </ModalProvider>
             </ChakraProvider>
           </ReactQueryProvider>
         </HelmetProvider>
