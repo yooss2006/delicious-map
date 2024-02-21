@@ -11,7 +11,7 @@ type ModalType = 'merchant';
 interface ModalStateType {
   isOpen: boolean;
   type: ModalType;
-  data: Record<string, unknown> | null;
+  data: Record<string, any> | null;
 }
 
 type OpenModal = (data: Omit<ModalStateType, 'isOpen'>) => void;

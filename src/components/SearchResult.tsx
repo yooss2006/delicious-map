@@ -15,6 +15,7 @@ export default function SearchResult({ places }: Props) {
         return (
           <ListItem key={places.id}>
             <MerchantCard
+              merchantId={places.id}
               lat={Number(places.y)}
               lng={Number(places.x)}
               name={places.place_name}

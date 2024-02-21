@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { HelmetProvider } from 'react-helmet-async';
@@ -6,6 +7,10 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import ChakraProvider from '@/lib/chakra';
 import { ReactQueryProvider } from '@/lib/react-query';
 import { ModalProvider } from '@/providers/useModal';
+
+import 'dayjs/locale/ko';
+
+dayjs.locale('ko');
 
 type Props = {
   children: React.ReactNode;

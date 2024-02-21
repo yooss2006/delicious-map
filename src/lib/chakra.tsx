@@ -13,15 +13,21 @@ const config: ThemeConfig = {
   initialColorMode: 'dark',
 };
 
-const { Input, Button, List, Card, Modal } = chakraTheme.components;
+const { Input, Button, List, Card, Modal, Heading, FormError, FormLabel, Form, Textarea } =
+  chakraTheme.components;
 
 export const theme = extendBaseTheme({
   components: {
+    Form,
+    FormLabel,
+    FormError,
     Input,
     Button,
     List,
     Card,
     Modal,
+    Heading,
+    Textarea,
   },
   config,
 });
