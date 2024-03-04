@@ -19,12 +19,12 @@ import dayjs from 'dayjs';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
 import ImageUpload from '@/components/ImageUpload';
-import { supabase } from '@/lib/supabase';
+import { uploadImage, uploadPost } from '@/lib/supabase';
 import { useModal } from '@/providers/useModal';
 
 interface FormValues {
   date: string;
-  image: any;
+  image: Array<File>;
   memo: string;
 }
 
@@ -36,7 +36,7 @@ export default function MerchantModal() {
     closeModal,
   } = useModal();
 
-  const { name, address } = data || {};
+  const { name, address, lat, lng, merchantId, code } = data || {};
 
   const methods = useForm<FormValues>();
   const {
@@ -46,27 +46,18 @@ export default function MerchantModal() {
   } = methods;
 
   const onSubmit: SubmitHandler<FormValues> = async (values) => {
-    const imageUploadPromises = values.image.map((image: File) =>
-      supabase.storage
-        .from('images')
-        .upload(`${dayjs().format('YYYY_MM_DD_HH_mm_ss')}.jpg`, image, {
-          cacheControl: '3600',
-          upsert: false,
-        })
-    );
-    try {
-      const results = await Promise.all(imageUploadPromises);
-      if (results.find((result) => result.error)) {
-        throw new Error('Error uploading images');
-      }
-      const urls = results.map((result) => [
-        `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/public/images/${result.data.key}`,
-        result,
-      ]);
-      console.log(urls);
-    } catch (error) {
-      console.error('Error uploading images: ', error);
-    }
+    const uploadedImages = await uploadImage(values.image);
+    const result = await uploadPost({
+      lat,
+      lng,
+      merchant_id: merchantId,
+      name,
+      address,
+      code,
+      memo: values.memo,
+      images: uploadedImages.map((image) => image.url),
+    });
+    console.log(result);
   };
 
   return (
