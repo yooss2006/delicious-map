@@ -1,13 +1,21 @@
-import { useRoutes } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate, useRoutes, useLocation } from 'react-router-dom';
 
-import { protectedRoutes } from '@/routes/protected';
+import afterLoginRoutes from '@/routes/afterLogin';
+import beforeLoginRoutes from '@/routes/beforeLogin';
 
 const commonRoutes = [{ path: '/', element: <div>로딩중...</div> }];
 
 export default function AppRouters() {
-  const auth = true;
+  const navigation = useNavigate();
+  const { pathname } = useLocation();
+  const auth = false;
 
-  const routes = auth ? protectedRoutes : [];
+  useEffect(() => {
+    if (pathname === '/' && !auth) navigation('/login');
+  }, [auth, navigation, pathname]);
+
+  const routes = auth ? afterLoginRoutes : beforeLoginRoutes;
 
   const element = useRoutes([...routes, ...commonRoutes]);
 

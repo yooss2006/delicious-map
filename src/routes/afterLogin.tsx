@@ -7,7 +7,7 @@ const App = () => {
   return <Outlet />;
 };
 
-export const protectedRoutes = [
+const afterLoginRoutes = [
   {
     path: '/',
     element: <App />,
@@ -18,3 +18,5 @@ export const protectedRoutes = [
     ],
   },
 ];
+
+export default afterLoginRoutes;
