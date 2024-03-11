@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 
 import { Image } from '@/old-file/types/image';
 import { Post } from '@/old-file/types/post';
-import { Database } from '@/old-file/types/supabase';
+import { Database } from '@/shared/lib/supabase/type';
 
 export const supabase = createClient<Database>(
   import.meta.env.VITE_SUPABASE_URL,
