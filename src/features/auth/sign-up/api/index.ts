@@ -6,15 +6,13 @@ export interface SignUpFormValues {
   confirmPassword?: string;
 }
 
-export async function signUp({ email, password }: SignUpFormValues) {
+export const signUp = async ({ email, password }: SignUpFormValues) => {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
   });
-
   if (error) {
     throw error;
   }
-
   return data;
-}
+};

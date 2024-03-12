@@ -39,7 +39,7 @@ export function RegisterPage() {
   };
 
   return (
-    <Box w="480px" background="black" py={2} px={4}>
+    <Box w="480px" background="white" _dark={{ background: 'black' }} py={2} px={4}>
       <Heading size="xl" textAlign="center">
         회원가입
       </Heading>
@@ -71,7 +71,7 @@ export function RegisterPage() {
               {errors.confirmPassword && errors.confirmPassword.message}
             </FormErrorMessage>
           </FormControl>
-          <Button colorScheme="blue" w="full" mt={3} onClick={handleSubmit(onSubmit)}>
+          <Button type="submit" colorScheme="blue" w="full" mt={3}>
             회원가입
           </Button>
         </form>

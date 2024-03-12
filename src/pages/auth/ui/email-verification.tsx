@@ -5,7 +5,7 @@ export function EmailVerificationPage() {
   const location = useLocation();
   const { email } = location.state as { email: string };
   return (
-    <Box w="480px" background="black" py={2} px={4}>
+    <Box w="480px" background="white" _dark={{ background: 'black' }} py={2} px={4}>
       <Heading size="xl" textAlign="center">
         이메일 인증
       </Heading>
