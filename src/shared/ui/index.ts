@@ -1,2 +1,2 @@
 export * from './form/password-input';
-export * from './layout/auth-layout';
+export * from '../../app/layout/auth-layout';

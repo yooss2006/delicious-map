@@ -1,7 +1,7 @@
 import { Navigate, RouteObject } from 'react-router-dom';
 
+import { AuthLayout } from '@/app/layout/auth-layout';
 import { lazyImport } from '@/shared/lib/lazyImport';
-import { AuthLayout } from '@/shared/ui';
 
 const { LoginPage } = lazyImport(() => import('@/pages/auth'), 'LoginPage');
 const { RegisterPage } = lazyImport(() => import('@/pages/auth'), 'RegisterPage');

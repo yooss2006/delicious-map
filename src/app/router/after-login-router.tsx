@@ -1,13 +1,11 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
-const App = () => {
-  return <Outlet />;
-};
+import { MapLayout } from '../layout/map-layout';
 
 const afterLoginRoutes = [
   {
     path: '/',
-    element: <App />,
+    element: <MapLayout />,
     children: [
       { path: '/', element: <div>시작</div> },
       { path: '*', element: <Navigate to="." /> },
