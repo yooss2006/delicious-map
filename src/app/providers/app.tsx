@@ -7,8 +7,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import { ChakraProvider } from '@/app/providers/chakra';
 import { ReactQueryProvider } from '@/app/providers/react-query';
-
 import 'dayjs/locale/ko';
+import { ModalProvider } from '@/shared/lib/modal';
 
 dayjs.locale('ko');
 
@@ -27,12 +27,14 @@ export function AppProvider({ children }: Props) {
         <HelmetProvider>
           <ReactQueryProvider>
             <ChakraProvider>
-              <Heading as="h1" className="visually-hidden">
-                맛있을지도
-              </Heading>
-              <Box as="main" h="100%">
-                <Router>{children}</Router>
-              </Box>
+              <ModalProvider>
+                <Heading as="h1" className="visually-hidden">
+                  맛있을지도
+                </Heading>
+                <Box as="main" h="100%">
+                  <Router>{children}</Router>
+                </Box>
+              </ModalProvider>
             </ChakraProvider>
           </ReactQueryProvider>
         </HelmetProvider>

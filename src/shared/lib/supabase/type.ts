@@ -3,6 +3,62 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export type Database = {
   public: {
     Tables: {
+      group_members: {
+        Row: {
+          group_id: number;
+          joined_at: string | null;
+          member_id: number;
+          role: string | null;
+          user_id: string;
+        };
+        Insert: {
+          group_id: number;
+          joined_at?: string | null;
+          member_id?: number;
+          role?: string | null;
+          user_id: string;
+        };
+        Update: {
+          group_id?: number;
+          joined_at?: string | null;
+          member_id?: number;
+          role?: string | null;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'group_members_group_id_fkey';
+            columns: ['group_id'];
+            isOneToOne: false;
+            referencedRelation: 'groups';
+            referencedColumns: ['group_id'];
+          },
+        ];
+      };
+      groups: {
+        Row: {
+          created_at: string | null;
+          description: string | null;
+          group_id: number;
+          image_url: string | null;
+          name: string;
+        };
+        Insert: {
+          created_at?: string | null;
+          description?: string | null;
+          group_id?: number;
+          image_url?: string | null;
+          name: string;
+        };
+        Update: {
+          created_at?: string | null;
+          description?: string | null;
+          group_id?: number;
+          image_url?: string | null;
+          name?: string;
+        };
+        Relationships: [];
+      };
       merchant: {
         Row: {
           address: string | null;

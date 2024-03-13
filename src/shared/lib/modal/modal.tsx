@@ -1,57 +1,48 @@
 import React from 'react';
 
-import DynamicModal from '@/old-file/components/Modal';
-
 type Props = {
   children: React.ReactNode;
 };
 
-type ModalType = 'merchant';
+export enum ModalEnum {
+  Group = 'group',
+}
 
 interface ModalStateType {
   isOpen: boolean;
-  type: ModalType;
+  type: ModalEnum | null;
   data: Record<string, any> | null;
 }
 
 type OpenModal = (data: Omit<ModalStateType, 'isOpen'>) => void;
 type CloseModal = () => void;
 
-const DEFAULT_MODAL_STATE: Record<ModalType, ModalStateType> = {
-  merchant: {
-    isOpen: false,
-    type: 'merchant',
-    data: null,
-  },
+const DEFAULT_MODAL_STATE: ModalStateType = {
+  isOpen: false,
+  type: null,
+  data: null,
 };
 
-const ModalContext = React.createContext<
-  Record<'modalState', Record<ModalType, ModalStateType>> & {
-    openModal: OpenModal;
-    closeModal: CloseModal;
-  }
->({ modalState: DEFAULT_MODAL_STATE, openModal: () => {}, closeModal: () => {} });
+const ModalContext = React.createContext<{
+  modalState: ModalStateType;
+  openModal: OpenModal;
+  closeModal: CloseModal;
+}>({ modalState: DEFAULT_MODAL_STATE, openModal: () => {}, closeModal: () => {} });
 
 export function ModalProvider({ children }: Props) {
   const [state, setState] = React.useState(DEFAULT_MODAL_STATE);
 
   const openModal: OpenModal = ({ type, data }: Omit<ModalStateType, 'isOpen'>) => {
-    setState((prev) => ({ ...prev, [type]: { isOpen: true, type, data } }));
+    setState({ isOpen: true, type, data });
   };
+
   const closeModal = () => {
     setState(DEFAULT_MODAL_STATE);
   };
 
   const value = React.useMemo(() => ({ modalState: state, openModal, closeModal }), [state]);
 
-  return (
-    <ModalContext.Provider value={value}>
-      <>
-        {children}
-        <DynamicModal />
-      </>
-    </ModalContext.Provider>
-  );
+  return <ModalContext.Provider value={value}>{children}</ModalContext.Provider>;
 }
 
 export function useModal() {

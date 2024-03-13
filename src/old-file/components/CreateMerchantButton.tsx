@@ -2,8 +2,8 @@ import { StarIcon } from '@chakra-ui/icons';
 import { Button } from '@chakra-ui/react';
 import React from 'react';
 
-import { useModal } from '@/old-file/providers/useModal';
 import { MerchantCardType } from '@/old-file/types/place';
+import { useModal } from '@/shared/lib/modal/modal';
 
 export default function CreateMerchantButton(props: MerchantCardType) {
   const { lat, lng, name, address, merchantId, code } = props;

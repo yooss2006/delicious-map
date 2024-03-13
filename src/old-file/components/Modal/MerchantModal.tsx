@@ -20,7 +20,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
 import ImageUpload from '@/old-file/components/ImageUpload';
 import { uploadImage, uploadPost } from '@/old-file/lib/supabase';
-import { useModal } from '@/old-file/providers/useModal';
+import { useModal } from '@/shared/lib/modal/modal';
 
 interface FormValues {
   date: string;
