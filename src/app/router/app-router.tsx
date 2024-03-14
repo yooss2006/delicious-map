@@ -13,7 +13,6 @@ export function AppRouter() {
     queryKey: ['current_user'],
     queryFn: getUser,
     refetchOnWindowFocus: false,
-    retry: false,
   });
 
   const routes = data ? afterLoginRouter : beforeLoginRouter;

@@ -21,6 +21,7 @@ import { getUser } from '@/features/auth/user';
 import { createGroup as createGroupFn } from '@/features/group/create-group';
 import { createMember as createMemberFn } from '@/features/group/create-member';
 import { uploadImage } from '@/features/image/upload-image';
+import { queryClient } from '@/shared/lib';
 import { useModal } from '@/shared/lib/modal';
 
 type Props = {
@@ -71,6 +72,7 @@ export function GroupModalContent({ data }: Props) {
     const group_id = group?.id;
     const result = await createMember({ user_id, group_id });
     if (result) {
+      queryClient.invalidateQueries({ queryKey: ['group_list'] });
       navigate(`/group/${group_id}`);
       closeModal();
     }

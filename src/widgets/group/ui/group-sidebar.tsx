@@ -1,17 +1,21 @@
 import { AddIcon } from '@chakra-ui/icons';
-import { Flex, IconButton, Button, Image } from '@chakra-ui/react';
+import { Flex, IconButton } from '@chakra-ui/react';
 
 import { ModalEnum, useModal } from '@/shared/lib/modal';
 
+import { GroupButtonList } from './group-button-list';
+
 export function GroupSidebar() {
   const { openModal } = useModal();
+
   const openGroupModal = () => {
     openModal({ type: ModalEnum.Group, data: null });
   };
+
   return (
     <Flex
       paddingY={2}
-      flexBasis="60px"
+      flexBasis="80px"
       flexDirection="column"
       alignItems="center"
       gap={4}
@@ -20,53 +24,14 @@ export function GroupSidebar() {
       borderColor="gray.200"
     >
       <IconButton
+        w={14}
+        h={14}
         colorScheme="blue"
         aria-label="그룹 추가"
         icon={<AddIcon />}
         onClick={openGroupModal}
       />
-      <Flex flexDirection="column" gap={4} alignItems="center">
-        <Button colorScheme="blue" w={10} h={10} p={0} borderRadius="md">
-          <Image
-            src="https://bit.ly/sage-adebayo"
-            alt="Segun Adebayo"
-            w="100%"
-            h="100%"
-            objectFit="cover"
-            borderRadius="md"
-          />
-        </Button>
-        <Button colorScheme="blue" w={10} h={10} p={0} borderRadius="md">
-          <Image
-            src="https://bit.ly/sage-adebayo"
-            alt="Segun Adebayo"
-            w="100%"
-            h="100%"
-            objectFit="cover"
-            borderRadius="md"
-          />
-        </Button>
-        <Button colorScheme="blue" w={10} h={10} p={0} borderRadius="md">
-          <Image
-            src="https://bit.ly/sage-adebayo"
-            alt="Segun Adebayo"
-            w="100%"
-            h="100%"
-            objectFit="cover"
-            borderRadius="md"
-          />
-        </Button>
-        <Button colorScheme="blue" w={10} h={10} p={0} borderRadius="md">
-          <Image
-            src="https://bit.ly/sage-adebayo"
-            alt="Segun Adebayo"
-            w="100%"
-            h="100%"
-            objectFit="cover"
-            borderRadius="md"
-          />
-        </Button>
-      </Flex>
+      <GroupButtonList />
     </Flex>
   );
 }
