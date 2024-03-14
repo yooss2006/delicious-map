@@ -1,4 +1,4 @@
-import { Box, Heading } from '@chakra-ui/react';
+import { Box, CSSReset, Heading } from '@chakra-ui/react';
 import dayjs from 'dayjs';
 import React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -27,6 +27,7 @@ export function AppProvider({ children }: Props) {
         <HelmetProvider>
           <ReactQueryProvider>
             <ChakraProvider>
+              <CSSReset />
               <ModalProvider>
                 <Heading as="h1" className="visually-hidden">
                   맛있을지도

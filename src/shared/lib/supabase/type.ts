@@ -5,24 +5,21 @@ export type Database = {
     Tables: {
       group_members: {
         Row: {
-          group_id: number;
+          group_id: string;
           joined_at: string | null;
           member_id: number;
-          role: string | null;
           user_id: string;
         };
         Insert: {
-          group_id: number;
+          group_id: string;
           joined_at?: string | null;
           member_id?: number;
-          role?: string | null;
           user_id: string;
         };
         Update: {
-          group_id?: number;
+          group_id?: string;
           joined_at?: string | null;
           member_id?: number;
-          role?: string | null;
           user_id?: string;
         };
         Relationships: [
@@ -31,7 +28,7 @@ export type Database = {
             columns: ['group_id'];
             isOneToOne: false;
             referencedRelation: 'groups';
-            referencedColumns: ['group_id'];
+            referencedColumns: ['id'];
           },
         ];
       };
@@ -39,21 +36,21 @@ export type Database = {
         Row: {
           created_at: string | null;
           description: string | null;
-          group_id: number;
+          id: string;
           image_url: string | null;
           name: string;
         };
         Insert: {
           created_at?: string | null;
           description?: string | null;
-          group_id?: number;
+          id?: string;
           image_url?: string | null;
           name: string;
         };
         Update: {
           created_at?: string | null;
           description?: string | null;
-          group_id?: number;
+          id?: string;
           image_url?: string | null;
           name?: string;
         };

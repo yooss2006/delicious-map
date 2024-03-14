@@ -1,1 +1,1 @@
-export * from './group-modal-content';
+export * from '../../../widgets/group/ui/group-modal-content';

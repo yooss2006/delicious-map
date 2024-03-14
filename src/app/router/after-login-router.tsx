@@ -8,6 +8,7 @@ const afterLoginRoutes = [
     element: <MapLayout />,
     children: [
       { path: '/', element: <div>시작</div> },
+      { path: '/group/:id', element: <div>시작</div> },
       { path: '*', element: <Navigate to="." /> },
     ],
   },
