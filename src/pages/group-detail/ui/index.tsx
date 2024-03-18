@@ -1,7 +1,5 @@
-import { IconButton } from '@chakra-ui/button';
 import { SearchIcon } from '@chakra-ui/icons';
-import { Input } from '@chakra-ui/input';
-import { Flex } from '@chakra-ui/layout';
+import { Flex, IconButton, Input } from '@chakra-ui/react';
 import React from 'react';
 
 export default function SearchForm({
@@ -37,5 +35,21 @@ export default function SearchForm({
         />
       </Flex>
     </form>
+  );
+}
+
+export function GroupDetailPage() {
+  return (
+    <Flex w="400px" h="100%">
+      <Flex
+        paddingY={2}
+        flex={1}
+        flexDirection="column"
+        alignItems="center"
+        gap={4}
+        borderRight="1px"
+        borderColor="gray.200"
+      ></Flex>
+    </Flex>
   );
 }

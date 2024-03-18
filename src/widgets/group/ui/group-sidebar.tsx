@@ -1,10 +1,8 @@
 import { AddIcon } from '@chakra-ui/icons';
 import { CircularProgress, Flex, IconButton } from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
 import { useCallback, useEffect } from 'react';
 
-import { getUser } from '@/features/auth/user';
-import { getGroupsByMyId } from '@/features/group/get-group-list';
+import { useGroupList } from '@/pages/group-detail/hooks/useGroupList';
 import { ModalEnum, useModal } from '@/shared/lib/modal';
 
 import { GroupLinkList } from './group-link-list';
@@ -12,18 +10,7 @@ import { GroupLinkList } from './group-link-list';
 export function GroupSidebar() {
   const { openModal } = useModal();
 
-  const { data: user } = useQuery({
-    queryKey: ['current_user'],
-    queryFn: getUser,
-    refetchOnWindowFocus: false,
-  });
-
-  const { data: groups, isLoading } = useQuery({
-    queryKey: ['group_list', user?.id],
-    queryFn: getGroupsByMyId,
-    refetchOnWindowFocus: false,
-    enabled: !!user,
-  });
+  const { groups, isLoading } = useGroupList();
 
   const openGroupModal = useCallback(() => {
     openModal({ type: ModalEnum.Group, data: null });

@@ -12,16 +12,15 @@ import {
   ModalHeader,
   Textarea,
 } from '@chakra-ui/react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { FormProvider, SubmitHandler, useForm, useFormContext } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { getUser } from '@/features/auth/user';
 import { createGroup as createGroupFn } from '@/features/group/create-group';
 import { createMember as createMemberFn } from '@/features/group/create-member';
-import { getGroupsByMyId } from '@/features/group/get-group-list';
 import { uploadImage } from '@/features/image/upload-image';
+import { useGroupList } from '@/pages/group-detail/hooks/useGroupList';
 import { queryClient } from '@/shared/lib';
 import { useModal } from '@/shared/lib/modal';
 
@@ -46,18 +45,7 @@ export function GroupModalContent({ data }: Props) {
   const { mutateAsync: createMember, isPending: isCreateMemberPending } = useMutation({
     mutationFn: createMemberFn,
   });
-  const { data: user } = useQuery({
-    queryKey: ['current_user'],
-    queryFn: getUser,
-    refetchOnWindowFocus: false,
-  });
-
-  const { data: groups = [] } = useQuery({
-    queryKey: ['group_list', user?.id],
-    queryFn: getGroupsByMyId,
-    refetchOnWindowFocus: false,
-    enabled: !!user,
-  });
+  const { user, groups } = useGroupList();
 
   const navigate = useNavigate();
   const user_id = user?.id;
@@ -132,7 +120,7 @@ export function GroupModalContent({ data }: Props) {
           </form>
         </FormProvider>
       </ModalBody>
-      {groups.length > 0 && <ModalCloseButton />}
+      {groups && groups.length > 0 && <ModalCloseButton />}
     </Box>
   );
 }
