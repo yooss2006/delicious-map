@@ -1,5 +1,5 @@
 import { AddIcon } from '@chakra-ui/icons';
-import { Flex, IconButton } from '@chakra-ui/react';
+import { CircularProgress, Flex, IconButton } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { useCallback, useEffect } from 'react';
 
@@ -7,7 +7,7 @@ import { getUser } from '@/features/auth/user';
 import { getGroupsByMyId } from '@/features/group/get-group-list';
 import { ModalEnum, useModal } from '@/shared/lib/modal';
 
-import { GroupButtonList } from './group-button-list';
+import { GroupLinkList } from './group-link-list';
 
 export function GroupSidebar() {
   const { openModal } = useModal();
@@ -18,7 +18,7 @@ export function GroupSidebar() {
     refetchOnWindowFocus: false,
   });
 
-  const { data: groups } = useQuery({
+  const { data: groups, isLoading } = useQuery({
     queryKey: ['group_list', user?.id],
     queryFn: getGroupsByMyId,
     refetchOnWindowFocus: false,
@@ -54,7 +54,11 @@ export function GroupSidebar() {
         icon={<AddIcon />}
         onClick={openGroupModal}
       />
-      <GroupButtonList groups={groups} />
+      {isLoading ? (
+        <CircularProgress isIndeterminate color="green.300" />
+      ) : (
+        <GroupLinkList groups={groups} />
+      )}
     </Flex>
   );
 }
