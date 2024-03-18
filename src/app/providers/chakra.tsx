@@ -26,6 +26,7 @@ const {
   Textarea,
   Alert,
   Avatar,
+  Accordion,
 } = chakraTheme.components;
 
 export const theme = extendBaseTheme({
@@ -42,6 +43,7 @@ export const theme = extendBaseTheme({
     Textarea,
     Alert,
     Avatar,
+    Accordion,
   },
   config,
 });

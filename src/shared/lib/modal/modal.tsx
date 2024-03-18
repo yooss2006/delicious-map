@@ -34,7 +34,9 @@ export function ModalProvider({ children }: Props) {
 
   const openModal: OpenModal = useCallback(
     ({ type, data }: Omit<ModalStateType, 'isOpen'>) => {
-      if (!state.isOpen) setState({ isOpen: true, type, data });
+      if (!state.isOpen) {
+        setState({ isOpen: true, type, data });
+      }
     },
     [state.isOpen]
   );
