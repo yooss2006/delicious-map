@@ -38,6 +38,13 @@ export function LoginPage() {
           status: 'error',
         });
       }
+      if (error.message === 'Email not confirmed') {
+        toast({
+          title: '이메일 인증이 필요합니다. 이메일을 확인해주세요.',
+          position: 'top',
+          status: 'error',
+        });
+      }
     },
   });
 

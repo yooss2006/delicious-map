@@ -30,11 +30,12 @@ export function RegisterPage() {
     },
   });
 
-  const onSubmit: SubmitHandler<SignUpFormValues> = async ({ email, password }) => {
+  const onSubmit: SubmitHandler<SignUpFormValues> = async ({ email, password, nickname }) => {
     if (isPending) return;
     mutate({
       email,
       password,
+      nickname,
     });
   };
 
@@ -58,6 +59,15 @@ export function RegisterPage() {
               })}
             />
             <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
+          </FormControl>
+          <FormControl isRequired isInvalid={!!errors.nickname} mb={2}>
+            <FormLabel>닉네임</FormLabel>
+            <Input
+              {...register('nickname', {
+                required: '닉네임은 필수입니다.',
+              })}
+            />
+            <FormErrorMessage>{errors.nickname && errors.nickname.message}</FormErrorMessage>
           </FormControl>
           <FormControl isRequired isInvalid={!!errors.password} mb={2}>
             <FormLabel>비밀번호</FormLabel>
