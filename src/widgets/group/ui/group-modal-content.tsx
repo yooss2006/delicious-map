@@ -20,6 +20,7 @@ import { useNavigate } from 'react-router-dom';
 import { getUser } from '@/features/auth/user';
 import { createGroup as createGroupFn } from '@/features/group/create-group';
 import { createMember as createMemberFn } from '@/features/group/create-member';
+import { getGroupsByMyId } from '@/features/group/get-group-list';
 import { uploadImage } from '@/features/image/upload-image';
 import { queryClient } from '@/shared/lib';
 import { useModal } from '@/shared/lib/modal';
@@ -49,8 +50,15 @@ export function GroupModalContent({ data }: Props) {
     queryKey: ['current_user'],
     queryFn: getUser,
     refetchOnWindowFocus: false,
-    retry: false,
   });
+
+  const { data: groups = [] } = useQuery({
+    queryKey: ['group_list', user?.id],
+    queryFn: getGroupsByMyId,
+    refetchOnWindowFocus: false,
+    enabled: !!user,
+  });
+
   const navigate = useNavigate();
   const user_id = user?.id;
 
@@ -72,8 +80,8 @@ export function GroupModalContent({ data }: Props) {
     const group_id = group?.id;
     const result = await createMember({ user_id, group_id });
     if (result) {
-      queryClient.invalidateQueries({ queryKey: ['group_list'] });
-      navigate(`/group/${group_id}`);
+      await queryClient.invalidateQueries({ queryKey: ['group_list'] });
+      await navigate(`/group/${group_id}`);
       closeModal();
     }
   };
@@ -124,7 +132,7 @@ export function GroupModalContent({ data }: Props) {
           </form>
         </FormProvider>
       </ModalBody>
-      <ModalCloseButton />
+      {groups.length > 0 && <ModalCloseButton />}
     </Box>
   );
 }

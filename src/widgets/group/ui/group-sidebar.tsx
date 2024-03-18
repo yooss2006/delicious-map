@@ -1,6 +1,10 @@
 import { AddIcon } from '@chakra-ui/icons';
 import { Flex, IconButton } from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
+import { useCallback, useEffect } from 'react';
 
+import { getUser } from '@/features/auth/user';
+import { getGroupsByMyId } from '@/features/group/get-group-list';
 import { ModalEnum, useModal } from '@/shared/lib/modal';
 
 import { GroupButtonList } from './group-button-list';
@@ -8,9 +12,28 @@ import { GroupButtonList } from './group-button-list';
 export function GroupSidebar() {
   const { openModal } = useModal();
 
-  const openGroupModal = () => {
+  const { data: user } = useQuery({
+    queryKey: ['current_user'],
+    queryFn: getUser,
+    refetchOnWindowFocus: false,
+  });
+
+  const { data: groups } = useQuery({
+    queryKey: ['group_list', user?.id],
+    queryFn: getGroupsByMyId,
+    refetchOnWindowFocus: false,
+    enabled: !!user,
+  });
+
+  const openGroupModal = useCallback(() => {
     openModal({ type: ModalEnum.Group, data: null });
-  };
+  }, [openModal]);
+
+  useEffect(() => {
+    if (groups && groups.length === 0) {
+      openGroupModal();
+    }
+  }, [groups, openGroupModal]);
 
   return (
     <Flex
@@ -31,7 +54,7 @@ export function GroupSidebar() {
         icon={<AddIcon />}
         onClick={openGroupModal}
       />
-      <GroupButtonList />
+      <GroupButtonList groups={groups} />
     </Flex>
   );
 }

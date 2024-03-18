@@ -1,26 +1,15 @@
 import { Button, Flex, Image } from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
 import { AiOutlineLoading } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 
-import { getUser } from '@/features/auth/user';
-import { getGroupsByMyId } from '@/features/group/get-group-list';
+import { Database } from '@/shared/lib/supabase/type';
 
-export function GroupButtonList() {
+type Props = {
+  groups?: Array<Database['public']['Tables']['groups']['Row']>;
+};
+
+export function GroupButtonList({ groups = [] }: Props) {
   const navigate = useNavigate();
-  const { data: user } = useQuery({
-    queryKey: ['current_user'],
-    queryFn: getUser,
-    refetchOnWindowFocus: false,
-  });
-
-  const { data: groups } = useQuery({
-    queryKey: ['group_list', user?.id],
-    queryFn: getGroupsByMyId,
-    refetchOnWindowFocus: false,
-    enabled: !!user,
-  });
-
   return (
     <Flex flexDirection="column" gap={4} alignItems="center">
       {groups?.map(({ id, name, image_url }) => (

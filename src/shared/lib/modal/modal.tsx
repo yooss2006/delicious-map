@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 type Props = {
   children: React.ReactNode;
@@ -32,15 +32,21 @@ const ModalContext = React.createContext<{
 export function ModalProvider({ children }: Props) {
   const [state, setState] = React.useState(DEFAULT_MODAL_STATE);
 
-  const openModal: OpenModal = ({ type, data }: Omit<ModalStateType, 'isOpen'>) => {
-    setState({ isOpen: true, type, data });
-  };
+  const openModal: OpenModal = useCallback(
+    ({ type, data }: Omit<ModalStateType, 'isOpen'>) => {
+      if (!state.isOpen) setState({ isOpen: true, type, data });
+    },
+    [state.isOpen]
+  );
 
   const closeModal = () => {
     setState(DEFAULT_MODAL_STATE);
   };
 
-  const value = React.useMemo(() => ({ modalState: state, openModal, closeModal }), [state]);
+  const value = React.useMemo(
+    () => ({ modalState: state, openModal, closeModal }),
+    [openModal, state]
+  );
 
   return <ModalContext.Provider value={value}>{children}</ModalContext.Provider>;
 }
