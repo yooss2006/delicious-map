@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import React from 'react';
+import { createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 declare global {
   interface Window {
@@ -32,14 +32,14 @@ const MAP_OPTIONS: MapOption = {
   level: 2,
 };
 
-const KakaoMapContext = React.createContext<MapContext>(null);
+export const KakaoMapContext = createContext<MapContext>(null);
 
 export function KakaoMapProvider({ children }: Props) {
-  const [map, setMap] = React.useState<any>(null);
-  const curentMarker = React.useRef<any>(null);
-  const mapRef = React.useRef(null);
+  const [map, setMap] = useState<any>(null);
+  const curentMarker = useRef<any>(null);
+  const mapRef = useRef(null);
 
-  const move = React.useCallback(
+  const move = useCallback(
     ({ center, level = 3 }: MapOption) => {
       if (map) {
         const moveLatLng = new window.kakao.maps.LatLng(center.lat, center.lng);
@@ -62,7 +62,8 @@ export function KakaoMapProvider({ children }: Props) {
     [map]
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
+    console.log(window.kakao, !map, mapRef.current);
     if (window.kakao && !map && mapRef.current) {
       window.kakao.maps.load(() => {
         const container = mapRef.current;
@@ -75,19 +76,11 @@ export function KakaoMapProvider({ children }: Props) {
     }
   }, [map]);
 
-  const MapComponent = React.useMemo(() => {
+  const MapComponent = useMemo(() => {
     return <Box style={{ width: '100%', height: '100%' }} ref={mapRef}></Box>;
   }, [mapRef]);
 
-  const value = React.useMemo(() => ({ MapComponent, move }), [MapComponent, move]);
+  const value = useMemo(() => ({ MapComponent, move }), [MapComponent, move]);
 
   return <KakaoMapContext.Provider value={value}>{children}</KakaoMapContext.Provider>;
-}
-
-export function useKakaoMap() {
-  const context = React.useContext(KakaoMapContext);
-  if (!context) {
-    throw new Error('KakaoMapProvider를 찾을 수 없습니다.');
-  }
-  return context;
 }

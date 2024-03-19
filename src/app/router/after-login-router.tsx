@@ -1,8 +1,7 @@
 import { Navigate } from 'react-router-dom';
 
+import { MapLayout } from '@/pages/group-detail/ui/map-layout';
 import { lazyImport } from '@/shared/lib/lazyImport';
-
-import { MapLayout } from '../layout/map-layout';
 
 const { GroupDetailPage } = lazyImport(() => import('@/pages/group-detail'), 'GroupDetailPage');
 
