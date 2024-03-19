@@ -1,6 +1,7 @@
-import { SearchIcon } from '@chakra-ui/icons';
+import { SearchIcon, StarIcon } from '@chakra-ui/icons';
 import {
   Box,
+  Button,
   Card,
   CardBody,
   Flex,
@@ -18,17 +19,10 @@ import { PiBowlFoodDuotone, PiCoffeeDuotone } from 'react-icons/pi';
 import { useSearchParams } from 'react-router-dom';
 
 import { useKakaoMap } from '@/entities/kakao-map';
+import { MerchantCardType } from '@/entities/merchant-card';
 import { useSearchPlaces } from '@/features/kakao-places/search-places/hooks/use-search-places';
 import { useParsedLocation } from '@/shared/hooks';
-
-interface MerchantCardType {
-  merchantId: string;
-  lat: number;
-  lng: number;
-  name: string;
-  address: string;
-  code: string;
-}
+import { ModalEnum, useModal } from '@/shared/lib/modal';
 
 export function SearchBox() {
   const { query } = useParsedLocation();
@@ -129,7 +123,31 @@ function MerchantCard(props: MerchantCardType) {
         <Text fontSize="sm" color="gray.500">
           {address}
         </Text>
+        <CreateVisitingRecordButton {...props} />
       </CardBody>
     </Card>
+  );
+}
+
+export function CreateVisitingRecordButton(props: MerchantCardType) {
+  const { openModal } = useModal();
+  const handleAddButtonClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation();
+    openModal({ type: ModalEnum.Record, data: props });
+  };
+  return (
+    <Button
+      leftIcon={<StarIcon />}
+      size="sm"
+      onClick={handleAddButtonClick}
+      colorScheme="blue"
+      position="absolute"
+      top="50%"
+      bottom="50%"
+      right={2}
+      transform="translateY(-50%)"
+    >
+      추가
+    </Button>
   );
 }

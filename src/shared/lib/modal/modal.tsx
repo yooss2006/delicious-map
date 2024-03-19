@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { createContext, useCallback, useContext, useMemo, useState } from 'react';
 
 type Props = {
   children: React.ReactNode;
@@ -6,12 +6,13 @@ type Props = {
 
 export enum ModalEnum {
   Group = 'group',
+  Record = 'record',
 }
 
 interface ModalStateType {
   isOpen: boolean;
   type: ModalEnum | null;
-  data: Record<string, any> | null;
+  data: any | null;
 }
 
 type OpenModal = (data: Omit<ModalStateType, 'isOpen'>) => void;
@@ -23,14 +24,14 @@ const DEFAULT_MODAL_STATE: ModalStateType = {
   data: null,
 };
 
-const ModalContext = React.createContext<{
+const ModalContext = createContext<{
   modalState: ModalStateType;
   openModal: OpenModal;
   closeModal: CloseModal;
 }>({ modalState: DEFAULT_MODAL_STATE, openModal: () => {}, closeModal: () => {} });
 
 export function ModalProvider({ children }: Props) {
-  const [state, setState] = React.useState(DEFAULT_MODAL_STATE);
+  const [state, setState] = useState(DEFAULT_MODAL_STATE);
 
   const openModal: OpenModal = useCallback(
     ({ type, data }: Omit<ModalStateType, 'isOpen'>) => {
@@ -45,16 +46,13 @@ export function ModalProvider({ children }: Props) {
     setState(DEFAULT_MODAL_STATE);
   };
 
-  const value = React.useMemo(
-    () => ({ modalState: state, openModal, closeModal }),
-    [openModal, state]
-  );
+  const value = useMemo(() => ({ modalState: state, openModal, closeModal }), [openModal, state]);
 
   return <ModalContext.Provider value={value}>{children}</ModalContext.Provider>;
 }
 
 export function useModal() {
-  const context = React.useContext(ModalContext);
+  const context = useContext(ModalContext);
   if (!context) {
     throw new Error('useModal must be used within a ModalProvider');
   }
