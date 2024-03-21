@@ -2,7 +2,7 @@ import { Button } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useGroupList } from '@/pages/group-detail/hooks/useGroupList';
+import { useGroupList } from '@/features/group/get-group-list/use-group-list';
 import { queryClient } from '@/shared/lib';
 
 import { deleteGroup } from '../lib/delete-group';

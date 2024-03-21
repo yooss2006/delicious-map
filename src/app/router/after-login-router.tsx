@@ -1,18 +1,21 @@
 import { Navigate } from 'react-router-dom';
 
-import { MapLayout } from '@/pages/group-detail/ui/map-layout';
+import { MapLayout } from '@/pages/layout/ui/map-layout';
 import { lazyImport } from '@/shared/lib/lazyImport';
 
-const { GroupDetailPage } = lazyImport(() => import('@/pages/group-detail'), 'GroupDetailPage');
+const { DetailPage } = lazyImport(() => import('@/pages/group-detail'), 'DetailPage');
+const { ReplacePage } = lazyImport(() => import('@/widgets/replace-page'), 'ReplacePage');
+const { CreateGroupPage } = lazyImport(() => import('@/pages/create-group'), 'CreateGroupPage');
 
 const afterLoginRoutes = [
   {
     path: '/',
     element: <MapLayout />,
     children: [
-      { path: '/', element: <div>시작</div> },
-      { path: '/group/:id', element: <GroupDetailPage /> },
-      { path: '*', element: <Navigate to="." /> },
+      { path: '/', element: <ReplacePage /> },
+      { path: '/create-group', element: <CreateGroupPage /> },
+      { path: '/group/:id', element: <DetailPage /> },
+      { path: '*', element: <Navigate to="/" /> },
     ],
   },
 ];

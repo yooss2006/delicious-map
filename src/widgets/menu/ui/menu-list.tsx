@@ -23,7 +23,15 @@ export function MenuList() {
   const mode = query.mode ?? '';
 
   return (
-    <Flex flexDirection="column" gap={4} alignContent="center">
+    <Flex
+      p={2}
+      background="white"
+      borderRight="1px"
+      borderColor="gray.200"
+      flexDirection="column"
+      gap={4}
+      alignContent="center"
+    >
       {MENU_LIST.map(({ label, Icon, query }) => {
         const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
           if (mode === query) {

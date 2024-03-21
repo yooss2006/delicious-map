@@ -9,7 +9,7 @@ import {
 import { useParams } from 'react-router-dom';
 
 import { DeleteGroupButton } from '@/features/group/delete-group';
-import { useGroupList } from '@/pages/group-detail/hooks/useGroupList';
+import { useGroupList } from '@/features/group/get-group-list/use-group-list';
 
 export function MainBox() {
   const { groups = [] } = useGroupList();

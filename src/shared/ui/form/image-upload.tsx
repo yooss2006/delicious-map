@@ -5,13 +5,13 @@ import { useFormContext } from 'react-hook-form';
 
 type Props = {
   label?: string;
-  key?: string;
+  fieldName?: string;
   isShowPreview?: boolean;
 };
 
 export function ImageUpload({
   label = '이미지 업로드',
-  key = 'image',
+  fieldName = 'image',
   isShowPreview = false,
 }: Props) {
   const { setValue } = useFormContext();
@@ -35,8 +35,8 @@ export function ImageUpload({
   };
 
   useEffect(() => {
-    setValue(key, images);
-  }, [images, setValue]);
+    setValue(fieldName, images);
+  }, [images, fieldName, setValue]);
 
   return (
     <>
