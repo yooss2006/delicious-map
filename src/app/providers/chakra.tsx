@@ -10,7 +10,7 @@ type Props = {
 };
 
 const config: ThemeConfig = {
-  initialColorMode: 'dark',
+  // initialColorMode: 'dark',
 };
 
 const {
@@ -44,6 +44,22 @@ export const theme = extendBaseTheme({
     Alert,
     Avatar,
     Accordion,
+  },
+  colors: {
+    black: '#0a0d11',
+    white: '#fefffc',
+    green: {
+      50: '#21d14a',
+      100: '#20be45',
+      200: '#1fab40',
+      300: '#1d983c',
+      400: '#1c8537',
+      500: '#1b7332',
+      600: '#1a602d',
+      700: '#184d29',
+      800: '#173a24',
+      900: '#16271f',
+    },
   },
   config,
 });

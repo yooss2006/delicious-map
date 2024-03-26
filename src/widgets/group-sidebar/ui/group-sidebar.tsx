@@ -15,21 +15,23 @@ export function GroupSidebar() {
 
   return (
     <Flex
-      paddingY={2}
-      flexBasis="80px"
+      py={2}
+      w="80px"
       flexDirection="column"
       alignItems="center"
       gap={4}
-      background="white"
+      textAlign="center"
+      background="gray.50"
       borderRight="1px"
       borderColor="gray.200"
     >
       <IconButton
         w={14}
         h={14}
-        colorScheme="blue"
+        background="green.50"
+        _hover={{ background: 'green.100' }}
         aria-label="그룹 추가"
-        icon={<AddIcon />}
+        icon={<AddIcon color="green.600" />}
         onClick={moveCreateGroupPage}
       />
       {isLoading ? (

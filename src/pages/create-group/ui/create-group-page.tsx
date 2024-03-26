@@ -36,7 +36,7 @@ export function CreateGroupPage() {
   };
 
   return (
-    <Box w="400px" h="100%">
+    <Box w="440px" h="100%">
       <Heading py={4} lineHeight={2} as="h2" fontSize="lg" textAlign="center">
         그룹 생성
       </Heading>

@@ -24,10 +24,10 @@ export function DetailPage() {
   }, [data, navigate]);
 
   return (
-    <Flex h="100%">
+    <Flex w="440px" h="100%">
       <MenuList />
       <Flex
-        w="400px"
+        flex={1}
         h="100%"
         flexDirection="column"
         alignItems="center"

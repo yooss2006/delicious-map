@@ -1,5 +1,5 @@
 import { Flex, Image, Link as ChakraLink } from '@chakra-ui/react';
-import { AiOutlineLoading } from 'react-icons/ai';
+import { FaRegUserCircle } from 'react-icons/fa';
 import { Link as ReactRouterLink } from 'react-router-dom';
 
 import { useParsedLocation } from '@/shared/hooks';
@@ -33,16 +33,21 @@ export function GroupLinkList({ groups = [] }: Props) {
             onClick={handleLinkClick}
             borderRadius="md"
             boxSizing="content-box"
-            boxShadow={pathname === nextPathname ? '0 0 0 3px #4931ce' : 'none'}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            boxShadow={
+              pathname === nextPathname ? `0 0 0 3px var(--chakra-colors-green-200)` : 'none'
+            }
             _hover={pathname !== nextPathname ? { boxShadow: '0 0 0 3px #3182ce' } : {}}
           >
             <Image
-              src={image_url ? image_url : undefined}
+              src={image_url ?? ''}
               alt={name}
               w="100%"
               h="100%"
               objectFit="cover"
-              fallback={<AiOutlineLoading />}
+              fallback={<FaRegUserCircle fontSize="32px" color="green" />}
               borderRadius="md"
             />
           </ChakraLink>
