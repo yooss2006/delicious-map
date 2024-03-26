@@ -72,7 +72,7 @@ export function KakaoMapProvider({ children }: Props) {
       });
       setMap(map);
     });
-  }, []);
+  }, [map]);
 
   const MapComponent = useMemo(() => {
     return <div style={{ width: '100%', height: '100%' }} ref={mapRef}></div>;

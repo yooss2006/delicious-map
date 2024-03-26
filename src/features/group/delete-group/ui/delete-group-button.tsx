@@ -1,5 +1,6 @@
-import { Button } from '@chakra-ui/react';
+import { Button, ButtonProps, chakra } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
+import { ImExit } from 'react-icons/im';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useGroupList } from '@/features/group/get-group-list/use-group-list';
@@ -7,7 +8,7 @@ import { queryClient } from '@/shared/lib';
 
 import { deleteGroup } from '../lib/delete-group';
 
-export function DeleteGroupButton() {
+export function DeleteGroupButton(props: ButtonProps) {
   const { id } = useParams();
   const navigate = useNavigate();
   const { groups = [] } = useGroupList();
@@ -24,9 +25,18 @@ export function DeleteGroupButton() {
   const handleDeleteGroup = () => {
     mutate(id);
   };
+
   return (
-    <Button w="100%" onClick={handleDeleteGroup}>
-      그룹 탈퇴
+    <Button
+      w="100%"
+      background="red.700"
+      color="white"
+      {...props}
+      _hover={{ background: 'red.900' }}
+      onClick={handleDeleteGroup}
+    >
+      <ImExit />
+      <chakra.span pl={1}>그룹 탈퇴</chakra.span>
     </Button>
   );
 }

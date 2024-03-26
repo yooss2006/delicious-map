@@ -1,30 +1,19 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input,
-  Textarea,
-} from '@chakra-ui/react';
+import { FormControl, FormErrorMessage, FormLabel, Input, Textarea } from '@chakra-ui/react';
 import { useFormContext } from 'react-hook-form';
 
 import { Group } from '@/entities/group';
 
 import { UploadedAvatar } from './uploaded-avatar';
 
-type Props = {
-  isLoading: boolean;
-};
-
-export function GroupForm({ isLoading }: Props) {
+export function GroupForm() {
   const {
     register,
+    getValues,
     formState: { errors },
   } = useFormContext<Group>();
 
   return (
-    <Box px={4}>
+    <>
       <FormControl isInvalid={!!errors.profileImage} mb={2}>
         <FormLabel htmlFor="profileImage" cursor="pointer" textAlign="center">
           <UploadedAvatar />
@@ -34,7 +23,9 @@ export function GroupForm({ isLoading }: Props) {
           id="profileImage"
           accept="image/*"
           display="none"
-          {...register('profileImage', { required: '프로필 이미지를 업로드하세요.' })}
+          {...register('profileImage', {
+            required: getValues('imageUrl') ? false : '프로필 이미지를 업로드하세요.',
+          })}
         />
         <FormErrorMessage>{errors.profileImage && errors.profileImage.message}</FormErrorMessage>
       </FormControl>
@@ -48,9 +39,6 @@ export function GroupForm({ isLoading }: Props) {
         <Textarea rows={3} {...register('description', { required: '상세 설명을 작성하세요.' })} />
         <FormErrorMessage>{errors.description && errors.description.message}</FormErrorMessage>
       </FormControl>
-      <Button type="submit" width="100%" mt={3} isLoading={isLoading}>
-        추가
-      </Button>
-    </Box>
+    </>
   );
 }

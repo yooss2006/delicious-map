@@ -6,7 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getGroupByGroupId } from '@/features/group/get-group-by-group-id';
 import { useParsedLocation } from '@/shared/hooks';
 import { MainBox, SearchBox } from '@/widgets/group-detail/ui';
-import { MenuList } from '@/widgets/menu/ui/menu-list';
+import { MenuSidebar } from '@/widgets/menu';
 
 export function DetailPage() {
   const { id } = useParams();
@@ -25,14 +25,14 @@ export function DetailPage() {
 
   return (
     <Flex w="440px" h="100%">
-      <MenuList />
+      <MenuSidebar />
       <Flex
         flex={1}
         h="100%"
         flexDirection="column"
         alignItems="center"
         gap={4}
-        background="white"
+        background="gray.50"
         color="black"
         borderRight="1px"
         borderColor="gray.200"

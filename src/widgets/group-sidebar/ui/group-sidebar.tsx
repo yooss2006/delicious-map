@@ -21,9 +21,9 @@ export function GroupSidebar() {
       alignItems="center"
       gap={4}
       textAlign="center"
-      background="gray.50"
+      background="gray.200"
       borderRight="1px"
-      borderColor="gray.200"
+      borderColor="gray.400"
     >
       <IconButton
         w={14}

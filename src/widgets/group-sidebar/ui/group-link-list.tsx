@@ -1,6 +1,6 @@
 import { Flex, Image, Link as ChakraLink } from '@chakra-ui/react';
 import { FaRegUserCircle } from 'react-icons/fa';
-import { Link as ReactRouterLink } from 'react-router-dom';
+import { Link as ReactRouterLink, useParams } from 'react-router-dom';
 
 import { useParsedLocation } from '@/shared/hooks';
 import { Database } from '@/shared/lib/supabase/type';
@@ -11,10 +11,13 @@ type Props = {
 
 export function GroupLinkList({ groups = [] }: Props) {
   const { pathname } = useParsedLocation();
+  const { id } = useParams();
+
   return (
     <Flex flexDirection="column" gap={4} alignItems="center">
-      {groups?.map(({ id, name, image_url }) => {
-        const nextPathname = `/group/${id}`;
+      {groups?.map(({ id: groupId, name, image_url }) => {
+        const nextPathname = `/group/${groupId}`;
+        const isCurrentGroup = id === groupId;
 
         const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
           if (pathname === nextPathname) {
@@ -36,10 +39,8 @@ export function GroupLinkList({ groups = [] }: Props) {
             display="flex"
             justifyContent="center"
             alignItems="center"
-            boxShadow={
-              pathname === nextPathname ? `0 0 0 3px var(--chakra-colors-green-200)` : 'none'
-            }
-            _hover={pathname !== nextPathname ? { boxShadow: '0 0 0 3px #3182ce' } : {}}
+            boxShadow={isCurrentGroup ? `0 0 0 3px var(--chakra-colors-green-400)` : 'none'}
+            _hover={!isCurrentGroup ? { boxShadow: '0 0 0 3px var(--chakra-colors-green-50)' } : {}}
           >
             <Image
               src={image_url ?? ''}
