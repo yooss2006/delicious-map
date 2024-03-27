@@ -6,17 +6,21 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
+  Textarea,
   chakra,
 } from '@chakra-ui/react';
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 
-import { Menu } from '@/entities/merchant';
-import { ImageUpload, StarRatingForm } from '@/shared/ui';
+import { ReviewMenu, useMenu } from '@/entities/menu';
+import { StarRatingForm } from '@/shared/ui';
 
-type FormValues = Omit<Menu, 'id' | 'merchant_id'>;
+type Props = {
+  closeMenu: () => void;
+};
 
-export function MenuForm() {
-  const methods = useForm<FormValues>();
+export function ReviewMenuForm({ closeMenu }: Props) {
+  const methods = useForm<ReviewMenu>();
+  const { addMenu } = useMenu();
 
   const {
     control,
@@ -25,15 +29,16 @@ export function MenuForm() {
     formState: { errors },
   } = methods;
 
-  const onSubmit: SubmitHandler<FormValues> = async (values) => {
-    console.log(values);
+  const onSubmit = async (values: ReviewMenu) => {
+    addMenu(values);
+    closeMenu();
   };
 
   return (
-    <Box px={6} width="50%">
+    <Box px={4}>
       <FormProvider {...methods}>
         <chakra.form onSubmit={handleSubmit(onSubmit)}>
-          <FormControl isInvalid={!!errors.name} mb={2}>
+          <FormControl isInvalid={!!errors.name} mb={3}>
             <FormLabel>메뉴 이름</FormLabel>
             <Input
               placeholder="ex) 삼계탕"
@@ -41,7 +46,7 @@ export function MenuForm() {
             />
             <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
           </FormControl>
-          <FormControl isInvalid={!!errors.rating} mb={2}>
+          <FormControl isInvalid={!!errors.rating} mb={3}>
             <Flex alignItems="center" gap={2}>
               별점
               <StarRatingForm
@@ -53,20 +58,24 @@ export function MenuForm() {
             </Flex>
             <FormErrorMessage>{errors.rating && errors.rating.message}</FormErrorMessage>
           </FormControl>
-          <FormControl isInvalid={!!errors.price} mb={2}>
-            <FormLabel>금액</FormLabel>
-            <Input
-              placeholder="ex) 1,000"
-              type="number"
-              {...register('price', { required: '금액을 입력하세요.' })}
+          <FormControl isInvalid={!!errors.review} mb={3}>
+            <FormLabel>생각 남기기</FormLabel>
+            <Textarea
+              size="md"
+              rows={5}
+              {...register('review', { required: '생각을 작성해주세요.' })}
+              background="white"
             />
-            <FormErrorMessage>{errors.price && errors.price.message}</FormErrorMessage>
+            <FormErrorMessage>{errors.review && errors.review.message}</FormErrorMessage>
           </FormControl>
-          <FormControl mb={2}>
-            <FormLabel>메뉴 사진 업로드</FormLabel>
-            <ImageUpload isShowPreview fieldName="photo" />
-          </FormControl>
-          <Button type="submit" colorScheme="blue" w="100%">
+          <Button
+            type="submit"
+            width="100%"
+            background="green.200"
+            color="white"
+            _hover={{ background: 'green.400' }}
+            isLoading={false}
+          >
             메뉴 추가
           </Button>
         </chakra.form>

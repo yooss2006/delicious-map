@@ -4,7 +4,7 @@ import { FaStar, FaRegStar } from 'react-icons/fa';
 
 interface StarProps {
   filled: boolean;
-  onClick: () => void;
+  onClick?: () => void;
   startProps?: IconProps;
 }
 
@@ -67,6 +67,20 @@ export function StarRating({ value, onChange, startProps }: StarRatingProps) {
           onClick={() => onChange(rating)}
           startProps={startProps}
         />
+      ))}
+    </Flex>
+  );
+}
+
+interface StarRatingViewerProps {
+  count: number;
+}
+
+export function StarRatingViewer({ count }: StarRatingViewerProps) {
+  return (
+    <Flex gap={1}>
+      {[1, 2, 3, 4, 5].map((rating) => (
+        <Star key={rating} filled={rating <= count} />
       ))}
     </Flex>
   );

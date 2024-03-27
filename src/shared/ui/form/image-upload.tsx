@@ -1,5 +1,14 @@
 import { CloseIcon } from '@chakra-ui/icons';
-import { Box, Flex, FormControl, FormLabel, IconButton, Image, Input } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  FormControl,
+  FormLabel,
+  IconButton,
+  Image,
+  Input,
+  Text,
+} from '@chakra-ui/react';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
@@ -7,12 +16,14 @@ type Props = {
   label?: string;
   fieldName?: string;
   isShowPreview?: boolean;
+  maxImageCount?: number;
 };
 
 export function ImageUpload({
   label = '이미지 업로드',
   fieldName = 'image',
   isShowPreview = false,
+  maxImageCount = 5,
 }: Props) {
   const { setValue } = useFormContext();
   const [images, setImages] = useState<Array<File>>([]);
@@ -29,7 +40,8 @@ export function ImageUpload({
   const uploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files) {
-      setImages((prev) => [...prev, ...Array.from(files)]);
+      const newFiles = [...Array.from(files), ...images].slice(0, maxImageCount);
+      setImages(newFiles);
       setInputKey(Date.now());
     }
   };
@@ -41,9 +53,14 @@ export function ImageUpload({
   return (
     <>
       <FormControl mb={2}>
+        <Text mb={2} fontSize="sm" color="gray.500">
+          이미지는 {maxImageCount}개까지만 업로드 가능합니다.
+        </Text>
         <FormLabel
-          htmlFor="merchant_image_upload"
-          background="green.500"
+          htmlFor={`${fieldName}_upload`}
+          w="200px"
+          background="green.700"
+          color="white"
           py={2}
           margin={0}
           textAlign="center"
@@ -54,7 +71,7 @@ export function ImageUpload({
         </FormLabel>
         <Input
           key={inputKey}
-          id="merchant_image_upload"
+          id={`${fieldName}_upload`}
           type="file"
           accept="image/png, image/jpeg, image/jpg"
           multiple
@@ -74,7 +91,7 @@ export function ImageUpload({
                 objectFit="cover"
               />
               <IconButton
-                aria-label="delete preview image"
+                aria-label="이미지 삭제"
                 position="absolute"
                 right="-4px"
                 top="-4px"
@@ -86,9 +103,7 @@ export function ImageUpload({
                   setImages((prev) => prev.filter((_, i) => i !== index));
                 }}
                 icon={<CloseIcon />}
-              >
-                삭제
-              </IconButton>
+              />
             </Box>
           ))}
         </Flex>
