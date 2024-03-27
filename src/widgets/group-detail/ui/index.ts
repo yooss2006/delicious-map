@@ -1,2 +1,2 @@
-export * from './main-box';
-export * from './search-box';
+export * from './ui/main-box';
+export * from './ui/search-box';
