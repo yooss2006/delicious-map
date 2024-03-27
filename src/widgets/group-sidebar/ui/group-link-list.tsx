@@ -29,7 +29,7 @@ export function GroupLinkList({ groups = [] }: Props) {
           <ChakraLink
             as={ReactRouterLink}
             to={nextPathname}
-            key={id}
+            key={groupId}
             w={14}
             h={14}
             p={0}

@@ -1,22 +1,17 @@
 import { Box, Button, Heading, chakra } from '@chakra-ui/react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { Group } from '@/entities/group';
-import { getUser } from '@/features/auth/user';
+import { useCurrentUser } from '@/features/auth/user/get-current-user';
 import { createGroup } from '@/features/group/create-edit-group';
 import { queryClient } from '@/shared/lib';
 import { GroupForm } from '@/widgets/group-form';
 
 export function CreateGroupPage() {
   const navigate = useNavigate();
-
-  const { data: user } = useQuery({
-    queryKey: ['current_user'],
-    queryFn: getUser,
-    refetchOnWindowFocus: false,
-  });
+  const { data: user } = useCurrentUser();
   const userId = user?.id;
 
   const { mutate, isPending } = useMutation({

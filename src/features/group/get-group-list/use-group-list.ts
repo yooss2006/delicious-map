@@ -1,14 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { getUser } from '@/features/auth/user';
+import { useCurrentUser } from '@/features/auth/user/get-current-user';
 import { getGroupsByMyId } from '@/features/group/get-group-list/get-groups-by-id';
 
 export const useGroupList = () => {
-  const { data: user, isLoading: isUserLoading } = useQuery({
-    queryKey: ['current_user'],
-    queryFn: getUser,
-    refetchOnWindowFocus: false,
-  });
+  const { data: user, isLoading: isUserLoading } = useCurrentUser();
 
   const { data: groups, isLoading: isGroupsLoading } = useQuery({
     queryKey: ['group_list', user?.id],

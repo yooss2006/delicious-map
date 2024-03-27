@@ -1,7 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
 import { useRoutes, RouteObject } from 'react-router-dom';
 
-import { getUser } from '@/features/auth/user';
+import { useCurrentUser } from '@/features/auth/user/get-current-user';
 
 import afterLoginRouter from './after-login-router';
 import beforeLoginRouter from './before-login-router';
@@ -9,13 +8,9 @@ import beforeLoginRouter from './before-login-router';
 const commonRoutes: Array<RouteObject> = [];
 
 export function AppRouter() {
-  const { data, isLoading } = useQuery({
-    queryKey: ['current_user'],
-    queryFn: getUser,
-    refetchOnWindowFocus: false,
-  });
+  const { data: user, isLoading } = useCurrentUser();
 
-  const routes = data ? afterLoginRouter : beforeLoginRouter;
+  const routes = user ? afterLoginRouter : beforeLoginRouter;
 
   const element = useRoutes([...routes, ...commonRoutes]);
 

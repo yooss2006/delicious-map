@@ -3,27 +3,29 @@ import { useMutation } from '@tanstack/react-query';
 import { ImExit } from 'react-icons/im';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useGroupList } from '@/features/group/get-group-list/use-group-list';
+import { useCurrentUser } from '@/features/auth/user/get-current-user';
 import { queryClient } from '@/shared/lib';
 
-import { deleteGroup } from '../lib/delete-group';
+import { secedeGroup } from '../lib/secede-group';
 
-export function DeleteGroupButton(props: ButtonProps) {
+export function SecedeGroupButton(props: ButtonProps) {
   const { id } = useParams();
+  const { data: user } = useCurrentUser();
+  const userId = user?.id;
+
   const navigate = useNavigate();
-  const { groups = [] } = useGroupList();
 
   const { mutate } = useMutation({
-    mutationFn: deleteGroup,
-    onSuccess: () => {
-      const filteredGroups = groups.filter((group) => group.id !== id);
-      navigate(filteredGroups.length > 0 ? `/group/${filteredGroups[0]?.id}` : '/');
-      queryClient.invalidateQueries({ queryKey: ['group_list'] });
+    mutationFn: secedeGroup,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['group_list'] });
+      navigate('/');
     },
   });
 
   const handleDeleteGroup = () => {
-    mutate(id);
+    if (!(userId && id)) return;
+    mutate({ userId, groupId: id });
   };
 
   return (

@@ -12,8 +12,8 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 
 import { EditPageLink } from '@/features/group/create-edit-group';
-import { DeleteGroupButton } from '@/features/group/delete-group';
 import { getGroupByGroupId } from '@/features/group/get-group-by-group-id';
+import { SecedeGroupButton } from '@/features/group/secede-group';
 
 export function MainBox() {
   const { id } = useParams();
@@ -40,7 +40,7 @@ export function MainBox() {
           </AccordionButton>
           <AccordionPanel pb={4} display="flex" justifyContent="space-between" gap={2}>
             <EditPageLink flexBasis="50%" />
-            <DeleteGroupButton flexBasis="50%" />
+            <SecedeGroupButton flexBasis="50%" />
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
