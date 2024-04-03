@@ -10,7 +10,7 @@ type Props = {
 };
 
 const config: ThemeConfig = {
-  // initialColorMode: 'dark',
+  initialColorMode: 'system',
 };
 
 const {
@@ -27,6 +27,8 @@ const {
   Alert,
   Avatar,
   Accordion,
+  Progress,
+  Divider,
 } = chakraTheme.components;
 
 export const theme = extendBaseTheme({
@@ -44,6 +46,8 @@ export const theme = extendBaseTheme({
     Alert,
     Avatar,
     Accordion,
+    Progress,
+    Divider,
   },
   colors: {
     black: '#0a0d11',
@@ -60,6 +64,10 @@ export const theme = extendBaseTheme({
       800: '#173a24',
       900: '#16271f',
     },
+  },
+  fonts: {
+    body: 'Nanum Gothic, sans-serif',
+    heading: 'Jua, sans-serif',
   },
   config,
 });

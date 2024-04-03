@@ -1,52 +1,23 @@
 import {
   Box,
   Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
+  Divider,
   Heading,
-  Input,
-  useToast,
+  Text,
+  Link as ChakraLink,
+  AbsoluteCenter,
 } from '@chakra-ui/react';
-import { useMutation } from '@tanstack/react-query';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
-import { LoginFormValues, login } from '@/features/auth/login';
-import { queryClient } from '@/shared/lib';
-import { PasswordInput } from '@/shared/ui';
+import { LoginFormValues } from '@/entities/auth';
+import { useLogin } from '@/features/auth/login/api';
+import { LoginForm } from '@/widgets/auth-form';
 
 export function LoginPage() {
-  const toast = useToast();
+  const { mutate, isPending } = useLogin();
   const methods = useForm<LoginFormValues>();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = methods;
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: login,
-    onSuccess() {
-      queryClient.invalidateQueries({ queryKey: ['current_user'] });
-    },
-    onError(error) {
-      if (error.message === 'Invalid login credentials') {
-        toast({
-          title: '이메일 또는 비밀번호가 일치하지 않습니다.',
-          position: 'top',
-          status: 'error',
-        });
-      }
-      if (error.message === 'Email not confirmed') {
-        toast({
-          title: '이메일 인증이 필요합니다. 이메일을 확인해주세요.',
-          position: 'top',
-          status: 'error',
-        });
-      }
-    },
-  });
+  const { handleSubmit } = methods;
 
   const onSubmit = (values: LoginFormValues) => {
     if (isPending) return;
@@ -54,38 +25,41 @@ export function LoginPage() {
   };
 
   return (
-    <Box w="480px" background="white" _dark={{ background: 'black' }} py={2} px={4}>
-      <Heading size="xl" textAlign="center">
+    <Box>
+      <Heading size="xl" textAlign="center" color="green.50">
         로그인
       </Heading>
+      <Text mt={2} color="green.800" textAlign="center">
+        안녕하세요. 맛있을 지도 입니다.
+      </Text>
+      <Text mt={1} textAlign="center" fontWeight="700" color="blue.400">
+        <ChakraLink as={Link} to="/auth/register">
+          회원 가입을 원하신다면 여기를 클릭하세요.
+        </ChakraLink>
+      </Text>
+      <Divider mt={3} mb={5} orientation="horizontal" />
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <FormControl isInvalid={!!errors.email} mb={2}>
-            <FormLabel>이메일</FormLabel>
-            <Input
-              type="email"
-              {...register('email', {
-                required: '이메일은 필수입니다.',
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: '올바른 이메일 형식이 아닙니다.',
-                },
-              })}
-            />
-            <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
-          </FormControl>
-          <FormControl mb={2} isInvalid={!!errors.password}>
-            <FormLabel>비밀번호</FormLabel>
-            <PasswordInput isValidate={false} />
-            <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
-          </FormControl>
-          <Button type="submit" colorScheme="blue" w="full" mt={3}>
+          <LoginForm />
+          <Button
+            type="submit"
+            size="lg"
+            w="full"
+            mt={2}
+            color="white"
+            bg="green.100"
+            _hover={{ bg: 'green.300' }}
+          >
             로그인
           </Button>
         </form>
       </FormProvider>
-      <Box mt={2} display="flex" justifyContent="flex-end">
-        <Link to="/auth/register">회원가입</Link>
+      <Divider />
+      <Box position="relative" p={6}>
+        <Divider colorScheme="green" />
+        <AbsoluteCenter bg="white" px="4">
+          또는
+        </AbsoluteCenter>
       </Box>
     </Box>
   );

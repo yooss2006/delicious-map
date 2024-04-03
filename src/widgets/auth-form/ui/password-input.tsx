@@ -42,10 +42,10 @@ export function PasswordInput({
                 }
               : {
                   required: '비밀번호는 필수입니다.',
-                  pattern: {
-                    value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-                    message: '비밀번호는 영문자, 숫자, 특수문자를 각각 하나 이상 포함해야 합니다.',
-                  },
+                  // pattern: {
+                  //   value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+                  //   message: '비밀번호는 영문자, 숫자, 특수문자를 각각 하나 이상 포함해야 합니다.',
+                  // },
                 }
             : {
                 required: '비밀번호는 필수입니다.',
@@ -53,10 +53,10 @@ export function PasswordInput({
         )}
         disabled={disabled}
       />
-      <InputRightElement>
+      <InputRightElement mr={1}>
         {!disabled && (
-          <Button size="sm" onClick={handleClick} disabled={disabled}>
-            {show ? <AiFillEyeInvisible /> : <AiFillEye />}
+          <Button size="sm" variant="text" onClick={handleClick} disabled={disabled}>
+            {show ? <AiFillEye /> : <AiFillEyeInvisible />}
           </Button>
         )}
       </InputRightElement>

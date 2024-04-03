@@ -12,7 +12,7 @@ import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { Review } from '@/entities/review';
-import { ImageUpload, StarRatingForm } from '@/shared/ui';
+import { ImageUpload, StarRatingForm } from '@/shared/ui/form';
 
 type Props = {
   ratingAverage: number;

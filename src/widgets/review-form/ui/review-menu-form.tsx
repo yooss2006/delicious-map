@@ -12,7 +12,7 @@ import {
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { ReviewMenu, useMenu } from '@/entities/menu';
-import { StarRatingForm } from '@/shared/ui';
+import { StarRatingForm } from '@/shared/ui/form';
 
 type Props = {
   closeMenu: () => void;

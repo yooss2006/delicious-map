@@ -12,7 +12,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { SignUpFormValues, signUp } from '@/features/auth/sign-up';
-import { PasswordInput, passwordTypeEnum } from '@/shared/ui';
+import { PasswordInput, passwordTypeEnum } from '@/widgets/auth-form';
 
 export function RegisterPage() {
   const navigate = useNavigate();
@@ -40,14 +40,14 @@ export function RegisterPage() {
   };
 
   return (
-    <Box w="480px" background="white" _dark={{ background: 'black' }} py={2} px={4}>
-      <Heading size="xl" textAlign="center">
+    <Box>
+      <Heading size="xl" textAlign="center" color="green.50">
         회원가입
       </Heading>
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormControl isRequired isInvalid={!!errors.email} mb={2}>
-            <FormLabel>이메일</FormLabel>
+            <FormLabel>email</FormLabel>
             <Input
               type="email"
               {...register('email', {
@@ -61,7 +61,7 @@ export function RegisterPage() {
             <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
           </FormControl>
           <FormControl isRequired isInvalid={!!errors.nickname} mb={2}>
-            <FormLabel>닉네임</FormLabel>
+            <FormLabel>name</FormLabel>
             <Input
               {...register('nickname', {
                 required: '닉네임은 필수입니다.',
@@ -70,18 +70,26 @@ export function RegisterPage() {
             <FormErrorMessage>{errors.nickname && errors.nickname.message}</FormErrorMessage>
           </FormControl>
           <FormControl isRequired isInvalid={!!errors.password} mb={2}>
-            <FormLabel>비밀번호</FormLabel>
+            <FormLabel>password</FormLabel>
             <PasswordInput />
             <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
           </FormControl>
           <FormControl isRequired isInvalid={!!errors.confirmPassword} mb={2}>
-            <FormLabel>비밀번호 확인</FormLabel>
+            <FormLabel>confirm password</FormLabel>
             <PasswordInput type={passwordTypeEnum.ConfirmPassword} />
             <FormErrorMessage>
               {errors.confirmPassword && errors.confirmPassword.message}
             </FormErrorMessage>
           </FormControl>
-          <Button type="submit" colorScheme="blue" w="full" mt={3}>
+          <Button
+            type="submit"
+            size="lg"
+            w="full"
+            mt={2}
+            color="white"
+            bg="green.100"
+            _hover={{ bg: 'green.300' }}
+          >
             회원가입
           </Button>
         </form>

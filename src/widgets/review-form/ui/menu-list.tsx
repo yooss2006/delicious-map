@@ -13,7 +13,7 @@ import {
 
 import { ReviewMenu, useMenu } from '@/entities/menu';
 import { scrollNoneStyles } from '@/shared/style';
-import { StarRatingViewer } from '@/shared/ui';
+import { StarRatingViewer } from '@/shared/ui/form';
 
 type Props = {
   menus: Array<ReviewMenu>;

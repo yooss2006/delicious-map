@@ -3,9 +3,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 
-import { AppRouter } from '@/app/router';
+import { AppRouter } from '@/app/router/app-router';
 
-import { AppProvider } from './providers';
+import { AppProvider } from './providers/app';
 import { theme } from './providers/chakra';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
