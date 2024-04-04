@@ -1,27 +1,29 @@
-import {
-  Box,
-  Button,
-  Divider,
-  Heading,
-  Text,
-  Link as ChakraLink,
-  AbsoluteCenter,
-} from '@chakra-ui/react';
+import { Box, Divider, Heading, Text, Link as ChakraLink, AbsoluteCenter } from '@chakra-ui/react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { z } from 'zod';
 
 import { LoginFormValues } from '@/entities/auth';
 import { useLogin } from '@/features/auth/login/api';
+import { SubmitButton } from '@/shared/ui/form';
 import { LoginForm } from '@/widgets/auth-form';
 
+const userSchema = z.object({
+  email: z.string().min(1, '이메일을 입력하세요.').email('올바른 이메일 형식이 아닙니다.'),
+  password: z.string().min(1, '비밀번호를 입력하세요.'),
+});
+
 export function LoginPage() {
-  const { mutate, isPending } = useLogin();
-  const methods = useForm<LoginFormValues>();
+  const { mutate: login, isPending } = useLogin();
+  const methods = useForm<LoginFormValues>({
+    resolver: zodResolver(userSchema),
+  });
   const { handleSubmit } = methods;
 
   const onSubmit = (values: LoginFormValues) => {
     if (isPending) return;
-    mutate(values);
+    login(values);
   };
 
   return (
@@ -41,17 +43,7 @@ export function LoginPage() {
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <LoginForm />
-          <Button
-            type="submit"
-            size="lg"
-            w="full"
-            mt={2}
-            color="white"
-            bg="green.100"
-            _hover={{ bg: 'green.300' }}
-          >
-            로그인
-          </Button>
+          <SubmitButton>로그인</SubmitButton>
         </form>
       </FormProvider>
       <Divider />

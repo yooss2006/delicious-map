@@ -1,97 +1,64 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Heading,
-  Input,
-} from '@chakra-ui/react';
-import { useMutation } from '@tanstack/react-query';
+import { Box, Divider, Heading, Text } from '@chakra-ui/react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { z } from 'zod';
 
-import { SignUpFormValues, signUp } from '@/features/auth/sign-up';
-import { PasswordInput, passwordTypeEnum } from '@/widgets/auth-form';
+import { SignUpFormValues } from '@/entities/auth';
+import { useProfileImageUpload } from '@/features/auth/profile-image-upload';
+import { useSignUp } from '@/features/auth/sign-up';
+import { SubmitButton } from '@/shared/ui/form';
+import { RegisterForm } from '@/widgets/auth-form';
 
-export function RegisterPage() {
-  const navigate = useNavigate();
-  const methods = useForm<SignUpFormValues>();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = methods;
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: signUp,
-    onSuccess(data) {
-      navigate('/auth/email-verification', { replace: true, state: { email: data?.user?.email } });
-    },
+const userSchema = z
+  .object({
+    nickname: z.string().min(2, '닉네임은 필수 입니다.'),
+    email: z.string().min(1, '이메일은 필수입니다.').email('올바른 이메일 형식이 아닙니다.'),
+    confirmPassword: z.any(),
+    profileImage: z.any(),
+    password: z
+      .string()
+      .min(8, '비밀번호는 8글자 이상 입력해야 합니다.')
+      .regex(
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&*()]).{8,}$/,
+        '비밀번호는 영문자, 숫자, 특수문자를 각각 하나 이상 포함해야 합니다.'
+      ),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: '비밀번호가 일치하지 않습니다.',
+    path: ['confirmPassword'],
   });
 
-  const onSubmit: SubmitHandler<SignUpFormValues> = async ({ email, password, nickname }) => {
-    if (isPending) return;
-    mutate({
-      email,
-      password,
-      nickname,
+export function RegisterPage() {
+  const methods = useForm<SignUpFormValues>({
+    resolver: zodResolver(userSchema),
+  });
+
+  const { mutateAsync: uploadImage, isPending: isUploadLoading } = useProfileImageUpload();
+  const { mutate: signUp, isPending: isSignUpLoading } = useSignUp();
+
+  const { handleSubmit } = methods;
+  const onSubmit: SubmitHandler<SignUpFormValues> = async (values) => {
+    if (isUploadLoading || isSignUpLoading) return;
+    const image = await uploadImage({ image: values.profileImage?.[0], storageName: 'profile' });
+    signUp({
+      ...values,
+      profileImage: image,
     });
   };
 
   return (
     <Box>
-      <Heading size="xl" textAlign="center" color="green.50">
+      <Heading as="h2" size="xl" textAlign="center" color="green.50">
         회원가입
       </Heading>
+      <Text mt={2} color="green.800" textAlign="center">
+        회원가입을 환영합니다.
+      </Text>
+      <Divider my={4} />
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <FormControl isRequired isInvalid={!!errors.email} mb={2}>
-            <FormLabel>email</FormLabel>
-            <Input
-              type="email"
-              {...register('email', {
-                required: '이메일은 필수입니다.',
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: '올바른 이메일 형식이 아닙니다.',
-                },
-              })}
-            />
-            <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
-          </FormControl>
-          <FormControl isRequired isInvalid={!!errors.nickname} mb={2}>
-            <FormLabel>name</FormLabel>
-            <Input
-              {...register('nickname', {
-                required: '닉네임은 필수입니다.',
-              })}
-            />
-            <FormErrorMessage>{errors.nickname && errors.nickname.message}</FormErrorMessage>
-          </FormControl>
-          <FormControl isRequired isInvalid={!!errors.password} mb={2}>
-            <FormLabel>password</FormLabel>
-            <PasswordInput />
-            <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
-          </FormControl>
-          <FormControl isRequired isInvalid={!!errors.confirmPassword} mb={2}>
-            <FormLabel>confirm password</FormLabel>
-            <PasswordInput type={passwordTypeEnum.ConfirmPassword} />
-            <FormErrorMessage>
-              {errors.confirmPassword && errors.confirmPassword.message}
-            </FormErrorMessage>
-          </FormControl>
-          <Button
-            type="submit"
-            size="lg"
-            w="full"
-            mt={2}
-            color="white"
-            bg="green.100"
-            _hover={{ bg: 'green.300' }}
-          >
-            회원가입
-          </Button>
+          <RegisterForm />
+          <SubmitButton>회원가입</SubmitButton>
         </form>
       </FormProvider>
     </Box>

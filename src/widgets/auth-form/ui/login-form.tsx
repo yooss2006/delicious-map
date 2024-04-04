@@ -14,16 +14,7 @@ export function LoginForm() {
     <>
       <FormControl isInvalid={!!errors.email} mb={3}>
         <FormLabel>email</FormLabel>
-        <Input
-          type="email"
-          {...register('email', {
-            required: '이메일은 필수입니다.',
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: '올바른 이메일 형식이 아닙니다.',
-            },
-          })}
-        />
+        <Input type="email" {...register('email')} />
         <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
       </FormControl>
       <FormControl mb={4} isInvalid={!!errors.password}>

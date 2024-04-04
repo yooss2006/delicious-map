@@ -1,11 +1,7 @@
 import { Navigate, RouteObject } from 'react-router-dom';
 
+import { EmailVerificationPage, LoginPage, RegisterPage } from '@/pages/auth';
 import { AuthLayout } from '@/pages/layout';
-import { lazyImport } from '@/shared/lib/lazyImport';
-
-const { LoginPage } = lazyImport(() => import('@/pages/auth'), 'LoginPage');
-const { RegisterPage } = lazyImport(() => import('@/pages/auth'), 'RegisterPage');
-const { EmailVerificationPage } = lazyImport(() => import('@/pages/auth'), 'EmailVerificationPage');
 
 const beforeLoginRoutes: Array<RouteObject> = [
   {

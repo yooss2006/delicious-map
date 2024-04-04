@@ -2,8 +2,7 @@ import { FormControl, FormErrorMessage, FormLabel, Input, Textarea } from '@chak
 import { useFormContext } from 'react-hook-form';
 
 import { Group } from '@/entities/group';
-
-import { UploadedAvatar } from './uploaded-avatar';
+import { UploadedAvatar } from '@/shared/ui/form';
 
 export function GroupForm() {
   const {
@@ -12,11 +11,13 @@ export function GroupForm() {
     formState: { errors },
   } = useFormContext<Group>();
 
+  const imageUrl = getValues('imageUrl');
+
   return (
     <>
       <FormControl isInvalid={!!errors.profileImage} mb={2}>
         <FormLabel htmlFor="profileImage" cursor="pointer" textAlign="center">
-          <UploadedAvatar />
+          <UploadedAvatar name="profileImage" prevImage={imageUrl} />
         </FormLabel>
         <Input
           type="file"

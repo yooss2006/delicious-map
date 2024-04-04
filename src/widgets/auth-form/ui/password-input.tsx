@@ -9,15 +9,10 @@ export enum passwordTypeEnum {
 }
 
 type Props = InputProps & {
-  isValidate?: boolean;
   type?: passwordTypeEnum;
 };
 
-export function PasswordInput({
-  type = passwordTypeEnum.Password,
-  isValidate = true,
-  ...inputProps
-}: Props) {
+export function PasswordInput({ type = passwordTypeEnum.Password, ...inputProps }: Props) {
   const [show, setShow] = React.useState(false);
   const { register, watch } = useFormContext();
 
@@ -33,24 +28,7 @@ export function PasswordInput({
       <Input
         {...inputProps}
         type={show ? 'text' : 'password'}
-        {...register(
-          type,
-          isValidate
-            ? type === passwordTypeEnum.ConfirmPassword
-              ? {
-                  validate: (value) => value === password || '비밀번호가 일치하지 않습니다.',
-                }
-              : {
-                  required: '비밀번호는 필수입니다.',
-                  // pattern: {
-                  //   value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-                  //   message: '비밀번호는 영문자, 숫자, 특수문자를 각각 하나 이상 포함해야 합니다.',
-                  // },
-                }
-            : {
-                required: '비밀번호는 필수입니다.',
-              }
-        )}
+        {...register(type)}
         disabled={disabled}
       />
       <InputRightElement mr={1}>
