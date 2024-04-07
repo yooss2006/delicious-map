@@ -8,10 +8,10 @@ export function EmailVerificationPage() {
   const { email } = location.state as { email: string };
   return (
     <Box>
-      <Heading as="h2" size="xl" textAlign="center" color="green.50">
+      <Heading as="h2" size="xl" textAlign="center" color="green.50" _dark={{ color: 'gray.200' }}>
         이메일 인증
       </Heading>
-      <Box mt={2} mb={4} color="green.800" textAlign="center">
+      <Box mt={2} mb={4} color="green.800" textAlign="center" _dark={{ color: 'gray.300' }}>
         <Text lineHeight={2}>{email} 이메일로 확인 메일을 전송했습니다.</Text>
         <Text lineHeight={2}>확인 후 로그인을 진행해주세요.</Text>
       </Box>

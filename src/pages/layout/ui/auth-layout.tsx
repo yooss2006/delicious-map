@@ -8,7 +8,7 @@ export function AuthLayout() {
       justifyContent="center"
       alignItems="center"
       bg="gray.200"
-      _dark={{ bg: 'gray.900' }}
+      _dark={{ bg: 'green.900' }}
     >
       <Box
         w="480px"
@@ -17,7 +17,7 @@ export function AuthLayout() {
         borderRadius="20px"
         boxShadow="md"
         background="white"
-        _dark={{ background: 'black' }}
+        _dark={{ background: 'gray.900' }}
       >
         <Outlet />
       </Box>

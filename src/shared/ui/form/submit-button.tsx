@@ -9,6 +9,7 @@ export function SubmitButton(props: ButtonProps) {
       mt={3}
       color="white"
       bg="green.100"
+      _dark={{ bg: 'green.600', color: 'gray.300', _hover: { bg: 'green.700', color: 'gray.100' } }}
       _hover={{ bg: 'green.300' }}
       {...props}
     />

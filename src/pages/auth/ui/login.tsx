@@ -7,7 +7,7 @@ import { z } from 'zod';
 import { LoginFormValues } from '@/entities/auth';
 import { useLogin } from '@/features/auth/login/api';
 import { SubmitButton } from '@/shared/ui/form';
-import { LoginForm } from '@/widgets/auth-form';
+import { LoginForm, SocalLoginButtonGroup } from '@/widgets/auth-form';
 
 const userSchema = z.object({
   email: z.string().min(1, '이메일을 입력하세요.').email('올바른 이메일 형식이 아닙니다.'),
@@ -28,13 +28,19 @@ export function LoginPage() {
 
   return (
     <Box>
-      <Heading size="xl" textAlign="center" color="green.50">
+      <Heading size="xl" textAlign="center" color="green.50" _dark={{ color: 'gray.200' }}>
         로그인
       </Heading>
-      <Text mt={2} color="green.800" textAlign="center">
+      <Text mt={2} color="green.800" textAlign="center" _dark={{ color: 'gray.300' }}>
         안녕하세요. 맛있을 지도 입니다.
       </Text>
-      <Text mt={1} textAlign="center" fontWeight="700" color="blue.400">
+      <Text
+        mt={1}
+        textAlign="center"
+        fontWeight="700"
+        color="blue.400"
+        _dark={{ color: 'blue.600' }}
+      >
         <ChakraLink as={Link} to="/auth/register">
           회원 가입을 원하신다면 여기를 클릭하세요.
         </ChakraLink>
@@ -43,16 +49,17 @@ export function LoginPage() {
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <LoginForm />
-          <SubmitButton>로그인</SubmitButton>
+          <SubmitButton isLoading={isPending}>로그인</SubmitButton>
         </form>
       </FormProvider>
       <Divider />
       <Box position="relative" p={6}>
         <Divider colorScheme="green" />
-        <AbsoluteCenter bg="white" px="4">
+        <AbsoluteCenter px="4" bg="white" _dark={{ bg: 'gray.900' }}>
           또는
         </AbsoluteCenter>
       </Box>
+      <SocalLoginButtonGroup isLoading={isPending} />
     </Box>
   );
 }

@@ -35,10 +35,11 @@ export function RegisterPage() {
 
   const { mutateAsync: uploadImage, isPending: isUploadLoading } = useProfileImageUpload();
   const { mutate: signUp, isPending: isSignUpLoading } = useSignUp();
+  const isLoading = isUploadLoading || isSignUpLoading;
 
   const { handleSubmit } = methods;
   const onSubmit: SubmitHandler<SignUpFormValues> = async (values) => {
-    if (isUploadLoading || isSignUpLoading) return;
+    if (isLoading) return;
     const image = await uploadImage({ image: values.profileImage?.[0], storageName: 'profile' });
     signUp({
       ...values,
@@ -48,17 +49,17 @@ export function RegisterPage() {
 
   return (
     <Box>
-      <Heading as="h2" size="xl" textAlign="center" color="green.50">
+      <Heading as="h2" size="xl" textAlign="center" color="green.50" _dark={{ color: 'gray.200' }}>
         회원가입
       </Heading>
-      <Text mt={2} color="green.800" textAlign="center">
+      <Text mt={2} color="green.800" textAlign="center" _dark={{ color: 'gray.300' }}>
         회원가입을 환영합니다.
       </Text>
       <Divider my={4} />
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <RegisterForm />
-          <SubmitButton>회원가입</SubmitButton>
+          <SubmitButton isLoading={isLoading}>회원가입</SubmitButton>
         </form>
       </FormProvider>
     </Box>

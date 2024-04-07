@@ -14,7 +14,7 @@ export const signUp = async ({
     email,
     password,
     options: {
-      data: { nickname, profile_image: profileImage },
+      data: { name: nickname, avatar_url: profileImage },
     },
   });
   if (error) {

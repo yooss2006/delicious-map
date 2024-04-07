@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import uniqid from 'uniqid';
 
 import { supabase } from '@/shared/lib';
 
@@ -10,11 +10,10 @@ export const uploadImage = async ({
   storageName: string;
 }) => {
   if (!image) return '';
-  const lastDotIndex = image?.name.lastIndexOf('.');
-  const extension = image?.name.slice(lastDotIndex + 1);
+  const uniqueID = uniqid();
   const { data, error } = await supabase.storage
     .from('images')
-    .upload(`${storageName}/${dayjs().format('YYYY_MM_DD_HH_mm_ss')}.${extension}`, image, {
+    .upload(`${storageName}/${storageName}-${uniqueID}`, image, {
       cacheControl: '3600',
     });
   if (error) {
