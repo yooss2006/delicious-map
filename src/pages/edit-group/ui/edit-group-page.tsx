@@ -1,28 +1,19 @@
 import { Box, Button, Flex, Heading, chakra } from '@chakra-ui/react';
-import { useMutation, useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { Group } from '@/entities/group';
-import { editGroup } from '@/features/group/create-edit-group';
-import { getGroupByGroupId } from '@/features/group/get-group-by-group-id';
-import { queryClient } from '@/shared/lib';
+import { useGroupDetail } from '@/entities/group/api';
+import { useEditGroup } from '@/features/group/edit-group';
+import { MenuSidebar } from '@/widgets/group-detail/ui';
 import { GroupForm } from '@/widgets/group-form';
-import { MenuSidebar } from '@/widgets/menu';
 
 export function EditGroupPage() {
   const { id } = useParams();
-  const navigate = useNavigate();
 
-  const { data: groups } = useQuery({ queryKey: ['group', id], queryFn: getGroupByGroupId });
-  const { mutate, isPending } = useMutation({
-    mutationFn: editGroup,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['group', id] });
-      navigate(`/group/${id}`);
-    },
-  });
+  const { data: groups } = useGroupDetail();
+  const { mutate, isPending } = useEditGroup();
 
   const methods = useForm<Group>();
   const { handleSubmit, reset } = methods;
@@ -44,8 +35,15 @@ export function EditGroupPage() {
   return (
     <Flex w="440px" h="100%">
       <MenuSidebar />
-      <Box w="440px" h="100%" background="gray.50">
-        <Heading py={4} lineHeight={2} as="h2" fontSize="lg" textAlign="center">
+      <Box w="440px" h="100%" background="gray.50" _dark={{ background: 'gray.600' }}>
+        <Heading
+          py={4}
+          lineHeight={2}
+          as="h2"
+          fontSize="xl"
+          textAlign="center"
+          _dark={{ color: 'gray.200' }}
+        >
           그룹 수정
         </Heading>
         <FormProvider {...methods}>
@@ -59,6 +57,11 @@ export function EditGroupPage() {
                 background="green.300"
                 color="white"
                 _hover={{ background: 'green.500' }}
+                _dark={{
+                  bg: 'green.600',
+                  color: 'gray.300',
+                  _hover: { bg: 'green.700', color: 'gray.100' },
+                }}
                 isLoading={isPending}
               >
                 수정

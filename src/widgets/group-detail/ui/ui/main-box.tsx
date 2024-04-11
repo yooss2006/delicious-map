@@ -8,16 +8,13 @@ import {
   Heading,
   Text,
 } from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
 
-import { EditPageLink } from '@/features/group/create-edit-group';
-import { getGroupByGroupId } from '@/features/group/get-group-by-group-id';
+import { useGroupDetail } from '@/entities/group/api';
+import { EditPageLink } from '@/features/group/edit-group';
 import { SecedeGroupButton } from '@/features/group/secede-group';
 
 export function MainBox() {
-  const { id } = useParams();
-  const { data: groups = [] } = useQuery({ queryKey: ['group', id], queryFn: getGroupByGroupId });
+  const { data: groups = [] } = useGroupDetail();
 
   if (groups.length === 0) {
     return <></>;

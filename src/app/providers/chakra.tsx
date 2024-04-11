@@ -10,7 +10,7 @@ type Props = {
 };
 
 const config: ThemeConfig = {
-  initialColorMode: 'system',
+  initialColorMode: 'light',
 };
 
 const {

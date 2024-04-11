@@ -1,7 +1,9 @@
-import { Group } from '@/entities/group';
-import { supabase } from '@/shared/lib';
+import { useMutation } from '@tanstack/react-query';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { uploadImageFn } from './upload-image';
+import { Group } from '@/entities/group';
+import { queryClient, queryKey, supabase } from '@/shared/lib';
+import { uploadImage } from '@/shared/lib/supabase/upload-image';
 
 export const editGroup = async ({
   groupId,
@@ -13,7 +15,7 @@ export const editGroup = async ({
   const uploadedImage = profileImage.length > 0 && profileImage?.[0];
   let uploadImageUrl = imageUrl;
   if (uploadedImage) {
-    uploadImageUrl = await uploadImageFn(uploadedImage);
+    uploadImageUrl = await uploadImage({ image: uploadedImage, storageName: 'group' });
   }
   return await updateGroupFn({ name, description, imageUrl: uploadImageUrl as string, groupId });
 };
@@ -38,4 +40,17 @@ const updateGroupFn = async ({
     throw error;
   }
   return data[0];
+};
+
+export const useEditGroup = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: editGroup,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKey.groupDetail(id) });
+      navigate(`/group/${id}`);
+    },
+  });
 };

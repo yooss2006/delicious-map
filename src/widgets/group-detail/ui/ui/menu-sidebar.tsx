@@ -1,5 +1,5 @@
-import { Flex, Link as ChakraLink, Text } from '@chakra-ui/react';
-import { IoHome, IoSearch } from 'react-icons/io5';
+import { Flex, Link as ChakraLink, Text, chakra } from '@chakra-ui/react';
+import { IoHome, IoSearch, IoBookmark } from 'react-icons/io5';
 import { Link as ReactRouterLink } from 'react-router-dom';
 
 import { useParsedLocation } from '@/shared/hooks';
@@ -14,6 +14,11 @@ const MENU_LIST = [
     label: '검색',
     Icon: IoSearch,
     query: 'search',
+  },
+  {
+    label: '북마크',
+    Icon: IoBookmark,
+    query: 'bookmark',
   },
 ];
 
@@ -31,6 +36,7 @@ export function MenuSidebar() {
       background="gray.100"
       borderRight="1px"
       borderColor="gray.300"
+      _dark={{ background: 'gray.700', borderColor: 'gray.400' }}
     >
       {MENU_LIST.map(({ label, Icon, query }) => {
         const isSelect = mode === query;
@@ -39,6 +45,8 @@ export function MenuSidebar() {
             e.preventDefault();
           }
         };
+        const MenuIcon = chakra(Icon);
+
         return (
           <ChakraLink
             as={ReactRouterLink}
@@ -56,9 +64,15 @@ export function MenuSidebar() {
             borderRadius="md"
             boxSizing="content-box"
             background={isSelect ? 'gray.600' : 'none'}
+            _dark={{
+              color: isSelect ? 'white' : 'gray.50',
+              background: isSelect ? 'gray.500' : 'none',
+            }}
           >
-            <Icon size="20px" />
-            <Text textAlign="center">{label}</Text>
+            <MenuIcon size="20px" mb={1} />
+            <Text textAlign="center" fontSize="12px">
+              {label}
+            </Text>
           </ChakraLink>
         );
       })}

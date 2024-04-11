@@ -11,9 +11,12 @@ export const uploadImage = async ({
 }) => {
   if (!image) return '';
   const uniqueID = uniqid();
+  const lastDotIndex = image?.name.lastIndexOf('.');
+  const name = image?.name.slice(0, lastDotIndex);
+  const extension = image?.name.slice(lastDotIndex + 1);
   const { data, error } = await supabase.storage
     .from('images')
-    .upload(`${storageName}/${storageName}-${uniqueID}`, image, {
+    .upload(`${storageName}/${name}-${uniqueID}.${extension}`, image, {
       cacheControl: '3600',
     });
   if (error) {

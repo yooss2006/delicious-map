@@ -1,17 +1,14 @@
 import { Flex } from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import { getGroupByGroupId } from '@/features/group/get-group-by-group-id';
+import { useGroupDetail } from '@/entities/group/api';
 import { useParsedLocation } from '@/shared/hooks';
-import { MainBox, SearchBox } from '@/widgets/group-detail/ui';
-import { MenuSidebar } from '@/widgets/menu';
+import { MainBox, MenuSidebar, SearchBox } from '@/widgets/group-detail/ui';
 
 export function DetailPage() {
-  const { id } = useParams();
   const navigate = useNavigate();
-  const { data } = useQuery({ queryKey: ['group', id], queryFn: getGroupByGroupId });
+  const { data } = useGroupDetail();
 
   const { query } = useParsedLocation();
 

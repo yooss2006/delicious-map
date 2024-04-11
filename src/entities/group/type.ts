@@ -3,4 +3,5 @@ export interface Group {
   description: string;
   profileImage: Array<File>;
   imageUrl?: string;
+  leaderId: string;
 }
