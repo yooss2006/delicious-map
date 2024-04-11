@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { ImExit } from 'react-icons/im';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useCurrentUser } from '@/features/auth/user/get-current-user';
+import { useCurrentUser } from '@/entities/user';
 import { queryClient } from '@/shared/lib';
 
 import { secedeGroup } from '../lib/secede-group';

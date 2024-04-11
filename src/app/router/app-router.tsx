@@ -1,6 +1,6 @@
 import { useRoutes, RouteObject } from 'react-router-dom';
 
-import { useCurrentUser } from '@/features/auth/user/get-current-user';
+import { useCurrentUser } from '@/entities/user';
 import { LoadingPage } from '@/shared/ui/layout';
 
 import afterLoginRouter from './after-login-router';

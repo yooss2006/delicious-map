@@ -4,7 +4,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { Group } from '@/entities/group';
-import { useCurrentUser } from '@/features/auth/user/get-current-user';
+import { useCurrentUser } from '@/entities/user';
 import { createGroup } from '@/features/group/create-edit-group';
 import { queryClient } from '@/shared/lib';
 import { GroupForm } from '@/widgets/group-form';

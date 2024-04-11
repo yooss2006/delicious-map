@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { useCurrentUser } from '@/features/auth/user/get-current-user';
+import { useCurrentUser } from '@/entities/user';
 import { getGroupsByMyId } from '@/features/group/get-group-list/get-groups-by-id';
 
 export const useGroupList = () => {

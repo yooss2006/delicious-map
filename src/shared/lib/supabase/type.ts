@@ -101,7 +101,7 @@ export type Database = {
         };
         Relationships: [
           {
-            foreignKeyName: 'review_group_id_fkey';
+            foreignKeyName: 'public_review_group_id_fkey';
             columns: ['group_id'];
             isOneToOne: false;
             referencedRelation: 'groups';
@@ -140,7 +140,7 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
-            foreignKeyName: 'review_menu_review_id_fkey';
+            foreignKeyName: 'public_review_menu_review_id_fkey';
             columns: ['review_id'];
             isOneToOne: false;
             referencedRelation: 'review';

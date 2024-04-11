@@ -29,6 +29,7 @@ const {
   Accordion,
   Progress,
   Divider,
+  Popover,
 } = chakraTheme.components;
 
 export const theme = extendBaseTheme({
@@ -48,6 +49,7 @@ export const theme = extendBaseTheme({
     Accordion,
     Progress,
     Divider,
+    Popover,
   },
   colors: {
     black: '#0a0d11',
