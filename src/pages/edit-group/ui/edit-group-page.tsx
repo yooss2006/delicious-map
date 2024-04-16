@@ -6,13 +6,12 @@ import { useParams } from 'react-router-dom';
 import { Group } from '@/entities/group';
 import { useGroupDetail } from '@/entities/group/api';
 import { useEditGroup } from '@/features/group/edit-group';
-import { MenuSidebar } from '@/widgets/group-detail/ui';
 import { GroupForm } from '@/widgets/group-form';
 
 export function EditGroupPage() {
   const { id } = useParams();
 
-  const { data: groups } = useGroupDetail();
+  const { data: group } = useGroupDetail();
   const { mutate, isPending } = useEditGroup();
 
   const methods = useForm<Group>();
@@ -23,19 +22,18 @@ export function EditGroupPage() {
   };
 
   useEffect(() => {
-    if (groups && groups.length > 0) {
+    if (group) {
       reset({
-        name: groups[0]?.name ?? '',
-        description: groups[0]?.description ?? '',
-        imageUrl: groups[0]?.image_url ?? '',
+        name: group.name ?? '',
+        description: group.description ?? '',
+        imageUrl: group.image_url ?? '',
       });
     }
-  }, [groups, reset]);
+  }, [group, reset]);
 
   return (
     <Flex w="440px" h="100%">
-      <MenuSidebar />
-      <Box w="440px" h="100%" background="gray.50" _dark={{ background: 'gray.600' }}>
+      <Box w="100%" h="100%" background="gray.50" _dark={{ background: 'gray.700' }}>
         <Heading
           py={4}
           lineHeight={2}

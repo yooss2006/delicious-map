@@ -4,21 +4,24 @@ import { useNavigate } from 'react-router-dom';
 
 import { useGroupDetail } from '@/entities/group/api';
 import { useParsedLocation } from '@/shared/hooks';
-import { MainBox, MenuSidebar, SearchBox } from '@/widgets/group-detail/ui';
+import { MenuSidebar } from '@/widgets/menu';
+
+import { MainBox } from './main-box';
+import { SearchBox } from './search-box';
 
 export function DetailPage() {
   const navigate = useNavigate();
-  const { data } = useGroupDetail();
+  const { data: group, isLoading } = useGroupDetail();
 
   const { query } = useParsedLocation();
 
   const mode = query.mode || '';
 
   useEffect(() => {
-    if (data && data.length === 0) {
+    if (!group && !isLoading) {
       navigate('/create-group');
     }
-  }, [data, navigate]);
+  }, [group, navigate]);
 
   return (
     <Flex w="440px" h="100%">
@@ -33,6 +36,7 @@ export function DetailPage() {
         color="black"
         borderRight="1px"
         borderColor="gray.200"
+        _dark={{ background: 'gray.500' }}
       >
         {(() => {
           switch (mode) {

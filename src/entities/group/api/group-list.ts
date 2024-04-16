@@ -1,6 +1,8 @@
+import { useQuery } from '@tanstack/react-query';
+
 import { supabase } from '@/shared/lib';
 
-export const getGroupsByMyId = async ({ queryKey }: { queryKey: Array<any> }) => {
+const getGroupsByMyId = async ({ queryKey }: { queryKey: Array<any> }) => {
   const { data: members, error: membersError } = await supabase
     .from('group_members')
     .select('*')
@@ -10,4 +12,13 @@ export const getGroupsByMyId = async ({ queryKey }: { queryKey: Array<any> }) =>
   const { data, error } = await supabase.from('groups').select('*').in('id', membersGroupIds);
   if (error) throw error;
   return data;
+};
+
+export const useGroupList = ({ userId }: { userId?: string }) => {
+  return useQuery({
+    queryKey: ['group_list', userId],
+    queryFn: getGroupsByMyId,
+    refetchOnWindowFocus: false,
+    enabled: !!userId,
+  });
 };
