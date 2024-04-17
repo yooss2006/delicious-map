@@ -2,7 +2,7 @@ import { Flex } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useGroupDetail } from '@/entities/group/api';
+import { useGroupDetail } from '@/entities/group/api/get-group-by-group-id';
 import { useParsedLocation } from '@/shared/hooks';
 import { MenuSidebar } from '@/widgets/menu';
 

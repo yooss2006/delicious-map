@@ -3,21 +3,53 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export type Database = {
   public: {
     Tables: {
+      group_invitation: {
+        Row: {
+          created_at: string;
+          group_id: string;
+          id: number;
+          link: string;
+        };
+        Insert: {
+          created_at?: string;
+          group_id: string;
+          id?: number;
+          link?: string;
+        };
+        Update: {
+          created_at?: string;
+          group_id?: string;
+          id?: number;
+          link?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'public_group_invitation_group_id_fkey';
+            columns: ['group_id'];
+            isOneToOne: false;
+            referencedRelation: 'groups';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       group_members: {
         Row: {
           group_id: string;
+          image_url: string;
           joined_at: string | null;
           member_id: number;
           user_id: string;
         };
         Insert: {
           group_id: string;
+          image_url: string;
           joined_at?: string | null;
           member_id?: number;
           user_id: string;
         };
         Update: {
           group_id?: string;
+          image_url?: string;
           joined_at?: string | null;
           member_id?: number;
           user_id?: string;
@@ -38,6 +70,7 @@ export type Database = {
           description: string | null;
           id: string;
           image_url: string | null;
+          leader_id: string;
           name: string;
         };
         Insert: {
@@ -45,6 +78,7 @@ export type Database = {
           description?: string | null;
           id?: string;
           image_url?: string | null;
+          leader_id: string;
           name: string;
         };
         Update: {
@@ -52,6 +86,7 @@ export type Database = {
           description?: string | null;
           id?: string;
           image_url?: string | null;
+          leader_id?: string;
           name?: string;
         };
         Relationships: [];
