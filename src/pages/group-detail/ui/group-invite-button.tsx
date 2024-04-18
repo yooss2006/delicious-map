@@ -46,10 +46,10 @@ export function GroupInviteModalContent() {
 
   const isCreateInvitation = (date?: string) => {
     if (!date) return false;
-    const givenDate = new Date(date).getTime();
-    const oneDayLater = new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getTime();
+    const nowDay = new Date().getTime();
+    const oneDayLater = new Date(new Date(date).getTime() + 24 * 60 * 60 * 1000).getTime();
 
-    return givenDate >= oneDayLater;
+    return nowDay >= oneDayLater;
   };
 
   return (
@@ -78,7 +78,7 @@ export function GroupInviteModalContent() {
             leftIcon={<EmailIcon />}
             onClick={handleCreateInvitation}
             isLoading={isPending || isLoading}
-            isDisabled={!isCreateInvitation(invitation?.created_at)}
+            isDisabled={!!invitation && !isCreateInvitation(invitation?.created_at)}
           >
             초대 링크 생성
           </Button>

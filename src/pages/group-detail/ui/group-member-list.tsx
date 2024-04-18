@@ -1,9 +1,9 @@
 import { Avatar, List, ListItem } from '@chakra-ui/react';
 
-import { GroupMember, useGroupMember } from '@/entities/group-member';
+import { GroupMember, useGroupMemberByGroupId } from '@/entities/group-member';
 
 export function GroupMemberList() {
-  const { data: members = [] } = useGroupMember();
+  const { data: members = [] } = useGroupMemberByGroupId();
   return (
     <List>
       {members.map((member: GroupMember) => (

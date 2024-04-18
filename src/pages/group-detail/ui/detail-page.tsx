@@ -21,7 +21,7 @@ export function DetailPage() {
     if (!group && !isLoading) {
       navigate('/create-group');
     }
-  }, [group, navigate]);
+  }, [group, navigate, isLoading]);
 
   return (
     <Flex w="440px" h="100%">

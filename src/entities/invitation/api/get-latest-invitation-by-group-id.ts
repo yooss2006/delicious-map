@@ -9,14 +9,14 @@ const getLatestInvitationByGroupId = async ({ queryKey }: { queryKey: Array<any>
     .select('*')
     .eq('group_id', queryKey[2]);
   if (error) throw error;
-  return data.at(-1);
+  return data.length > 0 ? data.at(-1) : null;
 };
 
 export const useLatestInvitationByGroupId = () => {
   const { id } = useParams();
 
   return useQuery({
-    queryKey: queryKey.invitationByGroup(id),
+    queryKey: queryKey.invitationByGroupId(id),
     queryFn: getLatestInvitationByGroupId,
   });
 };

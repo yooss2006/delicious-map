@@ -18,5 +18,6 @@ export const useCurrentUser = () => {
     queryKey: queryKey.currentUser,
     queryFn: getCurrentUser,
     refetchOnWindowFocus: false,
+    retry: false,
   });
 };

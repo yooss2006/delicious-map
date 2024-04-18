@@ -11,8 +11,13 @@ const { CreateMerchantPage } = lazyImport(
   () => import('@/pages/craete-merchant'),
   'CreateMerchantPage'
 );
+const { InvitationPage } = lazyImport(() => import('@/pages/invitation'), 'InvitationPage');
 
 const afterLoginRoutes = [
+  {
+    path: '/invitation/:link',
+    element: <InvitationPage />,
+  },
   {
     path: '/',
     element: <MapLayout />,

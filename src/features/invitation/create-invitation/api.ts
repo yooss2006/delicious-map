@@ -20,7 +20,7 @@ export const useCreateInvitation = () => {
   return useMutation({
     mutationFn: createInvitation,
     onSuccess(data) {
-      queryClient.setQueryData(queryKey.invitationByGroup(id), data);
+      queryClient.setQueryData(queryKey.invitationByGroupId(id), data);
     },
   });
 };
