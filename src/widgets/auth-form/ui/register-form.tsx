@@ -31,7 +31,7 @@ export function RegisterForm() {
         <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
       </FormControl>
       <FormControl isInvalid={!!errors.nickname} mb={2}>
-        <FormLabel>name</FormLabel>
+        <FormLabel>nickname</FormLabel>
         <Input {...register('nickname')} />
         <FormErrorMessage>{errors.nickname && errors.nickname.message}</FormErrorMessage>
       </FormControl>

@@ -73,7 +73,7 @@ function InvitationModalContent() {
           </CardBody>
         </Stack>
         <CardFooter display="flex" alignItems="center">
-          <JoinButton />
+          <JoinButton groupId={group.id} />
         </CardFooter>
       </Card>
     </Box>

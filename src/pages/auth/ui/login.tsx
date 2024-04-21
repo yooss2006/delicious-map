@@ -6,6 +6,7 @@ import { z } from 'zod';
 
 import { LoginFormValues } from '@/entities/auth';
 import { useLogin } from '@/features/auth/login/api';
+import { useParsedLocation } from '@/shared/hooks';
 import { SubmitButton } from '@/shared/ui/form';
 import { LoginForm, SocalLoginButtonGroup } from '@/widgets/auth-form';
 
@@ -16,6 +17,8 @@ const userSchema = z.object({
 
 export function LoginPage() {
   const { mutate: login, isPending } = useLogin();
+  const { query } = useParsedLocation();
+  const nexturl = query.nexturl;
   const methods = useForm<LoginFormValues>({
     resolver: zodResolver(userSchema),
   });
@@ -41,7 +44,7 @@ export function LoginPage() {
         color="blue.400"
         _dark={{ color: 'blue.600' }}
       >
-        <ChakraLink as={Link} to="/auth/register">
+        <ChakraLink as={Link} to={`/auth/register${nexturl ? `?nexturl=${nexturl}` : ''}`}>
           회원 가입을 원하신다면 여기를 클릭하세요.
         </ChakraLink>
       </Text>
