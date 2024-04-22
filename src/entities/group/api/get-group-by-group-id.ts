@@ -3,8 +3,11 @@ import { useParams } from 'react-router-dom';
 
 import { queryKey, supabase } from '@/shared/lib';
 
-const getGroupByGroupId = async ({ queryKey }: { queryKey: Array<any> }) => {
-  const { data, error } = await supabase.from('groups').select('*').eq('id', queryKey[1]);
+export const getGroupByGroupId = async ({ queryKey }: { queryKey: Array<any> }) => {
+  const { data, error } = await supabase
+    .from('groups')
+    .select(`*, members: group_members (*)`)
+    .eq('id', queryKey[1]);
   if (error) throw error;
   return data[0];
 };

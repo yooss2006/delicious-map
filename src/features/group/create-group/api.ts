@@ -9,9 +9,10 @@ const createGroup = async ({
   userId,
   name,
   profileImage,
+  nickName,
   description,
   userImageUrl,
-}: Group & { userId: string; userImageUrl: string }) => {
+}: Group & { userId: string; userImageUrl: string; nickName: string }) => {
   const uploadedImage = profileImage?.[0];
   if (!uploadedImage) return;
   const imageUrl = await uploadImage({ image: uploadedImage, storageName: 'group' });
@@ -21,7 +22,7 @@ const createGroup = async ({
     imageUrl,
     leaderId: userId,
   });
-  return await createMemberFn({ userId, groupId, userImageUrl });
+  return await createMemberFn({ userId, groupId, userImageUrl, nickName });
 };
 
 const createGroupFn = async ({
@@ -43,16 +44,18 @@ const createGroupFn = async ({
 const createMemberFn = async ({
   userId,
   groupId,
+  nickName,
   userImageUrl,
 }: {
   userId: string;
   groupId?: string;
+  nickName: string;
   userImageUrl: string;
 }) => {
   if (!(userId && groupId)) return;
   const { data, error } = await supabase
     .from('group_members')
-    .insert({ user_id: userId, group_id: groupId, image_url: userImageUrl })
+    .insert({ user_id: userId, group_id: groupId, image_url: userImageUrl, name: nickName })
     .select();
 
   if (error) {

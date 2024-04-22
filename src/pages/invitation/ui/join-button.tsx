@@ -23,7 +23,12 @@ export function JoinButton({ groupId }: Props) {
 
   const handleButtonClick = () => {
     if (!user) return;
-    mutate({ userId: user?.id, groupId, userImageUrl: user?.user_metadata?.avatar_url });
+    mutate({
+      userId: user?.id,
+      groupId,
+      userImageUrl: user?.user_metadata?.avatar_url,
+      name: user?.user_metadata?.name,
+    });
   };
 
   return <Button onClick={handleButtonClick}>가입</Button>;

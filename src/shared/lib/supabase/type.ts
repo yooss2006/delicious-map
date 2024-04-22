@@ -38,6 +38,7 @@ export type Database = {
           image_url: string;
           joined_at: string | null;
           member_id: number;
+          name: string | null;
           user_id: string;
         };
         Insert: {
@@ -45,6 +46,7 @@ export type Database = {
           image_url: string;
           joined_at?: string | null;
           member_id?: number;
+          name?: string | null;
           user_id: string;
         };
         Update: {
@@ -52,6 +54,7 @@ export type Database = {
           image_url?: string;
           joined_at?: string | null;
           member_id?: number;
+          name?: string | null;
           user_id?: string;
         };
         Relationships: [

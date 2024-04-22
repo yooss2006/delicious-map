@@ -17,7 +17,12 @@ export function CreateGroupPage() {
 
   const onSubmit: SubmitHandler<Group> = async (values) => {
     if (!userId) return;
-    mutate({ ...values, userId, userImageUrl: user?.user_metadata?.avatar_url });
+    mutate({
+      ...values,
+      userId,
+      userImageUrl: user?.user_metadata?.avatar_url,
+      nickName: user?.user_metadata?.name,
+    });
   };
 
   return (
