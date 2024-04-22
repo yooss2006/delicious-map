@@ -1,10 +1,10 @@
 import { create } from 'zustand';
 
-import { ReviewMenu } from './types';
+import { BookmarkMenuFormValue } from './type';
 
 type Props = {
-  menus: Array<ReviewMenu>;
-  addMenu: (menu: ReviewMenu) => void;
+  menus: Array<BookmarkMenuFormValue>;
+  addMenu: (menu: BookmarkMenuFormValue) => void;
   deleteMenu: (name: string) => void;
   resetMenu: () => void;
 };

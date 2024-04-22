@@ -11,15 +11,15 @@ import {
 } from '@chakra-ui/react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { ReviewMenu, useMenu } from '@/entities/menu';
+import { BookmarkMenuFormValue, useMenu } from '@/entities/bookmark-menu';
 import { StarRatingForm } from '@/shared/ui/form';
 
 type Props = {
   closeMenu: () => void;
 };
 
-export function ReviewMenuForm({ closeMenu }: Props) {
-  const methods = useForm<ReviewMenu>();
+export function BookmarkMenuForm({ closeMenu }: Props) {
+  const methods = useForm<BookmarkMenuFormValue>();
   const { addMenu } = useMenu();
 
   const {
@@ -29,7 +29,7 @@ export function ReviewMenuForm({ closeMenu }: Props) {
     formState: { errors },
   } = methods;
 
-  const onSubmit = async (values: ReviewMenu) => {
+  const onSubmit = async (values: BookmarkMenuFormValue) => {
     addMenu(values);
     closeMenu();
   };

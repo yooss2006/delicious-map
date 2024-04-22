@@ -4,13 +4,13 @@ import { Link, useParams } from 'react-router-dom';
 
 import { MerchantCardType } from '@/entities/merchant-card';
 
-export function CreateMerchantLink(props: MerchantCardType) {
+export function CreateBookmarkLink(props: MerchantCardType) {
   const { id } = useParams();
   return (
-    <ChakraLink as={Link} to={`/group/${id}/create-merchant`} state={props}>
+    <ChakraLink as={Link} to={`/group/${id}/create-bookmark`} state={props}>
       <IconButton
         size="sm"
-        aria-label={`${props.name} 저장`}
+        aria-label={`${props.name} 북마크 저장`}
         position="absolute"
         top="50%"
         bottom="50%"

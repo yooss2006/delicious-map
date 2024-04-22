@@ -8,7 +8,7 @@ const { ReplacePage } = lazyImport(() => import('@/widgets/replace-page'), 'Repl
 const { CreateGroupPage } = lazyImport(() => import('@/pages/create-group'), 'CreateGroupPage');
 const { EditGroupPage } = lazyImport(() => import('@/pages/edit-group'), 'EditGroupPage');
 const { CreateMerchantPage } = lazyImport(
-  () => import('@/pages/craete-merchant'),
+  () => import('@/pages/craete-bookmark'),
   'CreateMerchantPage'
 );
 const { InvitationPage } = lazyImport(() => import('@/pages/invitation'), 'InvitationPage');
@@ -25,7 +25,7 @@ const afterLoginRoutes = [
       { path: '/', element: <ReplacePage /> },
       { path: '/create-group', element: <CreateGroupPage /> },
       { path: '/group/:id', element: <DetailPage /> },
-      { path: '/group/:id/create-merchant', element: <CreateMerchantPage /> },
+      { path: '/group/:id/create-bookmark', element: <CreateMerchantPage /> },
       { path: '/edit-group/:id', element: <EditGroupPage /> },
       { path: '*', element: <Navigate to="/" /> },
     ],

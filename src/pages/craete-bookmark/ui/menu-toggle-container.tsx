@@ -2,7 +2,7 @@ import { ChevronRightIcon, CloseIcon } from '@chakra-ui/icons';
 import { Box, Button, Heading, IconButton } from '@chakra-ui/react';
 import { useState } from 'react';
 
-import { ReviewMenuForm } from '@/widgets/review-form';
+import { BookmarkMenuForm } from '@/widgets/bookmark-form';
 
 type Props = {
   children: React.ReactNode;
@@ -61,7 +61,7 @@ export function MenuToggleContainer({ children }: Props) {
         <Heading py={4} lineHeight={2} as="h2" fontSize="lg" textAlign="center">
           메뉴
         </Heading>
-        {open && <ReviewMenuForm closeMenu={closeMenu} />}
+        {open && <BookmarkMenuForm closeMenu={closeMenu} />}
         <IconButton
           aria-label="메뉴 닫기"
           position="absolute"

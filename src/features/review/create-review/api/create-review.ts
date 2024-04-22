@@ -1,9 +1,9 @@
 import dayjs from 'dayjs';
 
-import { Review } from '@/entities/review';
+import { Bookmark } from '@/entities/bookmark';
 import { supabase } from '@/shared/lib';
 
-export const createReview = async ({ image, ...rest }: Review) => {
+export const createReview = async ({ image, ...rest }: Bookmark) => {
   const images = await uploadImageFn(image);
   return await createReviewFn({ ...rest, image: images });
 };

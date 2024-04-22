@@ -1,43 +1,36 @@
 import { Box, Button, Heading, Text, chakra } from '@chakra-ui/react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
-import { useMenu } from '@/entities/menu';
+import { BookmarkFormValue } from '@/entities/bookmark';
 import { MerchantCardType } from '@/entities/merchant-card';
-import { Review } from '@/entities/review';
-import { createReview } from '@/features/review/create-review';
-import { createReviewMenu } from '@/features/review/create-review/api/create-review-menu';
-import { Menulist, ReviewForm } from '@/widgets/review-form';
+import { useCurrentUser } from '@/entities/user';
+import { createBookmark } from '@/features/bookmark/create-bookmark';
+import { BookmarkForm, Menulist } from '@/widgets/bookmark-form';
 
 import { MenuToggleContainer } from './menu-toggle-container';
 
 export function CreateMerchantPage() {
   const location = useLocation();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const merchant: MerchantCardType | null = location.state;
   const { id: groupId } = useParams();
-  const { menus, resetMenu } = useMenu();
-  const ratingAverage =
-    Math.floor(menus.reduce((acc, cur) => acc + cur.rating, 0) / menus.length) ?? 0;
+  const { data: user } = useCurrentUser();
 
-  const methods = useForm<Review>();
+  const methods = useForm<any>();
   const { handleSubmit } = methods;
 
-  const onSubmit = async (values: Review) => {
-    if (!merchant) return;
-    const payload: Review = {
+  const onSubmit = async (values: BookmarkFormValue) => {
+    if (!merchant || !user?.id || !groupId) return;
+    const result = await createBookmark({
       ...values,
-      merchantId: merchant.merchantId,
-      merchantName: merchant.name,
-      type: merchant.code === 'FD6' ? 'restaurant' : 'cafe',
-      groupId: groupId!,
-      lat: Number(merchant.lat),
-      lng: Number(merchant.lng),
-    };
-    const id = await createReview(payload);
-    await createReviewMenu([id!, menus]);
-    navigate(`/group/${groupId}`);
-    resetMenu();
+      ...merchant,
+      groupId: groupId,
+      managerId: user.id,
+    });
+    console.log(result);
+    // await createReviewMenu([id!, menus]);
+    // navigate(`/group/${groupId}`);
   };
 
   if (!merchant) return null;
@@ -61,8 +54,8 @@ export function CreateMerchantPage() {
           justifyContent="space-between"
         >
           <Box>
-            <ReviewForm ratingAverage={ratingAverage} />
-            {menus.length > 0 && <Menulist menus={menus} />}
+            <BookmarkForm />
+            <Menulist />
           </Box>
           <Button
             type="submit"

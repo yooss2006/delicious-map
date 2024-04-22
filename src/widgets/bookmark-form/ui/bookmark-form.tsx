@@ -1,51 +1,21 @@
-import {
-  Box,
-  Flex,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input,
-  Textarea,
-} from '@chakra-ui/react';
+import { Box, FormControl, FormErrorMessage, FormLabel, Input, Textarea } from '@chakra-ui/react';
 import dayjs from 'dayjs';
-import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Review } from '@/entities/review';
-import { ImageUpload, StarRatingForm } from '@/shared/ui/form';
+import { BookmarkFormValue } from '@/entities/bookmark';
+import { ImageUpload } from '@/shared/ui/form';
 
-type Props = {
-  ratingAverage: number;
-};
+import { RatingForm } from './rating-form';
 
-export function ReviewForm({ ratingAverage }: Props) {
+export function BookmarkForm() {
   const {
-    control,
     register,
-    setValue,
     formState: { errors },
-  } = useFormContext<Review>();
-
-  useEffect(() => {
-    if (ratingAverage) {
-      setValue('rating', ratingAverage);
-    }
-  }, [ratingAverage, setValue]);
+  } = useFormContext<BookmarkFormValue>();
 
   return (
     <Box>
-      <FormControl isInvalid={!!errors.rating} mb={3}>
-        <Flex alignItems="center" gap={2}>
-          별점
-          <StarRatingForm
-            control={control}
-            name="rating"
-            rules={{ required: '별점을 선택하세요.' }}
-            startProps={{ fontSize: '20px' }}
-          />
-        </Flex>
-        <FormErrorMessage>{errors.rating && errors.rating.message}</FormErrorMessage>
-      </FormControl>
+      <RatingForm />
       <FormControl isInvalid={!!errors.visitDate} mb={3}>
         <FormLabel>방문 날짜</FormLabel>
         <Input

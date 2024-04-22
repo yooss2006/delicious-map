@@ -24,3 +24,14 @@ export const uploadImage = async ({
 
   return `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/images/${data.path}`;
 };
+
+export const uploadImageArray = async ({
+  images,
+  storageName,
+}: {
+  images: File[];
+  storageName: string;
+}) => {
+  if (images.length === 0) return [];
+  return await Promise.all(images.map((image) => uploadImage({ image, storageName })));
+};

@@ -10,16 +10,21 @@ import {
   StackDivider,
   Text,
 } from '@chakra-ui/react';
+import { useEffect } from 'react';
 
-import { ReviewMenu, useMenu } from '@/entities/menu';
+import { BookmarkMenuFormValue, useMenu } from '@/entities/bookmark-menu';
 import { scrollNoneStyles } from '@/shared/style';
 import { StarRatingViewer } from '@/shared/ui/form';
 
-type Props = {
-  menus: Array<ReviewMenu>;
-};
+export function Menulist() {
+  const { menus, resetMenu } = useMenu();
 
-export function Menulist({ menus }: Props) {
+  useEffect(() => {
+    return () => resetMenu();
+  }, [resetMenu]);
+
+  if (menus.length === 0) return null;
+
   return (
     <Card h="320px" overflowY="scroll" sx={scrollNoneStyles}>
       <CardHeader>
@@ -39,7 +44,7 @@ export function Menulist({ menus }: Props) {
 }
 
 type MenuItemProps = {
-  menu: ReviewMenu;
+  menu: BookmarkMenuFormValue;
 };
 
 function MenuItem({ menu: { name, review, rating } }: MenuItemProps) {

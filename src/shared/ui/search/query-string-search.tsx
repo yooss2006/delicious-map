@@ -5,9 +5,13 @@ import { useSearchParams } from 'react-router-dom';
 
 import { useParsedLocation } from '@/shared/hooks';
 
-export function SearchForm() {
+type Props = {
+  key?: string;
+};
+
+export function QueryStringSearch({ key = 'q' }: Props) {
   const { query } = useParsedLocation();
-  const q = query.q;
+  const q = query[key];
   const [searchText, setSearchText] = useState(q ?? '');
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -18,7 +22,7 @@ export function SearchForm() {
   const handleFormFinish = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!searchText.replace(/^\s+|\s+$/g, '')) return;
-    searchParams.set('q', searchText);
+    searchParams.set(key, searchText);
     setSearchParams(searchParams);
   };
 
@@ -34,7 +38,7 @@ export function SearchForm() {
           size="lg"
         />
         <IconButton
-          aria-label="Search Place"
+          aria-label="음식점/카페 검색"
           type="submit"
           icon={<SearchIcon />}
           size="lg"

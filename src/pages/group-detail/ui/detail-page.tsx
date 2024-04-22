@@ -4,10 +4,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { useGroupDetail } from '@/entities/group/api/get-group-by-group-id';
 import { useParsedLocation } from '@/shared/hooks';
+import { MainBox } from '@/widgets/group-detail-main';
+import { SearchBox } from '@/widgets/group-detail-search';
 import { MenuSidebar } from '@/widgets/menu';
-
-import { MainBox } from './main-box';
-import { SearchBox } from './search-box';
 
 export function DetailPage() {
   const navigate = useNavigate();

@@ -3,6 +3,101 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export type Database = {
   public: {
     Tables: {
+      bookmark: {
+        Row: {
+          created_at: string | null;
+          group_id: string;
+          id: number;
+          image: string[] | null;
+          lat: number | null;
+          lng: number | null;
+          manager_id: string;
+          merchant_id: string;
+          merchant_name: string;
+          rating: number | null;
+          review: string | null;
+          type: Database['public']['Enums']['review_type'];
+          visit_date: string | null;
+        };
+        Insert: {
+          created_at?: string | null;
+          group_id: string;
+          id?: number;
+          image?: string[] | null;
+          lat?: number | null;
+          lng?: number | null;
+          manager_id: string;
+          merchant_id: string;
+          merchant_name: string;
+          rating?: number | null;
+          review?: string | null;
+          type: Database['public']['Enums']['review_type'];
+          visit_date?: string | null;
+        };
+        Update: {
+          created_at?: string | null;
+          group_id?: string;
+          id?: number;
+          image?: string[] | null;
+          lat?: number | null;
+          lng?: number | null;
+          manager_id?: string;
+          merchant_id?: string;
+          merchant_name?: string;
+          rating?: number | null;
+          review?: string | null;
+          type?: Database['public']['Enums']['review_type'];
+          visit_date?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'public_bookmark_manager_id_fkey';
+            columns: ['manager_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'public_review_group_id_fkey';
+            columns: ['group_id'];
+            isOneToOne: false;
+            referencedRelation: 'groups';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      bookmark_menu: {
+        Row: {
+          bookmark_id: number;
+          id: number;
+          name: string;
+          rating: number | null;
+          review: string | null;
+        };
+        Insert: {
+          bookmark_id: number;
+          id?: number;
+          name: string;
+          rating?: number | null;
+          review?: string | null;
+        };
+        Update: {
+          bookmark_id?: number;
+          id?: number;
+          name?: string;
+          rating?: number | null;
+          review?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'public_bookmark_menu_bookmark_id_fkey';
+            columns: ['bookmark_id'];
+            isOneToOne: false;
+            referencedRelation: 'bookmark';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       group_invitation: {
         Row: {
           created_at: string;
@@ -93,98 +188,6 @@ export type Database = {
           name?: string;
         };
         Relationships: [];
-      };
-      review: {
-        Row: {
-          created_at: string | null;
-          group_id: string;
-          id: number;
-          image: string[] | null;
-          lat: number | null;
-          lng: number | null;
-          merchant_id: string;
-          merchant_name: string;
-          rating: number | null;
-          review: string | null;
-          type: Database['public']['Enums']['review_type'];
-          visit_date: string | null;
-        };
-        Insert: {
-          created_at?: string | null;
-          group_id: string;
-          id?: number;
-          image?: string[] | null;
-          lat?: number | null;
-          lng?: number | null;
-          merchant_id: string;
-          merchant_name: string;
-          rating?: number | null;
-          review?: string | null;
-          type: Database['public']['Enums']['review_type'];
-          visit_date?: string | null;
-        };
-        Update: {
-          created_at?: string | null;
-          group_id?: string;
-          id?: number;
-          image?: string[] | null;
-          lat?: number | null;
-          lng?: number | null;
-          merchant_id?: string;
-          merchant_name?: string;
-          rating?: number | null;
-          review?: string | null;
-          type?: Database['public']['Enums']['review_type'];
-          visit_date?: string | null;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'public_review_group_id_fkey';
-            columns: ['group_id'];
-            isOneToOne: false;
-            referencedRelation: 'groups';
-            referencedColumns: ['id'];
-          },
-        ];
-      };
-      review_menu: {
-        Row: {
-          id: number;
-          name: string;
-          rating: number | null;
-          review: string | null;
-          review_id: number;
-        };
-        Insert: {
-          id?: number;
-          name: string;
-          rating?: number | null;
-          review?: string | null;
-          review_id: number;
-        };
-        Update: {
-          id?: number;
-          name?: string;
-          rating?: number | null;
-          review?: string | null;
-          review_id?: number;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'fk_merchants';
-            columns: ['review_id'];
-            isOneToOne: false;
-            referencedRelation: 'review';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'public_review_menu_review_id_fkey';
-            columns: ['review_id'];
-            isOneToOne: false;
-            referencedRelation: 'review';
-            referencedColumns: ['id'];
-          },
-        ];
       };
     };
     Views: {

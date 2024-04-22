@@ -1,10 +1,6 @@
-import { ReviewMenu } from '@/entities/menu';
 import { supabase } from '@/shared/lib';
 
-export const createReviewMenu = async ([reviewId, menus]: [
-  reviewId: number,
-  menu: Array<ReviewMenu>,
-]) => {
+export const createReviewMenu = async ([reviewId, menus]: [reviewId: number, menu: Array<any>]) => {
   const { data, error } = await supabase
     .from('review_menu')
     .insert(

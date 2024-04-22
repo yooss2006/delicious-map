@@ -6,4 +6,5 @@ export const queryKey = {
   groupMemberListByUserId: (userId?: string) => ['group_member', 'user', userId],
   invitationByGroupId: (groupId?: string) => ['invitation', 'group', groupId],
   invitationByLink: (link?: string) => ['invitation', 'link', link],
+  bookmarkListByGroupId: (groupId?: string) => ['bookmark', 'group', groupId],
 };
