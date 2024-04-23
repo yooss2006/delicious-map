@@ -1,6 +1,6 @@
 import { Navigate, RouteObject } from 'react-router-dom';
 
-import { EmailVerificationPage, LoginPage, RegisterPage } from '@/pages/auth';
+import { CreateProfilePage, LoginPage, RegisterPage } from '@/pages/auth';
 import { AuthLayout } from '@/pages/layout';
 import { lazyImport } from '@/shared/lib/lazyImport';
 
@@ -23,8 +23,8 @@ const beforeLoginRoutes: Array<RouteObject> = [
         element: <RegisterPage />,
       },
       {
-        path: 'email-verification',
-        element: <EmailVerificationPage />,
+        path: 'create-profile',
+        element: <CreateProfilePage />,
       },
       { path: '*', element: <Navigate to="/auth/login" replace /> },
     ],

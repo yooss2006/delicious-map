@@ -5,17 +5,17 @@ import { FaFacebook } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 
-import { socialLogin } from '@/features/auth/social-login';
+import { oAuthLoginUser } from '../api';
 
 type Props = {
   isLoading?: boolean;
 };
 
-export function SocalLoginButtonGroup({ isLoading = false }: Props) {
+export function OAuthLoginButtonGroup({ isLoading = false }: Props) {
   return (
     <ButtonGroup display="flex" justifyContent="space-evenly">
-      <SocialLoginButton isLoading={isLoading} provider="google" Icon={FcGoogle} fontSize="32px" />
-      <SocialLoginButton
+      <OAuthLoginButton isLoading={isLoading} provider="google" Icon={FcGoogle} fontSize="32px" />
+      <OAuthLoginButton
         isLoading={isLoading}
         provider="facebook"
         Icon={FaFacebook}
@@ -23,7 +23,7 @@ export function SocalLoginButtonGroup({ isLoading = false }: Props) {
         isDisabled
         color="#0766ff"
       />
-      <SocialLoginButton
+      <OAuthLoginButton
         isLoading={isLoading}
         provider="kakao"
         Icon={RiKakaoTalkFill}
@@ -35,13 +35,13 @@ export function SocalLoginButtonGroup({ isLoading = false }: Props) {
   );
 }
 
-type SocialLoginButtonProps = Omit<IconButtonProps, 'aria-label'> & {
+type OAuthLoginButtonProps = Omit<IconButtonProps, 'aria-label'> & {
   provider: 'google' | 'kakao' | 'facebook';
   Icon: IconType;
 };
-function SocialLoginButton({ provider, Icon, ...props }: SocialLoginButtonProps) {
+function OAuthLoginButton({ provider, Icon, ...props }: OAuthLoginButtonProps) {
   const { mutate } = useMutation({
-    mutationFn: socialLogin,
+    mutationFn: oAuthLoginUser,
   });
 
   return (

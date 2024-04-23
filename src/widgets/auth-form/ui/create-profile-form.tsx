@@ -1,20 +1,22 @@
-import { FormControl, FormErrorMessage, FormLabel, Input, Text, useToast } from '@chakra-ui/react';
+import { FormControl, FormErrorMessage, FormLabel, Input, Text } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { createProfile as createProfileFn } from '@/entities/profile';
-import { SignUpUserDtoSchema, SignUpUserDto, signUpUser } from '@/entities/session';
+import {
+  CreateProfileDto,
+  CreateProfileDtoSchema,
+  createProfile as createProfileFn,
+} from '@/entities/profile';
+import { getCurrentUser } from '@/entities/session';
+import { queryClient, queryKey } from '@/shared/lib';
 import { SubmitButton, UploadedAvatar } from '@/shared/ui/form';
 
-import { PasswordInput, passwordTypeEnum } from './password-input';
-
-export function RegisterForm() {
+export function CreateProfileForm() {
   const navigate = useNavigate();
-  const toast = useToast();
-  const methods = useForm<SignUpUserDto>({
-    resolver: zodResolver(SignUpUserDtoSchema),
+  const methods = useForm<CreateProfileDto>({
+    resolver: zodResolver(CreateProfileDtoSchema),
   });
   const {
     handleSubmit,
@@ -22,28 +24,26 @@ export function RegisterForm() {
     formState: { errors },
   } = methods;
 
-  const { mutateAsync: signUp, isPending: isSignUpLoading } = useMutation({
-    mutationFn: signUpUser,
-  });
   const { mutate: createProfile, isPending: isCreateProfileLoading } = useMutation({
     mutationFn: createProfileFn,
     onSuccess: () => {
-      toast({ title: '회원가입이 완료되었습니다.', position: 'top', status: 'success' });
-      navigate('/auth/login');
+      queryClient.invalidateQueries({ queryKey: queryKey.currentUser });
+      navigate('/');
     },
   });
 
-  const onSubmit: SubmitHandler<SignUpUserDto> = async (values) => {
+  const onSubmit: SubmitHandler<CreateProfileDto> = async (values) => {
     if (isLoading) return;
-    const signUpResult = await signUp(values);
-    if (signUpResult) {
-      const { id } = signUpResult;
+    const user = await getCurrentUser();
+    if (user) {
+      const { id } = user;
       const { name, profileImage, email } = values;
       createProfile({ authId: id, name, profileImage, email });
     }
   };
 
-  const isLoading = isSignUpLoading || isCreateProfileLoading;
+  const isLoading = isCreateProfileLoading;
+  console.log(isLoading);
 
   return (
     <FormProvider {...methods}>
@@ -71,24 +71,7 @@ export function RegisterForm() {
           <Input {...register('name')} />
           <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
         </FormControl>
-        <FormControl isInvalid={!!errors.password} mb={2}>
-          <FormLabel>비밀번호</FormLabel>
-          <PasswordInput />
-          <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
-        </FormControl>
-        <FormControl isInvalid={!!errors.confirmPassword} mb={2}>
-          <FormLabel>비밀번호 확인</FormLabel>
-          <PasswordInput
-            type={passwordTypeEnum.ConfirmPassword}
-            borderWidth="1px"
-            borderColor="inherit"
-            opacity="1 !important"
-          />
-          <FormErrorMessage>
-            {errors.confirmPassword && String(errors.confirmPassword.message)}
-          </FormErrorMessage>
-        </FormControl>
-        <SubmitButton isLoading={isLoading}>회원가입</SubmitButton>
+        <SubmitButton isLoading={isLoading}>프로필 생성</SubmitButton>
       </form>
     </FormProvider>
   );

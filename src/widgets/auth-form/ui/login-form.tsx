@@ -1,27 +1,43 @@
 import { FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
-import { useFormContext } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { FormProvider, useForm } from 'react-hook-form';
 
-import { LoginFormValues } from '@/entities/auth';
+import { LoginUserDtoSchema, LoginUserDto, useLoginUser } from '@/entities/session';
+import { SubmitButton } from '@/shared/ui/form';
 
 import { PasswordInput } from './password-input';
 
 export function LoginForm() {
+  const { mutate: login, isPending } = useLoginUser();
+
+  const methods = useForm<LoginUserDto>({
+    resolver: zodResolver(LoginUserDtoSchema),
+  });
   const {
+    handleSubmit,
     register,
     formState: { errors },
-  } = useFormContext<LoginFormValues>();
+  } = methods;
+
+  const onSubmit = (values: LoginUserDto) => {
+    if (isPending) return;
+    login(values);
+  };
   return (
-    <>
-      <FormControl isInvalid={!!errors.email} mb={3}>
-        <FormLabel>email</FormLabel>
-        <Input type="email" {...register('email')} />
-        <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
-      </FormControl>
-      <FormControl mb={4} isInvalid={!!errors.password}>
-        <FormLabel>password</FormLabel>
-        <PasswordInput />
-        <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
-      </FormControl>
-    </>
+    <FormProvider {...methods}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <FormControl isInvalid={!!errors.email} mb={3}>
+          <FormLabel>email</FormLabel>
+          <Input type="email" {...register('email')} />
+          <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
+        </FormControl>
+        <FormControl mb={4} isInvalid={!!errors.password}>
+          <FormLabel>password</FormLabel>
+          <PasswordInput />
+          <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
+        </FormControl>
+        <SubmitButton isLoading={isPending}>로그인</SubmitButton>
+      </form>
+    </FormProvider>
   );
 }

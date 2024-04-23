@@ -1,3 +1,3 @@
 export * from './login';
 export * from './register';
-export * from './email-verification';
+export * from './create-profile';

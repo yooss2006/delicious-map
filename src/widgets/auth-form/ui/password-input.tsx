@@ -33,7 +33,14 @@ export function PasswordInput({ type = passwordTypeEnum.Password, ...inputProps 
       />
       <InputRightElement mr={1}>
         {!disabled && (
-          <Button size="sm" variant="text" onClick={handleClick} disabled={disabled}>
+          <Button
+            tabIndex={-1}
+            aria-label={show ? '비밀번호 감춤' : '비밀번호 표시'}
+            size="sm"
+            variant="text"
+            onClick={handleClick}
+            disabled={disabled}
+          >
             {show ? <AiFillEye /> : <AiFillEyeInvisible />}
           </Button>
         )}

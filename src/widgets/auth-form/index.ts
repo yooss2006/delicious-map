@@ -1,4 +1,4 @@
 export * from './ui/login-form';
 export * from './ui/register-form';
 export * from './ui/password-input';
-export * from './ui/social-login';
+export * from './ui/create-profile-form';
