@@ -49,3 +49,9 @@ export const useProfile = () => {
     retry: false,
   });
 };
+
+export const getProfileByEmail = async (email: string) => {
+  const { data } = await supabase.from('profile').select('*').eq('email', email).single();
+
+  return data;
+};

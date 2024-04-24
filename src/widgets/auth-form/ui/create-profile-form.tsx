@@ -1,4 +1,4 @@
-import { FormControl, FormErrorMessage, FormLabel, Input, Text } from '@chakra-ui/react';
+import { FormControl, FormErrorMessage, FormLabel, Input, Text, useToast } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
@@ -8,6 +8,7 @@ import {
   CreateProfileDto,
   CreateProfileDtoSchema,
   createProfile as createProfileFn,
+  getProfileByEmail,
 } from '@/entities/profile';
 import { getCurrentUser } from '@/entities/session';
 import { queryClient, queryKey } from '@/shared/lib';
@@ -15,6 +16,7 @@ import { SubmitButton, UploadedAvatar } from '@/shared/ui/form';
 
 export function CreateProfileForm() {
   const navigate = useNavigate();
+  const toast = useToast();
   const methods = useForm<CreateProfileDto>({
     resolver: zodResolver(CreateProfileDtoSchema),
   });
@@ -34,6 +36,14 @@ export function CreateProfileForm() {
 
   const onSubmit: SubmitHandler<CreateProfileDto> = async (values) => {
     if (isLoading) return;
+    const email = await getProfileByEmail(values.email);
+    if (email) {
+      return toast({
+        title: '이미 등록된 이메일입니다.',
+        position: 'top',
+        status: 'error',
+      });
+    }
     const user = await getCurrentUser();
     if (user) {
       const { id } = user;

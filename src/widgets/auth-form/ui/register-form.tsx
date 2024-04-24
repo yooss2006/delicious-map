@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { createProfile as createProfileFn } from '@/entities/profile';
+import { createProfile as createProfileFn, getProfileByEmail } from '@/entities/profile';
 import { SignUpUserDtoSchema, SignUpUserDto, signUpUser } from '@/entities/session';
 import { SubmitButton, UploadedAvatar } from '@/shared/ui/form';
 
@@ -35,6 +35,14 @@ export function RegisterForm() {
 
   const onSubmit: SubmitHandler<SignUpUserDto> = async (values) => {
     if (isLoading) return;
+    const email = await getProfileByEmail(values.email);
+    if (email) {
+      return toast({
+        title: '이미 등록된 이메일입니다.',
+        position: 'top',
+        status: 'error',
+      });
+    }
     const signUpResult = await signUp(values);
     if (signUpResult) {
       const { id } = signUpResult;
