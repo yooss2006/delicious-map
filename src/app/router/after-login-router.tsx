@@ -1,7 +1,8 @@
 import { Navigate } from 'react-router-dom';
 
+import { AuthLayout } from '@/pages/layout';
 import { MapLayout } from '@/pages/layout/ui/map-layout';
-import { lazyImport } from '@/shared/lib/lazyImport';
+import { lazyImport } from '@/shared/lib/lazy-import';
 
 const { DetailPage } = lazyImport(() => import('@/pages/group-detail'), 'DetailPage');
 const { ReplacePage } = lazyImport(() => import('@/widgets/replace-page'), 'ReplacePage');
@@ -12,11 +13,22 @@ const { CreateMerchantPage } = lazyImport(
   'CreateMerchantPage'
 );
 const { InvitationPage } = lazyImport(() => import('@/pages/invitation'), 'InvitationPage');
+const { EditProfilePage } = lazyImport(() => import('@/pages/edit-profile'), 'EditProfilePage');
 
 const afterLoginRoutes = [
   {
     path: '/invitation/:link',
     element: <InvitationPage />,
+  },
+  {
+    path: '/edit-profile',
+    element: <AuthLayout />,
+    children: [
+      {
+        index: true,
+        element: <EditProfilePage />,
+      },
+    ],
   },
   {
     path: '/',

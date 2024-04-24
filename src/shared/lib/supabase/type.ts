@@ -61,7 +61,7 @@ export type Database = {
             foreignKeyName: 'public_review_group_id_fkey';
             columns: ['group_id'];
             isOneToOne: false;
-            referencedRelation: 'groups';
+            referencedRelation: 'group';
             referencedColumns: ['id'];
           },
         ];
@@ -98,6 +98,41 @@ export type Database = {
           },
         ];
       };
+      group: {
+        Row: {
+          created_at: string | null;
+          creator_id: number;
+          description: string | null;
+          id: string;
+          image: string | null;
+          name: string;
+        };
+        Insert: {
+          created_at?: string | null;
+          creator_id: number;
+          description?: string | null;
+          id?: string;
+          image?: string | null;
+          name: string;
+        };
+        Update: {
+          created_at?: string | null;
+          creator_id?: number;
+          description?: string | null;
+          id?: string;
+          image?: string | null;
+          name?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'groups_creator_id_fkey';
+            columns: ['creator_id'];
+            isOneToOne: false;
+            referencedRelation: 'profile';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       group_invitation: {
         Row: {
           created_at: string;
@@ -122,15 +157,15 @@ export type Database = {
             foreignKeyName: 'public_group_invitation_group_id_fkey';
             columns: ['group_id'];
             isOneToOne: false;
-            referencedRelation: 'groups';
+            referencedRelation: 'group';
             referencedColumns: ['id'];
           },
         ];
       };
-      group_members: {
+      group_member: {
         Row: {
           group_id: string;
-          image_url: string;
+          image: string;
           joined_at: string | null;
           member_id: number;
           name: string | null;
@@ -138,7 +173,7 @@ export type Database = {
         };
         Insert: {
           group_id: string;
-          image_url: string;
+          image: string;
           joined_at?: string | null;
           member_id?: number;
           name?: string | null;
@@ -146,7 +181,7 @@ export type Database = {
         };
         Update: {
           group_id?: string;
-          image_url?: string;
+          image?: string;
           joined_at?: string | null;
           member_id?: number;
           name?: string | null;
@@ -157,37 +192,42 @@ export type Database = {
             foreignKeyName: 'public_group_members_group_id_fkey';
             columns: ['group_id'];
             isOneToOne: false;
-            referencedRelation: 'groups';
+            referencedRelation: 'group';
             referencedColumns: ['id'];
           },
         ];
       };
-      groups: {
+      profile: {
         Row: {
-          created_at: string | null;
-          description: string | null;
-          id: string;
-          image_url: string | null;
-          leader_id: string;
+          auth_id: string | null;
+          email: string;
+          id: number;
           name: string;
+          profile_image: string | null;
         };
         Insert: {
-          created_at?: string | null;
-          description?: string | null;
-          id?: string;
-          image_url?: string | null;
-          leader_id: string;
+          auth_id?: string | null;
+          email: string;
+          id?: number;
           name: string;
+          profile_image?: string | null;
         };
         Update: {
-          created_at?: string | null;
-          description?: string | null;
-          id?: string;
-          image_url?: string | null;
-          leader_id?: string;
+          auth_id?: string | null;
+          email?: string;
+          id?: number;
           name?: string;
+          profile_image?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: 'profile_auth_id_fkey';
+            columns: ['auth_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
       };
     };
     Views: {

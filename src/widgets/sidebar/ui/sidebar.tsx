@@ -8,7 +8,7 @@ import { useCurrentUser } from '@/entities/user';
 import { GroupLinkList } from './group-link-list';
 import { UserPopoverButton } from './user-popover-button';
 
-export function GroupSidebar() {
+export function Sidebar() {
   const { data: user } = useCurrentUser();
   const navigate = useNavigate();
 

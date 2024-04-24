@@ -1,10 +1,6 @@
 import { z } from 'zod';
 
-import { CreateProfileDtoSchema } from '../model';
+import { CreateProfileDtoSchema, EditProfileDtoSchema } from '../model';
 
 export type CreateProfileDto = z.infer<typeof CreateProfileDtoSchema>;
-
-export type CreateProfileEmailDto = {
-  email: string;
-  checkedEmail: boolean;
-};
+export type EditProfileDto = z.infer<typeof EditProfileDtoSchema>;

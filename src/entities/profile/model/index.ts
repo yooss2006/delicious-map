@@ -6,3 +6,8 @@ export const CreateProfileDtoSchema = z.object({
   authId: z.string().optional(),
   profileImage: z.any().optional(),
 });
+
+export const EditProfileDtoSchema = z.object({
+  name: z.string().min(2, '닉네임은 필수 입니다.'),
+  profileImage: z.any().optional(),
+});

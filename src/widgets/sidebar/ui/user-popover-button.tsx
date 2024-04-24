@@ -7,21 +7,23 @@ import {
   PopoverContent,
   PopoverTrigger,
   Portal,
+  Link as ChakraLink,
 } from '@chakra-ui/react';
 import { AiOutlineUser } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 
-import { useCurrentUser } from '@/entities/user';
+import { useProfile } from '@/entities/profile';
 import { LogoutButton } from '@/features/auth/logout';
 
 export function UserPopoverButton() {
-  const { data: user } = useCurrentUser();
-  const profileImage = user?.user_metadata?.avatar_url;
+  const { data: profile } = useProfile();
+
   return (
     <Popover placement="right-start">
       <PopoverTrigger>
         <Button w={14} h={14} p={0} borderRadius="md" overflow="hidden">
           <Image
-            src={profileImage}
+            src={profile?.profile_image ?? ''}
             alt="프로필 이미지"
             w="100%"
             h="100%"
@@ -33,8 +35,13 @@ export function UserPopoverButton() {
       <Portal>
         <PopoverContent>
           <PopoverArrow />
-          <PopoverBody display="flex" flexDirection="column" gap={2}>
-            <LogoutButton />
+          <PopoverBody display="flex" gap={2}>
+            <ChakraLink as={Link} to="/edit-profile" flexBasis="50%">
+              <Button w="full" colorScheme="yellow">
+                프로필 수정
+              </Button>
+            </ChakraLink>
+            <LogoutButton flexBasis="50%" />
           </PopoverBody>
         </PopoverContent>
       </Portal>

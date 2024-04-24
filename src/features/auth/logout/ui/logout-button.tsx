@@ -1,15 +1,11 @@
-import { Button } from '@chakra-ui/react';
+import { Button, ButtonProps } from '@chakra-ui/react';
 
 import { useLogout } from '@/entities/session';
 
-export function LogoutButton() {
+export function LogoutButton(props: ButtonProps) {
   const { mutate: logout, isPending } = useLogout();
   return (
-    <Button
-      _dark={{ background: 'red.800', _hover: { background: 'red.900' } }}
-      onClick={() => logout()}
-      isLoading={isPending}
-    >
+    <Button colorScheme="red" {...props} onClick={() => logout()} isLoading={isPending}>
       로그아웃
     </Button>
   );

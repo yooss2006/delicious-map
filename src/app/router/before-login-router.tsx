@@ -2,7 +2,7 @@ import { Navigate, RouteObject } from 'react-router-dom';
 
 import { CreateProfilePage, LoginPage, RegisterPage } from '@/pages/auth';
 import { AuthLayout } from '@/pages/layout';
-import { lazyImport } from '@/shared/lib/lazyImport';
+import { lazyImport } from '@/shared/lib/lazy-import';
 
 const { NotLoginInvitationPage } = lazyImport(
   () => import('@/pages/invitation'),
