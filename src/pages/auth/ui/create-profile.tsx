@@ -10,8 +10,9 @@ export function CreateProfilePage() {
   const navigate = useNavigate();
 
   if (isLoading) return <LoadingPage />;
-  if (profile) return navigate('/');
-
+  if (profile) {
+    navigate('/');
+  }
   return (
     <Box>
       <Heading as="h2" size="xl" textAlign="center" color="green.50" _dark={{ color: 'gray.200' }}>

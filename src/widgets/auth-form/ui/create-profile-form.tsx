@@ -26,8 +26,8 @@ export function CreateProfileForm() {
 
   const { mutate: createProfile, isPending: isCreateProfileLoading } = useMutation({
     mutationFn: createProfileFn,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKey.currentUser });
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: queryKey.currentUser });
       navigate('/');
     },
   });
@@ -43,7 +43,6 @@ export function CreateProfileForm() {
   };
 
   const isLoading = isCreateProfileLoading;
-  console.log(isLoading);
 
   return (
     <FormProvider {...methods}>

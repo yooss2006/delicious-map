@@ -27,12 +27,12 @@ export function LoginForm() {
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl isInvalid={!!errors.email} mb={3}>
-          <FormLabel>email</FormLabel>
+          <FormLabel>이메일</FormLabel>
           <Input type="email" {...register('email')} />
           <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
         </FormControl>
         <FormControl mb={4} isInvalid={!!errors.password}>
-          <FormLabel>password</FormLabel>
+          <FormLabel>비밀번호</FormLabel>
           <PasswordInput />
           <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
         </FormControl>
