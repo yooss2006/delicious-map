@@ -91,3 +91,19 @@ export const getCurrentUser = async () => {
 
   return user;
 };
+
+const logout = async () => {
+  const { error } = await supabase.auth.signOut();
+  if (error) {
+    throw error;
+  }
+};
+
+export const useLogout = () => {
+  return useMutation({
+    mutationFn: logout,
+    onSuccess() {
+      window.location.href = '/';
+    },
+  });
+};

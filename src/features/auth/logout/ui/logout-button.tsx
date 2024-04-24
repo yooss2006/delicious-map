@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/react';
 
-import { useLogout } from './api';
+import { useLogout } from '@/entities/session';
 
 export function LogoutButton() {
   const { mutate: logout, isPending } = useLogout();

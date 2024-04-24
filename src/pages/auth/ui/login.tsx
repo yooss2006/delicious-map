@@ -1,7 +1,7 @@
 import { Box, Divider, Heading, Text, Link as ChakraLink, AbsoluteCenter } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
-import { OAuthLoginButtonGroup } from '@/entities/session';
+import { OAuthLoginButtonGroup } from '@/features/auth/login-oauth';
 import { useParsedLocation } from '@/shared/hooks';
 import { LoginForm } from '@/widgets/auth-form';
 

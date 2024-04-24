@@ -5,7 +5,7 @@ import { FaFacebook } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 
-import { oAuthLoginUser } from '../api';
+import { oAuthLoginUser } from '@/entities/session/api';
 
 type Props = {
   isLoading?: boolean;
