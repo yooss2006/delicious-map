@@ -14,7 +14,7 @@ export function Sidebar() {
 
   const { data: groups, isLoading } = useGroupList({ userId: user?.id });
 
-  const moveCreateGroupPage = () => navigate('/create-group');
+  const moveCreateGroupPage = () => navigate('/group/create');
 
   return (
     <Flex

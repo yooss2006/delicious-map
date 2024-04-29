@@ -16,7 +16,7 @@ export function ReplacePage() {
     );
 
   if (!groups || (groups && groups.length === 0)) {
-    return <Navigate to="/create-group" replace={true} />;
+    return <Navigate to="/group/create" replace={true} />;
   }
 
   return <Navigate to={`/group/${groups[0]?.id}`} replace={true} />;

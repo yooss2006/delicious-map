@@ -8,7 +8,7 @@ import { MainBox } from '@/widgets/group-detail-main';
 import { SearchBox } from '@/widgets/group-detail-search';
 import { MenuSidebar } from '@/widgets/menu';
 
-export function DetailPage() {
+export function GroupDetailPage() {
   const navigate = useNavigate();
   const { data: group, isLoading } = useGroupDetail();
 
@@ -18,7 +18,7 @@ export function DetailPage() {
 
   useEffect(() => {
     if (!group && !isLoading) {
-      navigate('/create-group');
+      navigate('/group/create');
     }
   }, [group, navigate, isLoading]);
 
