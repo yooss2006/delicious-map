@@ -1,4 +1,4 @@
-import { List, ListItem, Text } from '@chakra-ui/react';
+import { Flex, Text, List, ListItem } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 
@@ -7,26 +7,32 @@ import { useSearchPlaces } from '@/features/kakao-places/search-places';
 import { useParsedLocation } from '@/shared/hooks';
 import { queryKey } from '@/shared/lib';
 import { scrollNoneStyles } from '@/shared/style';
+import { QueryStringSearch } from '@/shared/ui/search';
 
 import { MerchantCard } from './merchant-card';
 
-export function SearchResultList() {
-  const { id } = useParams();
+export function SearchBox() {
   const { query } = useParsedLocation();
   const q = query.q;
+  return (
+    <Flex w="100%" h="100%" mt={2} px={4} flexDirection="column">
+      <QueryStringSearch />
+      {q ? <SearchResultList q={q} /> : <Text mt={1}>음식점 또는 카페를 검색하세요.</Text>}
+    </Flex>
+  );
+}
+
+export function SearchResultList({ q }: { q: string }) {
+  const { id } = useParams();
+  const places = useSearchPlaces();
+
   const { data } = useQuery({
     queryKey: queryKey.bookmarkListByGroupId(id),
     queryFn: getBookmarkByGroupId,
-    enabled: !!query.q,
+    enabled: !!q,
   });
 
   console.log(data);
-
-  const places = useSearchPlaces();
-
-  if (!q) {
-    return <Text mt={1}>음식점 또는 카페를 검색하세요.</Text>;
-  }
 
   return (
     <List

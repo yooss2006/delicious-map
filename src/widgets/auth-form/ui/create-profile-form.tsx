@@ -4,6 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
+import { useUploadImageMutation } from '@/entities/image';
 import {
   CreateProfileDto,
   CreateProfileDtoSchema,
@@ -26,13 +27,14 @@ export function CreateProfileForm() {
     formState: { errors },
   } = methods;
 
-  const { mutate: createProfile, isPending: isCreateProfileLoading } = useMutation({
+  const createProfileMutation = useMutation({
     mutationFn: createProfileFn,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: queryKey.currentUser });
       navigate('/');
     },
   });
+  const uploadImageMutation = useUploadImageMutation();
 
   const onSubmit: SubmitHandler<CreateProfileDto> = async (values) => {
     if (isLoading) return;
@@ -47,27 +49,29 @@ export function CreateProfileForm() {
     const user = await getCurrentUser();
     if (user) {
       const { id } = user;
-      const { name, profileImage, email } = values;
-      createProfile({ authId: id, name, profileImage, email });
+      const { name, email } = values;
+      let { image } = values;
+      if (image) {
+        image = await uploadImageMutation.mutateAsync({
+          image: image[0],
+          storageName: 'profile',
+        });
+      }
+
+      createProfileMutation.mutate({ authId: id, name, image, email });
     }
   };
 
-  const isLoading = isCreateProfileLoading;
+  const isLoading = createProfileMutation.isPending || uploadImageMutation.isPending;
 
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl mb={2}>
-          <FormLabel htmlFor="profileImage" cursor="pointer" textAlign="center">
-            <UploadedAvatar name="profileImage" />
+          <FormLabel htmlFor="image" cursor="pointer" textAlign="center">
+            <UploadedAvatar name="image" />
           </FormLabel>
-          <Input
-            type="file"
-            id="profileImage"
-            accept="image/*"
-            display="none"
-            {...register('profileImage')}
-          />
+          <Input type="file" id="image" accept="image/*" display="none" {...register('image')} />
           <Text textAlign="center">👆를 클릭해 프로필 이미지를 추가해보세요.</Text>
         </FormControl>
         <FormControl isInvalid={!!errors.email} mb={2}>

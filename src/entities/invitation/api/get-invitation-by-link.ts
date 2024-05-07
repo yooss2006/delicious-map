@@ -9,7 +9,7 @@ const getInvitationByLink = async ({ queryKey }: { queryKey: Array<any> }) => {
     .select(
       `
         *,
-        groups (*)
+        group (*)
       )
     `
     )

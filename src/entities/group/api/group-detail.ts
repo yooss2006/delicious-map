@@ -5,8 +5,8 @@ import { queryKey, supabase } from '@/shared/lib';
 
 export const getGroupByGroupId = async ({ queryKey }: { queryKey: Array<any> }) => {
   const { data, error } = await supabase
-    .from('groups')
-    .select(`*, members: group_members (*)`)
+    .from('group')
+    .select(`*, member: group_member (*, profile(*)), profile (*)`)
     .eq('id', queryKey[1]);
   if (error) throw error;
   return data[0];

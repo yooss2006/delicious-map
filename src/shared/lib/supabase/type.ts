@@ -164,35 +164,39 @@ export type Database = {
       };
       group_member: {
         Row: {
-          group_id: string;
-          image: string;
-          joined_at: string | null;
-          member_id: number;
-          name: string | null;
-          user_id: string;
+          '\bcreated_at': string | null;
+          'group_id': string;
+          'id': number;
+          'name': string;
+          'profile_id': number;
         };
         Insert: {
-          group_id: string;
-          image: string;
-          joined_at?: string | null;
-          member_id?: number;
-          name?: string | null;
-          user_id: string;
+          '\bcreated_at'?: string | null;
+          'group_id': string;
+          'id'?: number;
+          'name': string;
+          'profile_id': number;
         };
         Update: {
-          group_id?: string;
-          image?: string;
-          joined_at?: string | null;
-          member_id?: number;
-          name?: string | null;
-          user_id?: string;
+          '\bcreated_at'?: string | null;
+          'group_id'?: string;
+          'id'?: number;
+          'name'?: string;
+          'profile_id'?: number;
         };
         Relationships: [
           {
-            foreignKeyName: 'public_group_members_group_id_fkey';
+            foreignKeyName: 'group_member_group_id_fkey';
             columns: ['group_id'];
             isOneToOne: false;
             referencedRelation: 'group';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'group_member_profile_id_fkey';
+            columns: ['profile_id'];
+            isOneToOne: false;
+            referencedRelation: 'profile';
             referencedColumns: ['id'];
           },
         ];
@@ -202,22 +206,22 @@ export type Database = {
           auth_id: string | null;
           email: string;
           id: number;
+          image: string | null;
           name: string;
-          profile_image: string | null;
         };
         Insert: {
           auth_id?: string | null;
           email: string;
           id?: number;
+          image?: string | null;
           name: string;
-          profile_image?: string | null;
         };
         Update: {
           auth_id?: string | null;
           email?: string;
           id?: number;
+          image?: string | null;
           name?: string;
-          profile_image?: string | null;
         };
         Relationships: [
           {

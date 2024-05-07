@@ -1,20 +1,20 @@
 import { supabase } from '@/shared/lib';
 
 export const createGroupMember = async ({
-  userId,
+  profileId,
   name,
   groupId,
-  userImageUrl,
+  image,
 }: {
-  userId?: string;
+  profileId?: number;
   groupId?: string;
   name?: string;
-  userImageUrl?: string;
+  image?: string;
 }) => {
-  if (!(userId && groupId)) return;
+  if (!(profileId && groupId)) return;
   const { data, error } = await supabase
-    .from('group_members')
-    .insert({ user_id: userId, group_id: groupId, image_url: userImageUrl ?? '', name })
+    .from('group_member')
+    .insert({ profile_id: profileId, group_id: groupId, image: image ?? '', name })
     .select();
 
   if (error) {

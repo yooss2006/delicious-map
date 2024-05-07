@@ -1,18 +1,19 @@
 import { AddIcon } from '@chakra-ui/icons';
-import { CircularProgress, Divider, Flex, IconButton } from '@chakra-ui/react';
+import { Divider, Flex, IconButton } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 
-import { useGroupList } from '@/entities/group/api/group-list';
-import { useCurrentUser } from '@/entities/user';
+import { useGroupListByProfileId } from '@/entities/group/api/group-list';
+import { useProfile } from '@/entities/profile';
+import { LoadingCircle } from '@/shared/ui/loading';
 
 import { GroupLinkList } from './group-link-list';
 import { UserPopoverButton } from './user-popover-button';
 
 export function Sidebar() {
-  const { data: user } = useCurrentUser();
+  const { data: profile } = useProfile();
   const navigate = useNavigate();
 
-  const { data: groups, isLoading } = useGroupList({ userId: user?.id });
+  const { data: groups, isLoading } = useGroupListByProfileId({ profileId: profile?.id });
 
   const moveCreateGroupPage = () => navigate('/group/create');
 
@@ -41,11 +42,7 @@ export function Sidebar() {
         icon={<AddIcon color="green.600" _dark={{ color: 'gray.800' }} />}
         onClick={moveCreateGroupPage}
       />
-      {isLoading ? (
-        <CircularProgress isIndeterminate color="green.300" />
-      ) : (
-        <GroupLinkList groups={groups} />
-      )}
+      {isLoading ? <LoadingCircle /> : <GroupLinkList groups={groups} />}
     </Flex>
   );
 }

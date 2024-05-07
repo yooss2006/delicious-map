@@ -1,12 +1,12 @@
 import { Flex } from '@chakra-ui/react';
 import { Navigate } from 'react-router-dom';
 
-import { useGroupList } from '@/entities/group/api/group-list';
-import { useCurrentUser } from '@/entities/user';
+import { useGroupListByProfileId } from '@/entities/group/api/group-list';
+import { useProfile } from '@/entities/profile';
 
 export function ReplacePage() {
-  const { data: user } = useCurrentUser();
-  const { data: groups, isLoading } = useGroupList({ userId: user?.id });
+  const { data: profile } = useProfile();
+  const { data: groups, isLoading } = useGroupListByProfileId({ profileId: profile?.id });
 
   if (isLoading)
     return (

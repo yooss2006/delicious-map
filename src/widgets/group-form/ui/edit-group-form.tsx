@@ -4,7 +4,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 
 import { Group } from '@/entities/group';
-import { useGroupDetail } from '@/entities/group/api/get-group-by-group-id';
+import { useGroupDetail } from '@/entities/group/api/group-detail';
 import { useEditGroup } from '@/features/group/edit-group';
 import { GroupForm } from '@/widgets/group-form';
 

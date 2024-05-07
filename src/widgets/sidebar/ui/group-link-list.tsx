@@ -7,7 +7,7 @@ import { Database } from '@/shared/lib/supabase/type';
 import { scrollNoneStyles } from '@/shared/style';
 
 type Props = {
-  groups?: Array<Database['public']['Tables']['groups']['Row']>;
+  groups?: Array<Database['public']['Tables']['group']['Row']>;
 };
 
 const RegUserCircle = chakra(FaRegUserCircle);
@@ -19,7 +19,7 @@ export function GroupLinkList({ groups = [] }: Props) {
   return (
     <Box w="100%" maxH="100%" sx={scrollNoneStyles}>
       <Flex py={1} justifyContent="center" flexDirection="column" gap={4} alignItems="center">
-        {groups?.map(({ id: groupId, name, image_url }) => {
+        {groups?.map(({ id: groupId, name, image }) => {
           const nextPathname = `/group/${groupId}`;
           const isCurrentGroup = id === groupId;
 
@@ -55,7 +55,7 @@ export function GroupLinkList({ groups = [] }: Props) {
               }}
             >
               <Image
-                src={image_url ?? ''}
+                src={image ?? ''}
                 alt={name}
                 w="100%"
                 h="100%"

@@ -8,22 +8,28 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
-  Spinner,
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 
-import { useLatestInvitationByGroupId } from '@/entities/invitation';
-import { useCreateInvitation } from '@/features/invitation/create-invitation';
+import { useLatestInvitationByGroupId, useCreateInvitation } from '@/entities/invitation';
 import { CopyableInput } from '@/shared/ui/input';
+import { LoadingCircle } from '@/shared/ui/loading';
 
 export function GroupInviteModal() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
-      <Button leftIcon={<EmailIcon />} onClick={onOpen}>
+      <Button
+        leftIcon={<EmailIcon />}
+        onClick={onOpen}
+        position="absolute"
+        right={3}
+        top="50%"
+        transform="translateY(-50%)"
+      >
         초대하기
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} size="2xl">
@@ -34,7 +40,7 @@ export function GroupInviteModal() {
   );
 }
 
-export function GroupInviteModalContent() {
+function GroupInviteModalContent() {
   const { id } = useParams();
   const { data: invitation, isLoading } = useLatestInvitationByGroupId();
   const { mutate, isPending } = useCreateInvitation();
@@ -64,13 +70,13 @@ export function GroupInviteModalContent() {
         <Flex mb={2} gap={2} alignItems="center" justifyContent="space-between">
           {isLoading ? (
             <Flex flex={1} alignItems="center" gap={4}>
-              <Spinner /> 링크를 불러오는 중입니다.
+              <LoadingCircle />
             </Flex>
           ) : (
             <CopyableInput
               leftText={`${import.meta.env.VITE_BASE_URL}/invitation/`}
               isDisabled
-              value={invitation?.link}
+              value={invitation?.link ?? ''}
             />
           )}
           <Button

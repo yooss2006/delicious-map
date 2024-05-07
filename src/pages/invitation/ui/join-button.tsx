@@ -2,7 +2,7 @@ import { Button } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
-import { useCurrentUser } from '@/entities/user';
+import { useProfile } from '@/entities/profile';
 import { createGroupMember } from '@/features/member/create-group-member';
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 
 // 현재 로그인된 유저를 그룹에 추가하는 버튼
 export function JoinButton({ groupId }: Props) {
-  const { data: user } = useCurrentUser();
+  const { data: profile } = useProfile();
   const navigate = useNavigate();
 
   const { mutate } = useMutation({
@@ -22,12 +22,12 @@ export function JoinButton({ groupId }: Props) {
   });
 
   const handleButtonClick = () => {
-    if (!user) return;
+    if (!profile) return;
     mutate({
-      userId: user?.id,
+      profileId: profile?.id,
       groupId,
-      userImageUrl: user?.user_metadata?.avatar_url,
-      name: user?.user_metadata?.name,
+      image: profile?.image ?? '',
+      name: profile?.name,
     });
   };
 

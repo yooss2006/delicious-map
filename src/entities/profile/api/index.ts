@@ -1,22 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { queryKey, supabase } from '@/shared/lib';
-import { uploadImage } from '@/shared/lib/supabase/upload-image';
 
 import { CreateProfileDto, EditProfileDto } from './type';
 
-export const createProfile = async ({ profileImage, authId, ...rest }: CreateProfileDto) => {
-  let imageUrl = null;
-  if (profileImage?.length) {
-    imageUrl = await uploadImage({ image: profileImage[0], storageName: 'profile' });
-  }
+export const createProfile = async ({ image, authId, ...rest }: CreateProfileDto) => {
   const { data, error } = await supabase
     .from('profile')
     .insert([
       {
         ...rest,
         auth_id: authId,
-        profile_image: imageUrl,
+        image,
       },
     ])
     .select('*')
@@ -65,7 +60,7 @@ export const editProfileByEmail = async ([email, values]: [
 ]) => {
   const { data, error } = await supabase
     .from('profile')
-    .update({ profile_image: values.profileImage, name: values.name })
+    .update({ image: values.image, name: values.name })
     .eq('email', email)
     .select('*');
 

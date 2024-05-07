@@ -23,7 +23,7 @@ export function UserPopoverButton() {
       <PopoverTrigger>
         <Button w={14} h={14} p={0} borderRadius="md" overflow="hidden">
           <Image
-            src={profile?.profile_image ?? ''}
+            src={profile?.image ?? ''}
             alt="프로필 이미지"
             w="100%"
             h="100%"

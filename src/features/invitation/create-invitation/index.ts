@@ -1,1 +1,1 @@
-export * from './api';
+export * from './ui/group-invite-button';

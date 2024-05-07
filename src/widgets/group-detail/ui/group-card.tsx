@@ -1,8 +1,8 @@
 import { Card, CardBody, CardHeader, Heading, Text } from '@chakra-ui/react';
 
-import { useGroupDetail } from '@/entities/group/api/get-group-by-group-id';
+import { useGroupDetail } from '@/entities/group/api/group-detail';
 
-import { GroupInviteModal } from './group-invite-button';
+import { GroupInviteModal } from '../../../features/invitation/create-invitation/ui/group-invite-button';
 
 export function GroupCard() {
   const { data: group } = useGroupDetail();

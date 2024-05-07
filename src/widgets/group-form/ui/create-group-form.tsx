@@ -1,30 +1,59 @@
 import { Box, Button, chakra } from '@chakra-ui/react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
-import { Group } from '@/entities/group';
-import { useCurrentUser } from '@/entities/user';
-import { useCreateGroup } from '@/features/group/create-group';
+import { GroupDto } from '@/entities/group/api/type';
+import { GroupDtoSchema } from '@/entities/group/model';
+import { GroupService, useCreateGroupMutation } from '@/entities/group/queries';
+import { useCreateGroupMemberMutation } from '@/entities/group-member/queries';
+import { useUploadImageMutation } from '@/entities/image';
+import { useProfile } from '@/entities/profile';
 
 import { GroupForm } from './group-form';
 
 export function CreateGroupForm() {
-  const { data: user } = useCurrentUser();
-  const userId = user?.id;
+  const navigate = useNavigate();
+  const { data: profile } = useProfile();
+  const id = profile?.id;
 
-  const { mutate, isPending } = useCreateGroup();
+  const createGroupMutation = useCreateGroupMutation();
+  const createMemberMutation = useCreateGroupMemberMutation();
+  const uploadImageMutation = useUploadImageMutation();
 
-  const methods = useForm<Group>();
+  const methods = useForm<GroupDto>({
+    resolver: zodResolver(GroupDtoSchema),
+  });
   const { handleSubmit } = methods;
 
-  const onSubmit: SubmitHandler<Group> = async (values) => {
-    if (!userId) return;
-    mutate({
-      ...values,
-      userId,
-      userImageUrl: user?.user_metadata?.avatar_url,
-      nickName: user?.user_metadata?.name,
+  const onSubmit: SubmitHandler<GroupDto> = async ({ profileImage, ...rest }) => {
+    if (!id) return;
+    const uploadedImage = profileImage?.[0];
+    const image = await uploadImageMutation.mutateAsync({
+      image: uploadedImage,
+      storageName: 'group',
     });
+    const group = await createGroupMutation.mutateAsync({
+      ...rest,
+      image,
+      creatorId: id,
+    });
+    if (!group) return;
+
+    const groupMember = await createMemberMutation.mutateAsync({
+      groupId: group.id,
+      profileId: id,
+      name: rest.name,
+    });
+    console.log(groupMember);
+
+    if (groupMember) {
+      GroupService.refreshGroupList();
+      navigate(`/group/${group.id}`);
+    }
   };
+
+  const isLoading = createGroupMutation.isPending || createMemberMutation.isPending;
 
   return (
     <FormProvider {...methods}>
@@ -43,7 +72,7 @@ export function CreateGroupForm() {
               color: 'gray.300',
               _hover: { bg: 'green.700', color: 'gray.100' },
             }}
-            isLoading={isPending}
+            isLoading={isLoading}
           >
             추가
           </Button>

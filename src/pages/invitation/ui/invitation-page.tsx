@@ -19,7 +19,7 @@ import {
 import { Link } from 'react-router-dom';
 
 import { useGroupMemberListByUserId } from '@/entities/group-member';
-import { useInvitationByLink } from '@/entities/invitation/api/get-invitation-by-link';
+import { useInvitationByLink } from '@/entities/invitation';
 import { useCurrentUser } from '@/entities/user';
 import { LoadingPage } from '@/shared/ui/layout';
 

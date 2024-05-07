@@ -32,7 +32,7 @@ const updateGroupFn = async ({
   imageUrl: string;
 }) => {
   const { data, error } = await supabase
-    .from('groups')
+    .from('group')
     .update({ name, description, image_url: imageUrl })
     .eq('id', groupId)
     .select();
