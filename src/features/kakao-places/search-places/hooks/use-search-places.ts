@@ -19,8 +19,8 @@ interface Place {
 
 export const useSearchPlaces = () => {
   const [placeController, setPlaceController] = useState<any>(null);
-  const { query } = useParsedLocation();
   const [places, setPlaces] = useState<Array<Place>>([]);
+  const { query } = useParsedLocation();
 
   const searchPlaces = useCallback(
     async (keyword: string) => {

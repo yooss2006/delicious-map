@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { FaCrown } from 'react-icons/fa6';
 
-import { useGroupDetail } from '@/entities/group/api/group-detail';
+import { useGroupDetail } from '@/entities/group';
 import { useProfile } from '@/entities/profile';
 import { scrollNoneStyles } from '@/shared/style';
 import { LoadingCircle } from '@/shared/ui/loading';

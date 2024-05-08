@@ -1,17 +1,17 @@
 import { SearchIcon } from '@chakra-ui/icons';
-import { Flex, IconButton, Input, chakra } from '@chakra-ui/react';
+import { Flex, IconButton, Input, InputProps, chakra } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useParsedLocation } from '@/shared/hooks';
 
 type Props = {
-  key?: string;
-};
+  keyword?: string;
+} & InputProps;
 
-export function QueryStringSearch({ key = 'q' }: Props) {
+export function QueryStringSearch({ keyword = 'q', placeholder = '검색', ...props }: Props) {
   const { query } = useParsedLocation();
-  const q = query[key];
+  const q = query[keyword];
   const [searchText, setSearchText] = useState(q ?? '');
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -22,7 +22,7 @@ export function QueryStringSearch({ key = 'q' }: Props) {
   const handleFormFinish = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!searchText.replace(/^\s+|\s+$/g, '')) return;
-    searchParams.set(key, searchText);
+    searchParams.set(keyword, searchText);
     setSearchParams(searchParams);
   };
 
@@ -30,15 +30,16 @@ export function QueryStringSearch({ key = 'q' }: Props) {
     <chakra.form onSubmit={handleFormFinish}>
       <Flex justifyContent="space-between" alignItems="center" gap={2}>
         <Input
+          {...props}
+          placeholder={placeholder}
           borderWidth="1px"
           borderColor="gray.300"
           value={searchText}
           onChange={handleChange}
-          placeholder="장소 검색"
           size="lg"
         />
         <IconButton
-          aria-label="음식점/카페 검색"
+          aria-label="검색"
           type="submit"
           icon={<SearchIcon />}
           size="lg"

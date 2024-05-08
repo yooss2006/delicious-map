@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useGroupDetail } from '@/entities/group/api/group-detail';
+import { useGroupDetail } from '@/entities/group';
 import { GroupDetailPageContent } from '@/widgets/group-detail';
 
 export function GroupDetailPage() {

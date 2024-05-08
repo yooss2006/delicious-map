@@ -1,6 +1,6 @@
 import { Avatar, List, ListItem } from '@chakra-ui/react';
 
-import { useGroupDetail } from '@/entities/group/api/group-detail';
+import { useGroupDetail } from '@/entities/group';
 import { Database } from '@/shared/lib/supabase/type';
 import { scrollNoneStyles } from '@/shared/style';
 import { LoadingCircle } from '@/shared/ui/loading';

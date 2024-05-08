@@ -1,8 +1,10 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { useParams } from 'react-router-dom';
 
 import { queryClient } from '@/shared/lib';
 
 import { createGroup } from './api/create-group';
+import { getGroupByGroupId } from './api/group-detail';
 
 export const groupKeys = {
   root: () => ['group'],
@@ -16,6 +18,12 @@ export const GroupService = {
   refreshGroupList: () => {
     queryClient.invalidateQueries({ queryKey: groupKeys.groupList() });
   },
+};
+
+export const useGroupDetail = () => {
+  const { id = '' } = useParams();
+
+  return useQuery({ queryKey: groupKeys.groupDetail(id), queryFn: getGroupByGroupId });
 };
 
 export const useCreateGroupMutation = () => {

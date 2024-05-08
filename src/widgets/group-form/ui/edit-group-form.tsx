@@ -3,8 +3,7 @@ import { useEffect } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 
-import { Group } from '@/entities/group';
-import { useGroupDetail } from '@/entities/group/api/group-detail';
+import { Group, useGroupDetail } from '@/entities/group';
 import { useEditGroup } from '@/features/group/edit-group';
 import { GroupForm } from '@/widgets/group-form';
 
@@ -26,7 +25,7 @@ export function EditGroupForm() {
       reset({
         name: group.name ?? '',
         description: group.description ?? '',
-        imageUrl: group.image_url ?? '',
+        image: group.image ?? '',
       });
     }
   }, [group, reset]);
