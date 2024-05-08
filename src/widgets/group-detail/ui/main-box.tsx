@@ -13,9 +13,9 @@ import { FaCrown } from 'react-icons/fa6';
 
 import { useGroupDetail } from '@/entities/group/api/group-detail';
 import { useProfile } from '@/entities/profile';
-import { GroupInviteModal } from '@/features/invitation/create-invitation';
 import { scrollNoneStyles } from '@/shared/style';
 import { LoadingCircle } from '@/shared/ui/loading';
+import { GroupInviteModal } from '@/widgets/group-invite-modal';
 
 export function MainBox() {
   return (
