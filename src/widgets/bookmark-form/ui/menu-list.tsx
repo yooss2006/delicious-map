@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { useEffect } from 'react';
 
-import { BookmarkMenuFormValue, useMenu } from '@/entities/bookmark-menu';
+import { BookmarkMenuDto, useMenu } from '@/entities/bookmark-menu';
 import { scrollNoneStyles } from '@/shared/style';
 import { StarRatingViewer } from '@/shared/ui/form';
 
@@ -44,7 +44,7 @@ export function Menulist() {
 }
 
 type MenuItemProps = {
-  menu: BookmarkMenuFormValue;
+  menu: BookmarkMenuDto;
 };
 
 function MenuItem({ menu: { name, review, rating } }: MenuItemProps) {

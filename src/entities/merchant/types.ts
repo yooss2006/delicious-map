@@ -1,4 +1,4 @@
-export interface MerchantCardType {
+export interface Merchant {
   merchantId: string;
   lat: number;
   lng: number;

@@ -1,9 +1,6 @@
-import { Database } from '@/shared/lib/supabase/type';
+import { z } from 'zod';
 
-export type BookmarkMenu = Database['public']['Tables']['bookmark_menu']['Row'];
+import { BookmarkMenuDtoSchema, CreateBookmarkMenuDtoSchema } from './model';
 
-export interface BookmarkMenuFormValue {
-  name: string;
-  rating: number;
-  review: string;
-}
+export type BookmarkMenuDto = z.infer<typeof BookmarkMenuDtoSchema>;
+export type CreateBookmarkMenuDto = z.infer<typeof CreateBookmarkMenuDtoSchema>;

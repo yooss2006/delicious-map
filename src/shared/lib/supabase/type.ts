@@ -5,13 +5,14 @@ export type Database = {
     Tables: {
       bookmark: {
         Row: {
+          address: string;
           created_at: string | null;
           group_id: string;
           id: number;
           image: string[] | null;
           lat: number | null;
           lng: number | null;
-          manager_id: string;
+          manager_id: number;
           merchant_id: string;
           merchant_name: string;
           rating: number | null;
@@ -20,13 +21,14 @@ export type Database = {
           visit_date: string | null;
         };
         Insert: {
+          address: string;
           created_at?: string | null;
           group_id: string;
           id?: number;
           image?: string[] | null;
           lat?: number | null;
           lng?: number | null;
-          manager_id: string;
+          manager_id: number;
           merchant_id: string;
           merchant_name: string;
           rating?: number | null;
@@ -35,13 +37,14 @@ export type Database = {
           visit_date?: string | null;
         };
         Update: {
+          address?: string;
           created_at?: string | null;
           group_id?: string;
           id?: number;
           image?: string[] | null;
           lat?: number | null;
           lng?: number | null;
-          manager_id?: string;
+          manager_id?: number;
           merchant_id?: string;
           merchant_name?: string;
           rating?: number | null;
@@ -51,10 +54,10 @@ export type Database = {
         };
         Relationships: [
           {
-            foreignKeyName: 'public_bookmark_manager_id_fkey';
+            foreignKeyName: 'bookmark_manager_id_fkey';
             columns: ['manager_id'];
             isOneToOne: false;
-            referencedRelation: 'users';
+            referencedRelation: 'profile';
             referencedColumns: ['id'];
           },
           {
@@ -69,6 +72,7 @@ export type Database = {
       bookmark_menu: {
         Row: {
           bookmark_id: number;
+          create_at: string | null;
           id: number;
           name: string;
           rating: number | null;
@@ -76,6 +80,7 @@ export type Database = {
         };
         Insert: {
           bookmark_id: number;
+          create_at?: string | null;
           id?: number;
           name: string;
           rating?: number | null;
@@ -83,6 +88,7 @@ export type Database = {
         };
         Update: {
           bookmark_id?: number;
+          create_at?: string | null;
           id?: number;
           name?: string;
           rating?: number | null;

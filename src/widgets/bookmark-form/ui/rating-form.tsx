@@ -2,7 +2,7 @@ import { Flex, FormControl, FormErrorMessage } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { BookmarkFormValue } from '@/entities/bookmark';
+import { BookmarkDto } from '@/entities/bookmark';
 import { useMenu } from '@/entities/bookmark-menu';
 import { StarRatingForm } from '@/shared/ui/form';
 
@@ -11,7 +11,7 @@ export function RatingForm() {
     control,
     formState: { errors },
     setValue,
-  } = useFormContext<BookmarkFormValue>();
+  } = useFormContext<BookmarkDto>();
 
   const { menus } = useMenu();
 
@@ -28,14 +28,9 @@ export function RatingForm() {
     <FormControl isInvalid={!!errors.rating} mb={3}>
       <Flex alignItems="center" gap={2}>
         별점
-        <StarRatingForm
-          control={control}
-          name="rating"
-          rules={{ required: '별점을 선택하세요.' }}
-          startProps={{ fontSize: '20px' }}
-        />
+        <StarRatingForm control={control} name="rating" startProps={{ fontSize: '20px' }} />
       </Flex>
-      <FormErrorMessage>{errors.rating && errors.rating.message}</FormErrorMessage>
+      <FormErrorMessage>{errors.rating && '별점을 입력하세요.'}</FormErrorMessage>
     </FormControl>
   );
 }

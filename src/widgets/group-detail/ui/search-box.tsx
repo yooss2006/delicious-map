@@ -1,6 +1,5 @@
 import { Flex, List, ListItem } from '@chakra-ui/react';
 
-import { useGroupBookmarkList } from '@/entities/bookmark';
 import { useSearchPlaces } from '@/features/kakao-places/search-places';
 import { useParsedLocation } from '@/shared/hooks';
 import { scrollNoneStyles } from '@/shared/style';
@@ -21,9 +20,7 @@ export function SearchBox() {
 
 export function SearchResultList({ q }: { q: string }) {
   const places = useSearchPlaces();
-
-  const { data } = useGroupBookmarkList(!!q);
-  console.log(data);
+  console.log(q);
 
   return (
     <List

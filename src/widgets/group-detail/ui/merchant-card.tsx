@@ -13,9 +13,9 @@ import { PiBowlFoodDuotone, PiCoffeeDuotone } from 'react-icons/pi';
 import { useParams, Link } from 'react-router-dom';
 
 import { useKakaoMap } from '@/entities/kakao-map';
-import { MerchantCardType } from '@/entities/merchant-card';
+import { Merchant } from '@/entities/merchant';
 
-export function MerchantCard(props: MerchantCardType) {
+export function MerchantCard(props: Merchant) {
   const cardColor = useColorModeValue('gray.100', 'gray.900');
   const { lat, lng, name, address, code } = props;
   const { move } = useKakaoMap();
@@ -48,10 +48,10 @@ export function MerchantCard(props: MerchantCardType) {
   );
 }
 
-function CreateBookmarkLink(props: MerchantCardType) {
+function CreateBookmarkLink(props: Merchant) {
   const { id } = useParams();
   return (
-    <ChakraLink as={Link} to={`/group/${id}/create-bookmark`} state={props}>
+    <ChakraLink as={Link} to={`/bookmark/create`} state={{ ...props, groupId: id }}>
       <IconButton
         size="sm"
         aria-label={`${props.name} 북마크 저장`}

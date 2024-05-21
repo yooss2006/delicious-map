@@ -1,5 +1,5 @@
 import { Icon, IconProps, Flex } from '@chakra-ui/react';
-import { Controller, RegisterOptions } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import { FaStar, FaRegStar } from 'react-icons/fa';
 
 interface StarProps {
@@ -23,11 +23,10 @@ function Star({ filled, onClick, startProps }: StarProps) {
 interface StarRatingFormProps {
   control: any;
   name: string;
-  rules?: RegisterOptions;
   startProps?: IconProps;
 }
 
-export function StarRatingForm({ control, name, rules, startProps }: StarRatingFormProps) {
+export function StarRatingForm({ control, name, startProps }: StarRatingFormProps) {
   const renderStars = (value: number, onChange: (rating: number) => void) => {
     return [1, 2, 3, 4, 5].map((rating) => (
       <Star
@@ -43,7 +42,6 @@ export function StarRatingForm({ control, name, rules, startProps }: StarRatingF
     <Controller
       name={name}
       control={control}
-      rules={rules}
       render={({ field: { onChange, value } }) => (
         <Flex gap={1}>{renderStars(value ?? 0, onChange)}</Flex>
       )}
