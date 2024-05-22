@@ -22,12 +22,12 @@ export const BookmarkMenuDtoSchema = z.object({
   name: z.string().min(1, '메뉴 이름을 입력하세요.'),
   rating: z.number(),
   review: z.string().min(1, '리뷰를 입력하세요.'),
-  bookmarkId: z.string(),
+  bookmarkId: z.number(),
 });
 
 export const CreateBookmarkMenuDtoSchema = z.object({
   name: z.string().min(1, '메뉴 이름을 입력하세요.'),
   rating: z.number(),
   review: z.string().min(1, '리뷰를 입력하세요.'),
-  bookmark_id: z.string(),
+  bookmark_id: z.number(),
 });
