@@ -5,9 +5,9 @@ import { useParsedLocation } from '@/shared/hooks';
 import { scrollNoneStyles } from '@/shared/style';
 import { QueryStringSearch } from '@/shared/ui/search';
 
-import { MerchantCard } from './merchant-card';
+import { MerchantCard } from '../../../widgets/group-detail/ui/merchant-card';
 
-export function SearchBox() {
+export function SearchContent() {
   const { query } = useParsedLocation();
   const q = query.q;
   return (

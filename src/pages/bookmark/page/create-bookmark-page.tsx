@@ -1,9 +1,10 @@
 import dayjs from 'dayjs';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { BookmarkDto, useCreateBookmarkMutation } from '@/entities/bookmark';
 import { BookmarkProvider } from '@/entities/bookmark/ui/bookmark-provider';
 import { BookmarkMenuDto } from '@/entities/bookmark-menu';
+import { useCreateBookmarkMenuMutation } from '@/entities/bookmark-menu/queries';
 import { Merchant } from '@/entities/merchant';
 import { useProfile } from '@/entities/profile';
 
@@ -11,11 +12,15 @@ import { BookmarkEditor } from '../ui/bookmark-editor';
 
 export function CreateBookmarkPage() {
   const location = useLocation();
+  const navigate = useNavigate();
   const locationState: (Merchant & { groupId: string }) | null = location.state;
   const { data: user } = useProfile();
-  const { mutateAsync: createBookmark, isPending } = useCreateBookmarkMutation();
+  const { mutateAsync: createBookmark, isPending: isBookmarkPending } = useCreateBookmarkMutation();
+  const { mutateAsync: createBookmarkMenu, isPending: isMenuPending } =
+    useCreateBookmarkMenuMutation();
 
   if (!(locationState && user)) return null;
+  const isLoading = isBookmarkPending || isMenuPending;
 
   const defaultData: BookmarkDto = {
     merchantId: locationState.merchantId,
@@ -35,20 +40,16 @@ export function CreateBookmarkPage() {
   const onSubmit = async (values: BookmarkDto & { menus: Array<BookmarkMenuDto> }) => {
     const { menus, ...rest } = values;
     const bookmark = await createBookmark(rest);
-    console.log(bookmark, menus);
-    // if (!merchant || !user?.id || !groupId) return;
-    // const result = await createBookmark({
-    //   ...values,
-    //   ...merchant,
-    //   groupId: groupId,
-    //   managerId: user.id,
-    // });
-    // await createReviewMenu([id!, menus]);
-    // navigate(`/group/${groupId}`);
+    const result = await createBookmarkMenu(
+      menus.map((menu) => ({ ...menu, bookmarkId: bookmark.id }))
+    );
+    if (result) {
+      navigate(`/group/${locationState.groupId}`);
+    }
   };
 
   return (
-    <BookmarkProvider data={defaultData} onSubmit={onSubmit} isLoading={isPending}>
+    <BookmarkProvider data={defaultData} onSubmit={onSubmit} isLoading={isLoading}>
       <BookmarkEditor />
     </BookmarkProvider>
   );

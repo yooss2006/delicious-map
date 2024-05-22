@@ -6,3 +6,8 @@ export interface Merchant {
   address: string;
   code: string;
 }
+
+export enum MerchantTypeEnum {
+  Cafe = 'cafe',
+  Restaurant = 'restaurant',
+}

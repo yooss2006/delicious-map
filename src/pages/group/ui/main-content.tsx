@@ -17,15 +17,6 @@ import { scrollNoneStyles } from '@/shared/style';
 import { LoadingCircle } from '@/shared/ui/loading';
 import { GroupInviteModal } from '@/widgets/group-invite-modal';
 
-export function MainBox() {
-  return (
-    <Box w="100%" p={3}>
-      <GroupIntroduceCard />
-      <GroupMemberList />
-    </Box>
-  );
-}
-
 function GroupIntroduceCard() {
   const { data: group } = useGroupDetail();
 
@@ -69,5 +60,14 @@ export function GroupMemberList() {
         </List>
       </CardBody>
     </Card>
+  );
+}
+
+export function MainContent() {
+  return (
+    <Box w="100%" p={3}>
+      <GroupIntroduceCard />
+      <GroupMemberList />
+    </Box>
   );
 }
