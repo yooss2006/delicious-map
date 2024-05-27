@@ -1,10 +1,10 @@
 import { Card, CardBody, CardHeader, Heading, Text } from '@chakra-ui/react';
 
-import { useGroupDetail } from '@/entities/group';
+import { groupQueries } from '@/entities/group';
 import { GroupInviteModal } from '@/widgets/group-invite-modal';
 
 export function GroupCard() {
-  const { data: group } = useGroupDetail();
+  const { data: group } = groupQueries.useGroupDetailBySlug();
 
   if (!group) return null;
 

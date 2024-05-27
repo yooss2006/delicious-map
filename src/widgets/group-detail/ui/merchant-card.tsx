@@ -7,13 +7,14 @@ import {
   Text,
   useColorModeValue,
   IconButton,
-  Link as ChakraLink,
 } from '@chakra-ui/react';
 import { PiBowlFoodDuotone, PiCoffeeDuotone } from 'react-icons/pi';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { useKakaoMap } from '@/entities/kakao-map';
 import { Merchant } from '@/entities/merchant';
+import { pathKeys } from '@/shared/lib/react-router';
+import { Link } from '@/shared/ui/link';
 
 export function MerchantCard(props: Merchant) {
   const cardColor = useColorModeValue('gray.100', 'gray.900');
@@ -51,7 +52,7 @@ export function MerchantCard(props: Merchant) {
 function CreateBookmarkLink(props: Merchant) {
   const { id } = useParams();
   return (
-    <ChakraLink as={Link} to={`/bookmark/create`} state={{ ...props, groupId: id }}>
+    <Link to={pathKeys.bookmark.create()} state={{ ...props, groupId: id }}>
       <IconButton
         size="sm"
         aria-label={`${props.name} 북마크 저장`}
@@ -65,6 +66,6 @@ function CreateBookmarkLink(props: Merchant) {
         _hover={{ background: 'green.900' }}
         icon={<StarIcon />}
       />
-    </ChakraLink>
+    </Link>
   );
 }

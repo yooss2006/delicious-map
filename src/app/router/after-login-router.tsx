@@ -1,22 +1,22 @@
 import { Navigate, RouteObject } from 'react-router-dom';
 
 import { BookmarkRoutes } from '@/pages/bookmark/route';
-import { GroupRoutes } from '@/pages/group/route';
-import { AuthLayout } from '@/pages/layout';
-import { MapLayout } from '@/pages/layout/ui/map-layout';
+import { GroupRoutes } from '@/pages/group/routes';
+import { AuthLayout, MapLayout } from '@/pages/layout';
 import { lazyImport } from '@/shared/lib/lazy-import';
+import { pathKeys } from '@/shared/lib/react-router';
 
-const { ReplacePage } = lazyImport(() => import('@/widgets/replace-page'), 'ReplacePage');
+const { ReplacePage } = lazyImport(() => import('@/pages/replace'), 'ReplacePage');
 const { InvitationPage } = lazyImport(() => import('@/pages/invitation'), 'InvitationPage');
-const { EditProfilePage } = lazyImport(() => import('@/pages/edit-profile'), 'EditProfilePage');
+const { EditProfilePage } = lazyImport(() => import('@/pages/auth'), 'EditProfilePage');
 
 const afterLoginRoutes: Array<RouteObject> = [
   {
-    path: '/invitation/:link',
+    path: pathKeys.invitation.link(':link'),
     element: <InvitationPage />,
   },
   {
-    path: '/edit-profile',
+    path: pathKeys.auth.editProfile(),
     element: <AuthLayout />,
     children: [
       {
@@ -26,13 +26,13 @@ const afterLoginRoutes: Array<RouteObject> = [
     ],
   },
   {
-    path: '/',
+    path: pathKeys.root,
     element: <MapLayout />,
     children: [
-      { path: '/', element: <ReplacePage /> },
+      { path: pathKeys.root, element: <ReplacePage /> },
       GroupRoutes,
       BookmarkRoutes,
-      { path: '*', element: <Navigate to="/" /> },
+      { path: '*', element: <Navigate to={pathKeys.root} /> },
     ],
   },
 ];

@@ -1,13 +1,13 @@
 import { Box, Heading, List, ListItem, Text } from '@chakra-ui/react';
 
 import { useGroupBookmarkList } from '@/entities/bookmark';
-import { useGroupDetail } from '@/entities/group';
+import { groupQueries } from '@/entities/group';
 import { MerchantTypeEnum } from '@/entities/merchant';
 import { scrollNoneStyles } from '@/shared/style';
 import { MerchantCard } from '@/widgets/merchant-card';
 
 export function BookmarkContent() {
-  const { data: group } = useGroupDetail();
+  const { data: group } = groupQueries.useGroupDetailBySlug();
   const { data: bookmark = [] } = useGroupBookmarkList(!!group?.id);
   console.log(bookmark);
 

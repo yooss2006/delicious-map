@@ -11,11 +11,12 @@ export function AuthLayout() {
       _dark={{ bg: 'green.900' }}
     >
       <Box
-        w="480px"
+        w="100%"
+        maxWidth={{ base: 'auto', md: '480px' }}
+        height={{ base: '100%', md: 'auto' }}
         px={4}
-        py={8}
-        borderRadius="20px"
-        boxShadow="md"
+        borderRadius={{ base: '0', md: '20px' }}
+        boxShadow={{ base: 'none', md: 'md' }}
         background="white"
         _dark={{ background: 'gray.900' }}
       >

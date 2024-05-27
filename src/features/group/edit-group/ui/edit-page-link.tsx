@@ -1,15 +1,18 @@
-import { Button, Link as ChakraLink, LinkProps, chakra } from '@chakra-ui/react';
+import { Button, LinkProps, chakra } from '@chakra-ui/react';
 import { AiFillSetting } from 'react-icons/ai';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+
+import { pathKeys } from '@/shared/lib/react-router';
+import { Link } from '@/shared/ui/link';
 
 export function EditPageLink(props: LinkProps) {
   const { id } = useParams();
   return (
-    <ChakraLink as={Link} to={`/edit-group/${id}`} {...props}>
+    <Link to={pathKeys.group.edit(id ?? '')} {...props}>
       <Button w="100%" background="green.400" color="white" _hover={{ background: 'green.600' }}>
         <AiFillSetting />
         <chakra.span pl={1}>수정</chakra.span>
       </Button>
-    </ChakraLink>
+    </Link>
   );
 }

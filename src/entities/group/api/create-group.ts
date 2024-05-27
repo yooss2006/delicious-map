@@ -1,6 +1,6 @@
 import { supabase } from '@/shared/lib';
 
-import { GroupDto } from './type';
+import { GroupDto } from '../types';
 
 export const createGroup = async ({
   name,

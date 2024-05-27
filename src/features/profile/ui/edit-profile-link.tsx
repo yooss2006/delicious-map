@@ -1,10 +1,12 @@
-import { Button, Link as ChakraLink } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Button } from '@chakra-ui/react';
+
+import { pathKeys } from '@/shared/lib/react-router';
+import { Link } from '@/shared/ui/link';
 
 export function EditProfileLink() {
   return (
-    <ChakraLink as={Link} to="/edit-profile">
+    <Link to={pathKeys.auth.editProfile()}>
       <Button w="100%">프로필 수정</Button>
-    </ChakraLink>
+    </Link>
   );
 }

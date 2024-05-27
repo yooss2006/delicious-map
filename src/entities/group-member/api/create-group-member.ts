@@ -1,6 +1,6 @@
 import { supabase } from '@/shared/lib';
 
-import { GroupMemberDto } from '../type';
+import { GroupMemberDto } from '../types';
 
 export const createGroupMember = async ({ profileId, groupId, ...rest }: GroupMemberDto) => {
   if (!(profileId && groupId)) return;

@@ -4,13 +4,14 @@ import { Outlet } from 'react-router-dom';
 
 import { KakaoMapProvider } from '@/entities/kakao-map';
 import { Map } from '@/entities/kakao-map/ui/map';
-import { Sidebar } from '@/widgets/sidebar';
+
+import { DesktopSidebar } from './desktop-sidebar';
 
 export function MapLayout() {
   return (
     <KakaoMapProvider>
       <Flex w="100%" h="100%">
-        <Sidebar />
+        <DesktopSidebar />
         <Suspense
           fallback={
             <Flex background="white" w="400px" h="100%">

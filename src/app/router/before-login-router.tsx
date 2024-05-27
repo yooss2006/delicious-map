@@ -1,8 +1,8 @@
 import { Navigate, RouteObject } from 'react-router-dom';
 
-import { CreateProfilePage, LoginPage, RegisterPage } from '@/pages/auth';
-import { AuthLayout } from '@/pages/layout';
+import { AuthRoutes } from '@/pages/auth';
 import { lazyImport } from '@/shared/lib/lazy-import';
+import { pathKeys } from '@/shared/lib/react-router';
 
 const { NotLoginInvitationPage } = lazyImport(
   () => import('@/pages/invitation'),
@@ -10,29 +10,11 @@ const { NotLoginInvitationPage } = lazyImport(
 );
 
 const beforeLoginRoutes: Array<RouteObject> = [
+  AuthRoutes,
   {
-    path: '/auth/*',
-    element: <AuthLayout />,
-    children: [
-      {
-        path: 'login',
-        element: <LoginPage />,
-      },
-      {
-        path: 'register',
-        element: <RegisterPage />,
-      },
-      {
-        path: 'create-profile',
-        element: <CreateProfilePage />,
-      },
-      { path: '*', element: <Navigate to="/auth/login" replace /> },
-    ],
-  },
-  {
-    path: '/invitation/:link',
+    path: pathKeys.invitation.link(':link'),
     element: <NotLoginInvitationPage />,
   },
-  { path: '*', element: <Navigate to="/auth/login" replace /> },
+  { path: '*', element: <Navigate to={pathKeys.auth.login()} replace /> },
 ];
 export default beforeLoginRoutes;

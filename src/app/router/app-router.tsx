@@ -1,19 +1,18 @@
-import { useRoutes, RouteObject } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { useRoutes } from 'react-router-dom';
 
-import { useProfile } from '@/entities/profile';
+import { profileQueries } from '@/entities/profile';
 import { LoadingPage } from '@/shared/ui/layout';
 
 import afterLoginRouter from './after-login-router';
 import beforeLoginRouter from './before-login-router';
 
-const commonRoutes: Array<RouteObject> = [];
-
 export function AppRouter() {
-  const { data: user, isLoading } = useProfile();
+  const { data: user, isLoading } = useQuery(profileQueries.profileService.queryOptions());
 
   const routes = user ? afterLoginRouter : beforeLoginRouter;
 
-  const element = useRoutes([...routes, ...commonRoutes]);
+  const element = useRoutes(routes);
 
   if (isLoading) return <LoadingPage />;
 

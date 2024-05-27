@@ -5,7 +5,7 @@ export function SubmitButton(props: ButtonProps) {
     <Button
       type="submit"
       size="lg"
-      w="full"
+      w="100%"
       mt={3}
       color="white"
       bg="green.100"

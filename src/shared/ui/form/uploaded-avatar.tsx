@@ -15,7 +15,7 @@ export function UploadedAvatar({ name, prevImage = '', ...props }: Props) {
   const files = watch(name);
   const uploadedImage = files?.[0];
   const preview = useMemo(
-    () => (uploadedImage ? URL.createObjectURL(uploadedImage) : prevImage),
+    () => (uploadedImage instanceof File ? URL.createObjectURL(uploadedImage) : prevImage),
     [uploadedImage, prevImage]
   );
 

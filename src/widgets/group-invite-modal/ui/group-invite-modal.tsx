@@ -1,6 +1,5 @@
 import { EmailIcon } from '@chakra-ui/icons';
 import {
-  Button,
   Modal,
   ModalOverlay,
   useDisclosure,
@@ -10,6 +9,7 @@ import {
   ModalContent,
   ModalHeader,
   Text,
+  IconButton,
 } from '@chakra-ui/react';
 
 import { CreateInviteButton } from '@/features/invitation/create-invitation';
@@ -20,16 +20,7 @@ export function GroupInviteModal() {
 
   return (
     <>
-      <Button
-        leftIcon={<EmailIcon />}
-        onClick={onOpen}
-        position="absolute"
-        right={3}
-        top="50%"
-        transform="translateY(-50%)"
-      >
-        초대하기
-      </Button>
+      <IconButton icon={<EmailIcon />} onClick={onOpen} aria-label="그룹 초대 링크 생성 버튼" />
       <Modal isOpen={isOpen} onClose={onClose} size="2xl">
         <ModalOverlay />
         <GroupInviteModalContent />

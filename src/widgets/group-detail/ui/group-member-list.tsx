@@ -1,12 +1,12 @@
 import { Avatar, List, ListItem } from '@chakra-ui/react';
 
-import { useGroupDetail } from '@/entities/group';
+import { groupQueries } from '@/entities/group';
 import { Database } from '@/shared/lib/supabase/type';
 import { scrollNoneStyles } from '@/shared/style';
 import { LoadingCircle } from '@/shared/ui/loading';
 
 export function GroupMemberList() {
-  const { data: group, isLoading } = useGroupDetail();
+  const { data: group, isLoading } = groupQueries.useGroupDetailBySlug();
 
   if (isLoading) return <LoadingCircle />;
 

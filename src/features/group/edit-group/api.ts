@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Group } from '@/entities/group';
+import { groupTypes } from '@/entities/group';
 import { queryClient, queryKey, supabase } from '@/shared/lib';
 import { uploadImage } from '@/shared/lib/supabase/upload-image';
 
@@ -11,7 +11,7 @@ export const editGroup = async ({
   profileImage,
   imageUrl,
   description,
-}: Group & { groupId: string }) => {
+}: groupTypes.GroupDto & { groupId: string }) => {
   const uploadedImage = profileImage.length > 0 && profileImage?.[0];
   let uploadImageUrl = imageUrl;
   if (uploadedImage) {

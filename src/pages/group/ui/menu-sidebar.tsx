@@ -1,8 +1,8 @@
-import { Flex, Link as ChakraLink, Text, chakra } from '@chakra-ui/react';
+import { Flex, Text, chakra } from '@chakra-ui/react';
 import { IoHome, IoSearch, IoBookmark } from 'react-icons/io5';
-import { Link as ReactRouterLink } from 'react-router-dom';
 
 import { useParsedLocation } from '@/shared/hooks';
+import { Link } from '@/shared/ui/link';
 
 const MENU_LIST = [
   {
@@ -48,8 +48,7 @@ export function MenuSidebar() {
         const MenuIcon = chakra(Icon);
 
         return (
-          <ChakraLink
-            as={ReactRouterLink}
+          <Link
             to={`${pathname}${query ? `?mode=${query}` : ''}`}
             key={label}
             w={14}
@@ -73,7 +72,7 @@ export function MenuSidebar() {
             <Text textAlign="center" fontSize="12px">
               {label}
             </Text>
-          </ChakraLink>
+          </Link>
         );
       })}
     </Flex>

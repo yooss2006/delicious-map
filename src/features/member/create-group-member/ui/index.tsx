@@ -1,7 +1,7 @@
 import { Button } from '@chakra-ui/react';
 
 import { useCreateGroupMemberMutation } from '@/entities/group-member';
-import { useProfile } from '@/entities/profile';
+import { profileQueries } from '@/entities/profile';
 
 type Props = {
   groupId: string;
@@ -9,7 +9,7 @@ type Props = {
 
 // 현재 로그인된 유저를 그룹에 추가하는 버튼
 export function JoinGroupButton({ groupId }: Props) {
-  const { data: profile } = useProfile();
+  const profile = profileQueries.profileService.getCache();
   const { mutate } = useCreateGroupMemberMutation(groupId);
 
   const handleButtonClick = () => {

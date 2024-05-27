@@ -1,1 +1,1 @@
-export * from './oauth-login';
+export * from './oauth-login-button';

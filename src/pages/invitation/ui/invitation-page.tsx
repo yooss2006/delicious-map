@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 
 import { useGroupMemberListByProfileId } from '@/entities/group-member';
-import { useProfile } from '@/entities/profile';
+import { profileQueries } from '@/entities/profile';
 import { LoadingPage } from '@/shared/ui/layout';
 import {
   ExistingUserModalContent,
@@ -17,11 +17,11 @@ import {
 } from '@/widgets/invitation-modal-content';
 
 export function InvitationPage() {
-  const { data: profile, isLoading: isProfileLoading } = useProfile();
+  const profile = profileQueries.profileService.getCache();
   const { data: member, isLoading: isMemberLoading } = useGroupMemberListByProfileId(profile?.id);
   const isCurrentUserMember = member?.length;
 
-  if (isProfileLoading || isMemberLoading) return <LoadingPage />;
+  if (isMemberLoading) return <LoadingPage />;
 
   return (
     <Box w="100%" h="100%">

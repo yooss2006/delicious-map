@@ -6,7 +6,7 @@ import { BookmarkProvider } from '@/entities/bookmark/ui/bookmark-provider';
 import { BookmarkMenuDto } from '@/entities/bookmark-menu';
 import { useCreateBookmarkMenuMutation } from '@/entities/bookmark-menu/queries';
 import { Merchant } from '@/entities/merchant';
-import { useProfile } from '@/entities/profile';
+import { profileQueries } from '@/entities/profile';
 
 import { BookmarkEditor } from '../ui/bookmark-editor';
 
@@ -14,12 +14,12 @@ export function CreateBookmarkPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const locationState: (Merchant & { groupId: string }) | null = location.state;
-  const { data: user } = useProfile();
+  const profile = profileQueries.profileService.getCache();
   const { mutateAsync: createBookmark, isPending: isBookmarkPending } = useCreateBookmarkMutation();
   const { mutateAsync: createBookmarkMenu, isPending: isMenuPending } =
     useCreateBookmarkMenuMutation();
 
-  if (!(locationState && user)) return null;
+  if (!(locationState && profile?.id)) return null;
   const isLoading = isBookmarkPending || isMenuPending;
 
   const defaultData: BookmarkDto = {
@@ -34,7 +34,7 @@ export function CreateBookmarkPage() {
     review: '',
     visitDate: dayjs().format('YYYY-MM-DD'),
     image: [],
-    managerId: user.id,
+    managerId: profile.id,
   };
 
   const onSubmit = async (values: BookmarkDto & { menus: Array<BookmarkMenuDto> }) => {
